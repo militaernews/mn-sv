@@ -1,8 +1,25 @@
-import { e as attributes, f as attr_class, a as attr, g as ensure_array_like, h as stringify, d as attr_style, c as store_get, u as unsubscribe_stores, j as head } from "../../chunks/index2.js";
-import { X as escape_html } from "../../chunks/context.js";
+import { a4 as attributes, a8 as attr_class, Y as attr, a9 as ensure_array_like, a3 as escape_html, a6 as stringify, a2 as attr_style, a0 as store_get, a1 as unsubscribe_stores, a5 as head } from "../../chunks/index2.js";
+import { C as Cross_mark } from "../../chunks/cross-mark.js";
 import "clsx";
+import "leaflet";
 import { d as derived, w as writable } from "../../chunks/index.js";
 import "html2canvas-pro";
+function Magnifying_glass_tilted_left($$renderer, $$props) {
+  const { $$slots, $$events, ...p } = $$props;
+  $$renderer.push(`<svg${attributes(
+    {
+      viewBox: "0 0 32 32",
+      mode: "url",
+      width: "1.2em",
+      height: "1.2em",
+      ...p
+    },
+    void 0,
+    void 0,
+    void 0,
+    3
+  )}><g fill="none"><g filter="url(#ivZBUCc)"><rect width="7.513" height="12.209" x="17.414" y="22.867" fill="url(#imKxyMd)" rx="3.757" transform="rotate(-45 17.414 22.867)"></rect><rect width="7.513" height="12.209" x="17.414" y="22.867" fill="url(#ioxN0Ec)" rx="3.757" transform="rotate(-45 17.414 22.867)"></rect><rect width="7.513" height="12.209" x="17.414" y="22.867" fill="url(#iYTszOh)" rx="3.757" transform="rotate(-45 17.414 22.867)"></rect></g><rect width="7.513" height="12.209" x="17.414" y="22.867" fill="url(#i4K6exe)" rx="3.757" transform="rotate(-45 17.414 22.867)"></rect><path fill="url(#iFvAcwb)" fill-rule="evenodd" d="M12.906 23.797c5.972 0 10.813-4.841 10.813-10.813c0-5.971-4.841-10.812-10.813-10.812c-5.971 0-10.812 4.84-10.812 10.812s4.84 10.813 10.812 10.813m0-1.75a9.063 9.063 0 1 0 0-18.125a9.063 9.063 0 0 0 0 18.125" clip-rule="evenodd"></path><g filter="url(#iFIRr3c)"><path fill="url(#i8Lmwxd)" fill-rule="evenodd" d="M12.906 23.552c5.837 0 10.568-4.731 10.568-10.568S18.743 2.416 12.906 2.416S2.338 7.148 2.338 12.984c0 5.837 4.732 10.568 10.568 10.568m0-1.71a8.858 8.858 0 1 0 0-17.715a8.858 8.858 0 0 0 0 17.715" clip-rule="evenodd"></path><path fill="url(#ic3z9Dd)" fill-rule="evenodd" d="M12.906 23.552c5.837 0 10.568-4.731 10.568-10.568S18.743 2.416 12.906 2.416S2.338 7.148 2.338 12.984c0 5.837 4.732 10.568 10.568 10.568m0-1.71a8.858 8.858 0 1 0 0-17.715a8.858 8.858 0 0 0 0 17.715" clip-rule="evenodd"></path></g><g filter="url(#i0LXMlb)"><circle cx="12.906" cy="12.984" r="9.295" fill="url(#ic6XREe)"></circle></g><g filter="url(#ixaM7md)"><circle cx="12.906" cy="12.984" r="9.063" fill="#64D0EA"></circle></g><ellipse cx="16.99" cy="8.443" fill="url(#ibM6P4c)" rx="1.651" ry="2.033" transform="rotate(-38.896 16.99 8.443)"></ellipse><defs><linearGradient id="imKxyMd" x1="18.044" x2="22.375" y1="33.231" y2="24.701" gradientUnits="userSpaceOnUse"><stop stop-color="#A0659C"></stop><stop offset="1" stop-color="#895792"></stop></linearGradient><linearGradient id="ioxN0Ec" x1="21.16" x2="21.171" y1="23.398" y2="27.684" gradientUnits="userSpaceOnUse"><stop stop-color="#6C3B74"></stop><stop offset="1" stop-color="#845590" stop-opacity="0"></stop></linearGradient><linearGradient id="iYTszOh" x1="25.026" x2="19.878" y1="31.198" y2="31.043" gradientUnits="userSpaceOnUse"><stop offset=".115" stop-color="#703D7A"></stop><stop offset="1" stop-color="#703D7A" stop-opacity="0"></stop></linearGradient><linearGradient id="iFvAcwb" x1="12.906" x2="12.906" y1="2.172" y2="23.797" gradientUnits="userSpaceOnUse"><stop offset=".379" stop-color="#344A7D"></stop><stop offset=".633" stop-color="#785790"></stop><stop offset=".837" stop-color="#785790"></stop><stop offset="1" stop-color="#9872A2"></stop></linearGradient><linearGradient id="i8Lmwxd" x1="12.906" x2="12.906" y1="2.416" y2="23.552" gradientUnits="userSpaceOnUse"><stop stop-color="#475890"></stop><stop offset="1" stop-color="#7A4D87"></stop></linearGradient><linearGradient id="ic6XREe" x1="12.906" x2="12.906" y1="3.689" y2="22.279" gradientUnits="userSpaceOnUse"><stop stop-color="#204083"></stop><stop offset="1" stop-color="#523573"></stop></linearGradient><linearGradient id="ibM6P4c" x1="16.99" x2="16.99" y1="6.409" y2="10.476" gradientUnits="userSpaceOnUse"><stop stop-color="#DCDBF2"></stop><stop offset=".209" stop-color="#DCDBF2" stop-opacity=".848"></stop><stop offset="1" stop-color="#DCDBF2" stop-opacity="0"></stop></linearGradient><filter id="ivZBUCc" width="11.833" height="12.083" x="17.97" y="18.861" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dx="-1" dy="1"></feOffset><feGaussianBlur stdDeviation="1.5"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.4 0 0 0 0 0.239216 0 0 0 0 0.439216 0 0 0 1 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow_18_20461"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="-.25"></feOffset><feGaussianBlur stdDeviation=".375"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.639216 0 0 0 0 0.490196 0 0 0 0 0.643137 0 0 0 1 0"></feColorMatrix><feBlend in2="effect1_innerShadow_18_20461" result="effect2_innerShadow_18_20461"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation=".75"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.333333 0 0 0 0 0.27451 0 0 0 0 0.380392 0 0 0 1 0"></feColorMatrix><feBlend in2="effect2_innerShadow_18_20461" result="effect3_innerShadow_18_20461"></feBlend></filter><filter id="iFIRr3c" width="21.736" height="21.736" x="2.038" y="2.116" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur result="effect1_foregroundBlur_18_20461" stdDeviation=".15"></feGaussianBlur></filter><filter id="i0LXMlb" width="18.99" height="18.99" x="3.411" y="3.489" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur result="effect1_foregroundBlur_18_20461" stdDeviation=".1"></feGaussianBlur></filter><filter id="ixaM7md" width="18.125" height="19.275" x="3.844" y="3.772" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="1"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.168627 0 0 0 0 0.603922 0 0 0 0 0.956863 0 0 0 1 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow_18_20461"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dy="-.15"></feOffset><feGaussianBlur stdDeviation=".15"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.137255 0 0 0 0 0.607843 0 0 0 0 0.984314 0 0 0 1 0"></feColorMatrix><feBlend in2="effect1_innerShadow_18_20461" result="effect2_innerShadow_18_20461"></feBlend></filter><radialGradient id="i4K6exe" cx="0" cy="0" r="1" gradientTransform="rotate(92.442 -.259 21.504)scale(2.33336 5.42286)" gradientUnits="userSpaceOnUse"><stop stop-color="#2F1A3D"></stop><stop offset="1" stop-color="#532D64" stop-opacity="0"></stop></radialGradient><radialGradient id="ic3z9Dd" cx="0" cy="0" r="1" gradientTransform="matrix(0 -5.125 9.53123 0 12.906 7.406)" gradientUnits="userSpaceOnUse"><stop offset=".704" stop-color="#566298"></stop><stop offset=".787" stop-color="#566298" stop-opacity="0"></stop></radialGradient></defs></g></svg>`);
+}
 function Floppy_disk($$renderer, $$props) {
   const { $$slots, $$events, ...p } = $$props;
   $$renderer.push(`<svg${attributes(
@@ -99,22 +116,6 @@ function Plus($$renderer, $$props) {
     3
   )}><g fill="none"><path fill="url(#iL3BHQb)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><path fill="url(#ilJUrJa)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><path fill="url(#ijBGFvb)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><path fill="url(#it0Kh4W)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><path fill="url(#iv3MFme)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><path fill="url(#iBAfhTd)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><path fill="url(#ig22cte)" d="M19.05 5.06c0-1.68-1.37-3.06-3.06-3.06s-3.07 1.38-3.06 3.06v7.87H5.06C3.38 12.93 2 14.3 2 15.99c0 1.68 1.38 3.06 3.06 3.06h7.87v7.86c0 1.68 1.37 3.06 3.06 3.06c1.68 0 3.06-1.37 3.06-3.06v-7.86h7.86c1.68 0 3.06-1.37 3.06-3.06c0-1.68-1.37-3.06-3.06-3.06h-7.86z"></path><defs><radialGradient id="it0Kh4W" cx="0" cy="0" r="1" gradientTransform="matrix(0 2.85096 -5.34217 0 16.31 28.79)" gradientUnits="userSpaceOnUse"><stop offset=".096" stop-color="#9447FE"></stop><stop offset=".846" stop-color="#7D6CBB" stop-opacity="0"></stop></radialGradient><radialGradient id="iv3MFme" cx="0" cy="0" r="1" gradientTransform="matrix(-3.26241 0 0 -4.60993 2.26 15.156)" gradientUnits="userSpaceOnUse"><stop offset=".11" stop-color="#41366A"></stop><stop offset="1" stop-color="#7E5FCD" stop-opacity="0"></stop></radialGradient><radialGradient id="iBAfhTd" cx="0" cy="0" r="1" gradientTransform="matrix(1.0537 -1.67517 2.25759 1.42004 17.194 3.818)" gradientUnits="userSpaceOnUse"><stop offset=".177" stop-color="#A398D8"></stop><stop offset="1" stop-color="#8A7ACC" stop-opacity="0"></stop></radialGradient><radialGradient id="ig22cte" cx="0" cy="0" r="1" gradientTransform="matrix(1.46526 -1.95368 1.4073 1.05548 18.874 13.64)" gradientUnits="userSpaceOnUse"><stop offset=".177" stop-color="#A398D8"></stop><stop offset="1" stop-color="#8A7ACC" stop-opacity="0"></stop></radialGradient><linearGradient id="iL3BHQb" x1="15.985" x2="15.985" y1="2" y2="27.773" gradientUnits="userSpaceOnUse"><stop stop-color="#7366AD"></stop><stop offset="1" stop-color="#7D5DD4"></stop></linearGradient><linearGradient id="ilJUrJa" x1="15.985" x2="15.985" y1="12.732" y2="19.5" gradientUnits="userSpaceOnUse"><stop stop-color="#655898"></stop><stop offset=".214" stop-color="#8276BD"></stop><stop offset=".335" stop-color="#897EC1"></stop><stop offset=".523" stop-color="#7966C1"></stop><stop offset=".863" stop-color="#8842EC"></stop><stop offset="1" stop-color="#6035BE"></stop></linearGradient><linearGradient id="ijBGFvb" x1="13" x2="20.766" y1="9" y2="9" gradientUnits="userSpaceOnUse"><stop stop-color="#564199" stop-opacity="0"></stop><stop offset=".352" stop-color="#7362AF"></stop><stop offset=".563" stop-color="#8878CA"></stop><stop offset=".643" stop-color="#8878CA"></stop><stop offset=".849" stop-color="#9489CB" stop-opacity="0"></stop></linearGradient></defs></g></svg>`);
 }
-function Cross_mark($$renderer, $$props) {
-  const { $$slots, $$events, ...p } = $$props;
-  $$renderer.push(`<svg${attributes(
-    {
-      viewBox: "0 0 32 32",
-      mode: "url",
-      width: "1.2em",
-      height: "1.2em",
-      ...p
-    },
-    void 0,
-    void 0,
-    void 0,
-    3
-  )}><g fill="none"><g filter="url(#i2QLmuW)"><path fill="url(#ib20vNd)" d="M4.435 2.809A1.55 1.55 0 0 0 2.243 5L13.41 16.169a.25.25 0 0 1 0 .354L2.243 27.692a1.55 1.55 0 1 0 2.192 2.192l11.168-11.169a.25.25 0 0 1 .354 0l11.168 11.169a1.55 1.55 0 0 0 2.193-2.192l-11.17-11.17a.25.25 0 0 1 0-.353l11.17-11.168a1.55 1.55 0 0 0-2.192-2.192l-11.17 11.168a.25.25 0 0 1-.353 0z"></path><path fill="url(#ifwS9Oe)" d="M4.435 2.809A1.55 1.55 0 0 0 2.243 5L13.41 16.169a.25.25 0 0 1 0 .354L2.243 27.692a1.55 1.55 0 1 0 2.192 2.192l11.168-11.169a.25.25 0 0 1 .354 0l11.168 11.169a1.55 1.55 0 0 0 2.193-2.192l-11.17-11.17a.25.25 0 0 1 0-.353l11.17-11.168a1.55 1.55 0 0 0-2.192-2.192l-11.17 11.168a.25.25 0 0 1-.353 0z"></path></g><path fill="url(#iXQ9Tsd)" d="M4.435 2.809A1.55 1.55 0 0 0 2.243 5L13.41 16.169a.25.25 0 0 1 0 .354L2.243 27.692a1.55 1.55 0 1 0 2.192 2.192l11.168-11.169a.25.25 0 0 1 .354 0l11.168 11.169a1.55 1.55 0 0 0 2.193-2.192l-11.17-11.17a.25.25 0 0 1 0-.353l11.17-11.168a1.55 1.55 0 0 0-2.192-2.192l-11.17 11.168a.25.25 0 0 1-.353 0z"></path><g filter="url(#ii3r2tc)"><path stroke="url(#iZJHnTd)" stroke-linecap="round" d="M3.685 3.558L15.2 15.074m13.367 13.368L17.68 17.555"></path></g><g filter="url(#ikImW5d)"><path stroke="url(#iXCp4Hb)" stroke-linecap="round" d="m27.832 4.289l-10.78 10.785M3.685 28.442L14.57 17.555"></path></g><defs><linearGradient id="ib20vNd" x1="15.78" x2="15.78" y1="2.355" y2="30.338" gradientUnits="userSpaceOnUse"><stop stop-color="#E02C6B"></stop><stop offset="1" stop-color="#FF354E"></stop></linearGradient><linearGradient id="ifwS9Oe" x1="6.29" x2="14.721" y1="6.699" y2="15.172" gradientUnits="userSpaceOnUse"><stop stop-color="#EE3D81"></stop><stop offset="1" stop-color="#EE3D81" stop-opacity="0"></stop></linearGradient><linearGradient id="iZJHnTd" x1="3.314" x2="28.986" y1="3.885" y2="29.499" gradientUnits="userSpaceOnUse"><stop stop-color="#FF679B"></stop><stop offset="1" stop-color="#FF7171"></stop></linearGradient><linearGradient id="iXCp4Hb" x1="28.939" x2="6.319" y1="3.885" y2="26.505" gradientUnits="userSpaceOnUse"><stop stop-color="#EF4B8B"></stop><stop offset="1" stop-color="#FE4753"></stop></linearGradient><filter id="i2QLmuW" width="28.483" height="27.983" x="1.789" y="2.355" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dx=".5"></feOffset><feGaussianBlur stdDeviation=".5"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.776471 0 0 0 0 0.219608 0 0 0 0 0.411765 0 0 0 1 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow_18590_2030"></feBlend></filter><filter id="ii3r2tc" width="27.383" height="27.383" x="2.435" y="2.308" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur result="effect1_foregroundBlur_18590_2030" stdDeviation=".375"></feGaussianBlur></filter><filter id="ikImW5d" width="26.647" height="26.652" x="2.435" y="3.039" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feGaussianBlur result="effect1_foregroundBlur_18590_2030" stdDeviation=".375"></feGaussianBlur></filter><radialGradient id="iXQ9Tsd" cx="0" cy="0" r="1" gradientTransform="rotate(134.145 13.617 7.88)scale(1.36671)" gradientUnits="userSpaceOnUse"><stop stop-color="#FF75A7"></stop><stop offset="1" stop-color="#FF75A7" stop-opacity="0"></stop></radialGradient></defs></g></svg>`);
-}
 function Sidebar($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     const {
@@ -129,7 +130,11 @@ function Sidebar($$renderer, $$props) {
       Round_pushpin($$renderer2, { class: "size-6" });
       $$renderer2.push(`<!----></button></div> <div class="tooltip tooltip-right" data-tip="Toggle Legend"><button${attr_class(`btn btn-ghost btn-sm ${stringify(displayLegend ? "btn-active bg-primary text-primary-content" : "")}`)}>`);
       Eye($$renderer2, { class: "size-6" });
-      $$renderer2.push(`<!----></button></div> <div class="tooltip tooltip-right" data-tip="Download Screenshot"><button class="btn btn-ghost btn-sm"${attr("disabled", isCapturingScreenshot, true)}>`);
+      $$renderer2.push(`<!----></button></div> <div class="divider mx-2 my-0 opacity-20"></div> <div class="tooltip tooltip-right" data-tip="Advanced Leaflet Map"><button${attr_class(`btn btn-ghost btn-sm ${stringify("")}`)}>`);
+      World_map($$renderer2, { class: "size-6" });
+      $$renderer2.push(`<!----></button></div> <div class="tooltip tooltip-right" data-tip="Infrastructure Search"><button${attr_class(`btn btn-ghost btn-sm ${stringify("")}`)}>`);
+      Magnifying_glass_tilted_left($$renderer2, { class: "size-6" });
+      $$renderer2.push(`<!----></button></div> <div class="divider mx-2 my-0 opacity-20"></div> <div class="tooltip tooltip-right" data-tip="Download Screenshot"><button class="btn btn-ghost btn-sm"${attr("disabled", isCapturingScreenshot, true)}>`);
       if (isCapturingScreenshot) {
         $$renderer2.push("<!--[-->");
         $$renderer2.push(`<span class="loading loading-spinner loading-sm"></span>`);
@@ -145,7 +150,7 @@ function Sidebar($$renderer, $$props) {
       const each_array = ensure_array_like(mapSources);
       for (let index = 0, $$length = each_array.length; index < $$length; index++) {
         let source = each_array[index];
-        $$renderer2.push(`<li class="p-1"><div${attr_class(`flex w-full items-center justify-between ${stringify(selectedMapIndex === index ? "bg-primary text-primary-content" : "")}`)}><button class="flex-1 text-left text-sm"><span class="truncate overflow-ellipsis">${escape_html(source.name)}</span></button> `);
+        $$renderer2.push(`<li class="p-1"><div${attr_class(`flex w-full items-center justify-between ${stringify(selectedMapIndex === index && true ? "bg-primary text-primary-content" : "")}`)}><button class="flex-1 text-left text-sm"><span class="truncate overflow-ellipsis">${escape_html(source.name)}</span></button> `);
         if (source.isCustom) {
           $$renderer2.push("<!--[-->");
           $$renderer2.push(`<button class="btn btn-ghost btn-xs" title="Remove custom map">`);
@@ -212,7 +217,13 @@ function CircleItem($$renderer, $$props) {
     const { circle } = $$props;
     const fontColor = presetColors[circle.colorIndex]?.useDarkFont ? "#000000" : "#ffffff";
     const backgroundColor = presetColors[circle.colorIndex]?.color;
-    $$renderer2.push(`<div class="absolute z-10"${attr_style(`top: ${stringify(circle.y)}%; left: ${stringify(circle.x)}%; transform: translate(-50%, -50%);`)}><div${attr_class("size-16 cursor-move rounded-full border-4", void 0, {
+    if (circle.isChecked) {
+      $$renderer2.push("<!--[-->");
+      $$renderer2.push(`<div class="absolute z-20 pointer-events-none"${attr_style(`top: ${stringify(circle.y)}%; left: ${stringify(circle.x)}%; transform: translate(-50%, -50%);`)}><div class="bg-success text-success-content rounded-full p-1 shadow-lg animate-bounce"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></div></div>`);
+    } else {
+      $$renderer2.push("<!--[!-->");
+    }
+    $$renderer2.push(`<!--]--> <div class="absolute z-10"${attr_style(`top: ${stringify(circle.y)}%; left: ${stringify(circle.x)}%; transform: translate(-50%, -50%);`)}><div${attr_class("size-16 cursor-move touch-none rounded-full border-4", void 0, {
       "border-dotted": circle.useDottedBorder,
       "border-solid": !circle.useDottedBorder
     })}${attr_style(`border-color: ${stringify(backgroundColor)};`)}></div> <button type="button"${attr_class("text-md absolute cursor-pointer px-2 py-1", void 0, {
@@ -294,6 +305,35 @@ function MapModal($$renderer, $$props) {
     $$renderer2.push(`<!--]-->`);
   });
 }
+function Straight_ruler($$renderer, $$props) {
+  const { $$slots, $$events, ...p } = $$props;
+  $$renderer.push(`<svg${attributes(
+    {
+      viewBox: "0 0 32 32",
+      mode: "url",
+      width: "1.2em",
+      height: "1.2em",
+      ...p
+    },
+    void 0,
+    void 0,
+    void 0,
+    3
+  )}><g fill="none"><g filter="url(#iD7uXDd)"><rect width="31.576" height="10.482" x="8.542" y="1.201" fill="url(#iV0559c)" rx="2.25" transform="rotate(45 8.542 1.2)"></rect></g><path fill="#9D73E8" d="M11.117 3.776L9.172 5.72a.544.544 0 0 1-.77-.77l1.945-1.945zm1.492 1.491l.77.77l-1.112 1.11a.544.544 0 1 1-.77-.769zm2.216 2.217l.77.77l-1.875 1.875a.545.545 0 0 1-.77-.77zm2.281 2.28l.77.77l-1.15 1.15a.544.544 0 0 1-.77-.77zm2.248 2.249l.77.77l-1.87 1.868a.544.544 0 1 1-.769-.77zm2.268 2.267l.77.77l-1.143 1.143a.544.544 0 1 1-.77-.77zm2.212 2.212l.77.77l-1.9 1.9a.544.544 0 0 1-.77-.77zm2.253 2.253l.77.77l-1.162 1.162a.544.544 0 1 1-.77-.77zm2.273 2.274l.77.77l-1.881 1.88a.544.544 0 0 1-.77-.77z"></path><defs><linearGradient id="iV0559c" x1="24.33" x2="24.33" y1="1.201" y2="11.682" gradientUnits="userSpaceOnUse"><stop stop-color="#CAC8D1"></stop><stop offset="1" stop-color="#BAB8C0"></stop></linearGradient><filter id="iD7uXDd" width="28.475" height="28.475" x="1.762" y="1.833" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dx=".3" dy="-.3"></feOffset><feGaussianBlur stdDeviation=".3"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.611765 0 0 0 0 0.596078 0 0 0 0 0.658824 0 0 0 1 0"></feColorMatrix><feBlend in2="shape" result="effect1_innerShadow_18_23242"></feBlend><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"></feColorMatrix><feOffset dx="-.3" dy=".3"></feOffset><feGaussianBlur stdDeviation=".3"></feGaussianBlur><feComposite in2="hardAlpha" k2="-1" k3="1" operator="arithmetic"></feComposite><feColorMatrix values="0 0 0 0 0.913725 0 0 0 0 0.909804 0 0 0 0 0.92549 0 0 0 1 0"></feColorMatrix><feBlend in2="effect1_innerShadow_18_23242" result="effect2_innerShadow_18_23242"></feBlend></filter></defs></g></svg>`);
+}
+function Ruler($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    const { distance } = $$props;
+    distance > 1e3 ? (distance / 1e3).toFixed(2) + " km" : distance.toFixed(0) + " m";
+    $$renderer2.push(`<div class="absolute top-4 right-4 z-[30] bg-base-100 rounded-lg shadow-xl border border-base-300 p-2 flex items-center gap-3"><button${attr_class(`btn btn-sm ${stringify("btn-ghost")}`)} title="Toggle Ruler">`);
+    Straight_ruler($$renderer2, { class: "size-5" });
+    $$renderer2.push(`<!----></button> `);
+    {
+      $$renderer2.push("<!--[!-->");
+    }
+    $$renderer2.push(`<!--]--></div>`);
+  });
+}
 function createPersistentState(key, defaultValue, serializer = JSON.stringify, deserializer = JSON.parse) {
   let value;
   if (typeof localStorage !== "undefined") {
@@ -321,11 +361,11 @@ function createPersistentState(key, defaultValue, serializer = JSON.stringify, d
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     var $$store_subs;
-    const [initialDisplayLegend, saveDisplayLegend] = createPersistentState("displayLegend", true);
+    const [initialDisplayLegend] = createPersistentState("displayLegend", true);
     let displayLegend = initialDisplayLegend;
-    const [initialMapSources, saveMapSources] = createPersistentState("customMapSources", defaultMapSources);
+    const [initialMapSources] = createPersistentState("customMapSources", defaultMapSources);
     let mapSources = initialMapSources;
-    const [initialSelectedMapIndex, saveSelectedMapIndex] = createPersistentState("selectedMapIndex", 0, String, Number);
+    const [initialSelectedMapIndex] = createPersistentState("selectedMapIndex", 0, String, Number);
     let selectedMapIndex = initialSelectedMapIndex;
     const [initialCircles, saveCircles] = createPersistentState("mapCircles", []);
     const circles = writable(initialCircles);
@@ -333,6 +373,7 @@ function _page($$renderer, $$props) {
     const legendTexts = writable(initialLegendTexts);
     createPersistentState("nextCircleId", 1, String, Number);
     let isCapturingScreenshot = false;
+    let rulerDistance = 0;
     const currentMapUrl = mapSources[selectedMapIndex]?.url || "";
     const usedColors = derived(circles, ($circles) => {
       return new Set($circles.map((c) => c.colorIndex));
@@ -357,15 +398,30 @@ function _page($$renderer, $$props) {
       mapSources,
       selectedMapIndex
     });
-    $$renderer2.push(`<!----> `);
-    MapContainer($$renderer2, {
-      currentMapUrl,
-      circles: store_get($$store_subs ??= {}, "$circles", circles),
-      displayLegend,
-      legendTexts: store_get($$store_subs ??= {}, "$legendTexts", legendTexts),
-      activeLegendEntries
+    $$renderer2.push(`<!----> <div class="flex-grow relative">`);
+    {
+      $$renderer2.push("<!--[!-->");
+      MapContainer($$renderer2, {
+        currentMapUrl,
+        circles: store_get($$store_subs ??= {}, "$circles", circles),
+        displayLegend,
+        legendTexts: store_get($$store_subs ??= {}, "$legendTexts", legendTexts),
+        activeLegendEntries
+      });
+    }
+    $$renderer2.push(`<!--]--> `);
+    {
+      $$renderer2.push("<!--[!-->");
+    }
+    $$renderer2.push(`<!--]--> `);
+    {
+      $$renderer2.push("<!--[!-->");
+    }
+    $$renderer2.push(`<!--]--> `);
+    Ruler($$renderer2, {
+      distance: rulerDistance
     });
-    $$renderer2.push(`<!----> `);
+    $$renderer2.push(`<!----></div> `);
     {
       $$renderer2.push("<!--[!-->");
     }

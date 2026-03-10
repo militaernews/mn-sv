@@ -1,5 +1,4 @@
-import { H as HYDRATION_ERROR, C as COMMENT_NODE, a as HYDRATION_END, g as get_next_sibling, b as HYDRATION_START, c as HYDRATION_START_ELSE, e as effect_tracking, d as get, s as source, r as render_effect, u as untrack, i as increment, q as queue_micro_task, f as active_effect, h as block, j as branch, B as Batch, p as pause_effect, k as create_text, l as set_active_effect, m as set_active_reaction, n as set_component_context, o as handle_error, t as active_reaction, v as component_context, w as move_effect, x as internal_set, y as destroy_effect, z as invoke_error_boundary, A as svelte_boundary_reset_onerror, E as EFFECT_TRANSPARENT, D as EFFECT_PRESERVED, F as BOUNDARY_EFFECT, G as define_property, I as init_operations, J as get_first_child, K as hydration_failed, L as clear_text_content, M as array_from, N as component_root, O as push, P as pop, Q as set, R as LEGACY_PROPS, S as flushSync, T as mutable_source, U as setContext } from "./context.js";
-import { i as is_passive_event, r as render } from "./index2.js";
+import { H as HYDRATION_ERROR, C as COMMENT_NODE, a as HYDRATION_END, g as get_next_sibling, b as HYDRATION_START, c as HYDRATION_START_ELSE, e as effect_tracking, d as get, r as render_effect, s as source, u as untrack, i as increment, q as queue_micro_task, f as active_effect, h as block, j as branch, B as Batch, p as pause_effect, k as create_text, l as set_active_effect, m as set_active_reaction, n as set_component_context, o as handle_error, t as active_reaction, v as component_context, w as move_effect, x as internal_set, y as destroy_effect, z as invoke_error_boundary, A as svelte_boundary_reset_onerror, E as EFFECT_TRANSPARENT, D as EFFECT_PRESERVED, F as BOUNDARY_EFFECT, G as define_property, I as init_operations, J as get_first_child, K as hydration_failed, L as clear_text_content, M as array_from, N as component_root, O as is_passive_event, P as push, Q as pop, R as set, S as LEGACY_PROPS, T as flushSync, U as mutable_source, V as render, W as setContext } from "./index2.js";
 import "clsx";
 import "./environment.js";
 let public_env = {};
@@ -514,9 +513,8 @@ function assign_nodes(start, end) {
     /** @type {Effect} */
     active_effect
   );
-  if (effect.nodes_start === null) {
-    effect.nodes_start = start;
-    effect.nodes_end = end;
+  if (effect.nodes === null) {
+    effect.nodes = { start, end, a: null, t: null };
   }
 }
 function mount(component, options2) {
@@ -624,7 +622,7 @@ function _mount(Component, { target, anchor, props = {}, events, context, intro 
         }
         component = Component(anchor_node2, props) || {};
         if (hydrating) {
-          active_effect.nodes_end = hydrate_node;
+          active_effect.nodes.end = hydrate_node;
           if (hydrate_node === null || hydrate_node.nodeType !== COMMENT_NODE || /** @type {Comment} */
           hydrate_node.data !== HYDRATION_END) {
             hydration_mismatch();
@@ -886,7 +884,7 @@ const options = {
   service_worker: true,
   service_worker_options: void 0,
   templates: {
-    app: ({ head, body, assets, nonce, env }) => '<!doctype html>\n<html lang="en" dir="ltr">\n	<script src="https://cdn.jsdelivr.net/npm/css-oklch@1.0.1/oklch.min.js"><\/script>\n\n\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets + '/favicon.png" />\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		' + head + '\n	</head>\n\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n\n</html>",
+    app: ({ head, body, assets, nonce, env }) => '<!doctype html>\n<html lang="en" dir="ltr">\n\n\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets + '/favicon.png" />\n		<link rel="manifest" href="/manifest.json">\n\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		' + head + '\n	</head>\n\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n\n</html>",
     error: ({ status, message }) => '<!doctype html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -958,7 +956,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "1j9f9df"
+  version_hash: "1l6xufo"
 };
 async function get_hooks() {
   let handle;

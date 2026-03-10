@@ -3,12 +3,12 @@ import { json, text, error } from "@sveltejs/kit";
 import { HttpError, SvelteKitError, Redirect, ActionFailure } from "@sveltejs/kit/internal";
 import { with_request_store, merge_tracing, try_get_request_store } from "@sveltejs/kit/internal/server";
 import { a as assets, b as base, c as app_dir, r as relative, o as override, d as reset } from "./chunks/environment.js";
+import { B as BINARY_FORM_CONTENT_TYPE, c as create_remote_key, p as parse_remote_arg, s as stringify, d as deserialize_binary_form, T as TRAILING_SLASH_PARAM, I as INVALIDATED_PARAM } from "./chunks/shared.js";
 import * as devalue from "devalue";
 import { m as make_trackable, d as disable_search, a as decode_params, S as SCHEME, v as validate_layout_server_exports, b as validate_layout_exports, c as validate_page_server_exports, e as validate_page_exports, n as normalize_path, r as resolve, f as decode_pathname, g as validate_server_exports } from "./chunks/exports.js";
 import { b as base64_encode, t as text_decoder, a as text_encoder, g as get_relative_path } from "./chunks/utils.js";
 import { r as readable, w as writable } from "./chunks/index.js";
 import { p as public_env, r as read_implementation, o as options, s as set_private_env, a as set_public_env, g as get_hooks, b as set_read_implementation } from "./chunks/internal.js";
-import { c as create_remote_cache_key, p as parse_remote_arg, s as stringify, T as TRAILING_SLASH_PARAM, I as INVALIDATED_PARAM } from "./chunks/shared.js";
 import { parse, serialize } from "cookie";
 import * as set_cookie_parser from "set-cookie-parser";
 function with_resolvers() {
@@ -69,7 +69,8 @@ function is_form_content_type(request) {
     request,
     "application/x-www-form-urlencoded",
     "multipart/form-data",
-    "text/plain"
+    "text/plain",
+    BINARY_FORM_CONTENT_TYPE
   );
 }
 function coalesce_to_error(err) {
@@ -1019,7 +1020,7 @@ function create_universal_fetch(event, state, fetched, csr, resolve_opts) {
     }
     let teed_body;
     const proxy = new Proxy(response, {
-      get(response2, key2, _receiver) {
+      get(response2, key2, receiver) {
         async function push_fetched(body2, is_b64) {
           const status_number = Number(response2.status);
           if (isNaN(status_number)) {
@@ -1099,7 +1100,22 @@ function create_universal_fetch(event, state, fetched, csr, resolve_opts) {
             return body2 ? JSON.parse(body2) : void 0;
           };
         }
-        return Reflect.get(response2, key2, response2);
+        const value = Reflect.get(response2, key2, response2);
+        if (value instanceof Function) {
+          return Object.defineProperties(
+            /**
+             * @this {any}
+             */
+            function() {
+              return Reflect.apply(value, this === receiver ? response2 : this, arguments);
+            },
+            {
+              name: { value: value.name },
+              length: { value: value.length }
+            }
+          );
+        }
+        return value;
       }
     });
     if (csr) {
@@ -1950,7 +1966,7 @@ ${indent}}`);
       for (const [info, cache] of remote_cache) {
         if (!info.id) continue;
         for (const key2 in cache) {
-          remote[create_remote_cache_key(info.id, key2)] = await cache[key2];
+          remote[create_remote_key(info.id, key2)] = await cache[key2];
         }
       }
       const replacer = (thing) => {
@@ -2330,24 +2346,18 @@ async function handle_remote_call_internal(event, state, options2, manifest, id)
           )}`
         );
       }
-      const form_data = await event.request.formData();
-      form_client_refreshes = /** @type {string[]} */
-      JSON.parse(
-        /** @type {string} */
-        form_data.get("sveltekit:remote_refreshes") ?? "[]"
-      );
-      form_data.delete("sveltekit:remote_refreshes");
-      if (additional_args) {
-        form_data.set("sveltekit:id", decodeURIComponent(additional_args));
+      const { data: data2, meta, form_data } = await deserialize_binary_form(event.request);
+      if (additional_args && !("id" in data2)) {
+        data2.id = JSON.parse(decodeURIComponent(additional_args));
       }
       const fn2 = info.fn;
-      const data2 = await with_request_store({ event, state }, () => fn2(form_data));
+      const result = await with_request_store({ event, state }, () => fn2(data2, meta, form_data));
       return json(
         /** @type {RemoteFunctionResponse} */
         {
           type: "result",
-          result: stringify(data2, transport),
-          refreshes: data2.issues ? {} : await serialize_refreshes(form_client_refreshes)
+          result: stringify(result, transport),
+          refreshes: result.issues ? void 0 : await serialize_refreshes(meta.remote_refreshes)
         }
       );
     }
@@ -2387,7 +2397,7 @@ async function handle_remote_call_internal(event, state, options2, manifest, id)
         {
           type: "redirect",
           location: error2.location,
-          refreshes: await serialize_refreshes(form_client_refreshes ?? [])
+          refreshes: await serialize_refreshes(form_client_refreshes)
         }
       );
     }
@@ -2411,16 +2421,18 @@ async function handle_remote_call_internal(event, state, options2, manifest, id)
   }
   async function serialize_refreshes(client_refreshes) {
     const refreshes = state.refreshes ?? {};
-    for (const key2 of client_refreshes) {
-      if (refreshes[key2] !== void 0) continue;
-      const [hash3, name2, payload] = key2.split("/");
-      const loader = manifest._.remotes[hash3];
-      const fn2 = (await loader?.())?.default?.[name2];
-      if (!fn2) error(400, "Bad Request");
-      refreshes[key2] = with_request_store(
-        { event, state },
-        () => fn2(parse_remote_arg(payload, transport))
-      );
+    if (client_refreshes) {
+      for (const key2 of client_refreshes) {
+        if (refreshes[key2] !== void 0) continue;
+        const [hash3, name2, payload] = key2.split("/");
+        const loader = manifest._.remotes[hash3];
+        const fn2 = (await loader?.())?.default?.[name2];
+        if (!fn2) error(400, "Bad Request");
+        refreshes[key2] = with_request_store(
+          { event, state },
+          () => fn2(parse_remote_arg(payload, transport))
+        );
+      }
     }
     if (Object.keys(refreshes).length === 0) {
       return void 0;
@@ -2475,16 +2487,16 @@ async function handle_remote_form_post_internal(event, state, manifest, id) {
     form = with_request_store({ event, state }, () => form.for(JSON.parse(action_id)));
   }
   try {
-    const form_data = await event.request.formData();
     const fn = (
       /** @type {RemoteInfo & { type: 'form' }} */
       /** @type {any} */
       form.__.fn
     );
-    if (action_id && !form_data.has("id")) {
-      form_data.set("sveltekit:id", decodeURIComponent(action_id));
+    const { data, meta, form_data } = await deserialize_binary_form(event.request);
+    if (action_id && !("id" in data)) {
+      data.id = JSON.parse(decodeURIComponent(action_id));
     }
-    await with_request_store({ event, state }, () => fn(form_data));
+    await with_request_store({ event, state }, () => fn(data, meta, form_data));
     return {
       type: "success",
       status: 200
@@ -3285,7 +3297,7 @@ async function internal_respond(request, options2, manifest, state) {
     fetch: null,
     getClientAddress: state.getClientAddress || (() => {
       throw new Error(
-        `${"@sveltejs/adapter-auto"} does not specify getClientAddress. Please raise an issue`
+        `${"@sveltejs/adapter-vercel"} does not specify getClientAddress. Please raise an issue`
       );
     }),
     locals: {},
@@ -3302,7 +3314,11 @@ async function internal_respond(request, options2, manifest, state) {
             "Use `event.cookies.set(name, value, options)` instead of `event.setHeaders` to set cookies"
           );
         } else if (lower in headers2) {
-          throw new Error(`"${key2}" header is already set`);
+          if (lower === "server-timing") {
+            headers2[lower] += ", " + value;
+          } else {
+            throw new Error(`"${key2}" header is already set`);
+          }
         } else {
           headers2[lower] = value;
           if (state.prerendering && lower === "cache-control") {
