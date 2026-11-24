@@ -1,7 +1,4 @@
 import type { Component } from 'svelte';
-import IconRss from '~icons/lucide/rss';
-import IconScanSearch from '~icons/lucide/scan-search';
-import IconShieldBan from '~icons/lucide/shield-ban';
 import IconBookOpen from '~icons/lucide/book-open';
 
 export type Lang = 'de' | 'en';
@@ -30,7 +27,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
 	{
 		id: 'newsmix',
-		icon: IconRss,
+		image: '/img/newsmix.webp',
 		href: 'https://mix-sv.vercel.app',
 		text: {
 			de: {
@@ -65,7 +62,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'viz',
-		icon: IconScanSearch,
+		image: '/img/viz.webp',
 		href: 'https://viz-sv.vercel.app',
 		text: {
 			de: {
@@ -170,7 +167,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'tartaros',
-		icon: IconShieldBan,
+		image: '/img/tartaros.webp',
 		href: 'https://t.me/tartaros_report_bot',
 		text: {
 			de: {
