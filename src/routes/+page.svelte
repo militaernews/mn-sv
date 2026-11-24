@@ -1,41 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import IconArrowRight from '~icons/lucide/arrow-right';
 	import IconChevronRight from '~icons/lucide/chevron-right';
 	import IconCheck from '~icons/lucide/check';
 	import IconSend from '~icons/lucide/send';
 	import IconExternal from '~icons/lucide/external-link';
-	import { CONTACT, LANGS, PROJECTS, UI, type Lang } from '#lib/projects.js';
+	import IconBook from '~icons/lucide/book-open';
+	import { CONTACT, PROJECTS, UI } from '#lib/projects.js';
+	import { prefs } from '#lib/prefs.svelte.js';
 
-	const KEY = 'mn-sv:lang';
-
-	// Prerendered in German; the browser language or a remembered choice may switch to English
-	let lang = $state<Lang>('de');
+	const lang = $derived(prefs.lang);
 	const ui = $derived(UI[lang]);
-
-	onMount(() => {
-		let saved: string | null = null;
-		try {
-			saved = localStorage.getItem(KEY);
-		} catch {
-			// storage blocked: fall back to the browser language
-		}
-		const preferred = navigator.language?.toLowerCase().startsWith('de') ? 'de' : 'en';
-		lang = saved === 'de' || saved === 'en' ? saved : preferred;
-	});
-
-	$effect(() => {
-		document.documentElement.lang = lang;
-	});
-
-	function choose(next: Lang) {
-		lang = next;
-		try {
-			localStorage.setItem(KEY, next);
-		} catch {
-			// not remembered, still switched
-		}
-	}
 
 	const isTelegram = (href: string) => href.startsWith('https://t.me/');
 </script>
@@ -64,24 +38,6 @@
 	</svg>
 
 	<main class="relative mx-auto max-w-5xl px-4 pb-16 sm:px-6">
-		<nav class="flex justify-end pt-4" aria-label="Sprache / Language">
-			<div class="flex rounded-full border border-[var(--line)] bg-[var(--card)] p-1 text-sm">
-				{#each LANGS as option (option)}
-					<button
-						type="button"
-						class="rounded-full px-3 py-1 font-semibold uppercase transition-colors"
-						class:bg-[var(--accent)]={lang === option}
-						class:text-[var(--accent-ink)]={lang === option}
-						class:text-[var(--muted)]={lang !== option}
-						aria-pressed={lang === option}
-						onclick={() => choose(option)}
-					>
-						{option}
-					</button>
-				{/each}
-			</div>
-		</nav>
-
 		<header class="flex flex-col items-center pt-8 pb-12 text-center sm:pt-12">
 			<img
 				src="/img/mn.webp"
@@ -170,12 +126,14 @@
 						<div class="mt-auto pt-5">
 							<a
 								href={project.href}
-								target="_blank"
-								rel="noopener"
+								target={project.href.startsWith('/') ? undefined : '_blank'}
+								rel={project.href.startsWith('/') ? undefined : 'noopener'}
 								class="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 font-semibold text-[var(--accent-ink)] transition hover:brightness-110"
 							>
 								{#if isTelegram(project.href)}
 									<IconSend class="size-4" aria-hidden="true" />
+								{:else if project.href.startsWith('/')}
+									<IconBook class="size-4" aria-hidden="true" />
 								{:else}
 									<IconExternal class="size-4" aria-hidden="true" />
 								{/if}

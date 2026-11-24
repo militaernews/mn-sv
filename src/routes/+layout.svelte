@@ -1,7 +1,16 @@
 <script lang="ts">
 	import '../app.css';
+	import { onMount } from 'svelte';
+	import SiteHeader from '#lib/SiteHeader.svelte';
+	import { prefs, startPrefs } from '#lib/prefs.svelte.js';
 
 	let { children } = $props();
+
+	onMount(startPrefs);
+
+	$effect(() => {
+		document.documentElement.lang = prefs.lang;
+	});
 </script>
 
 <svelte:head>
@@ -12,5 +21,7 @@
 		rel="stylesheet"
 	/>
 </svelte:head>
+
+<SiteHeader />
 
 {@render children()}

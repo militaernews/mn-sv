@@ -1,5 +1,7 @@
 import type { Component } from 'svelte';
 import IconBookOpen from '~icons/lucide/book-open';
+import IconMap from '~icons/lucide/map';
+import IconChart from '~icons/lucide/chart-column';
 
 export type Lang = 'de' | 'en';
 export const LANGS: Lang[] = ['de', 'en'];
@@ -201,9 +203,114 @@ export const PROJECTS: Project[] = [
 		}
 	},
 	{
+		id: 'geo',
+		icon: IconMap,
+		href: 'https://geo-mn.vercel.app',
+		text: {
+			de: {
+				name: 'Karten',
+				audience: 'Für die Redaktion',
+				tagline: 'Lagekarten für Beiträge in wenigen Minuten',
+				description:
+					'Markiere Orte, Frontlinien und Gebiete auf einer Karte und lade sie als fertiges Bild herunter, im Stil der MilitärNews-Kanäle. Das Bild schickst du dann wie jedes andere Foto mit deinem Beitrag.',
+				features: [
+					'Orte, Linien und Flächen per Klick',
+					'Einheitlicher Kartenstil für alle Kanäle',
+					'Download als Bild, direkt im Browser',
+					'Auch als Mini-App im Vorschlags-Bot'
+				],
+				cta: 'Karte erstellen'
+			},
+			en: {
+				name: 'Maps',
+				audience: 'For editors',
+				tagline: 'Situation maps for posts in minutes',
+				description:
+					'Mark places, front lines and areas on a map and download it as a finished picture in the style of the MilitärNews channels. Then send it with your post like any other photo.',
+				features: [
+					'Places, lines and areas with a click',
+					'One map style across all channels',
+					'Download as a picture, right in the browser',
+					'Also a mini app in the suggestion bot'
+				],
+				cta: 'Make a map'
+			}
+		}
+	},
+	{
+		id: 'charts',
+		icon: IconChart,
+		href: 'https://chart-mn.vercel.app',
+		text: {
+			de: {
+				name: 'Diagramme',
+				audience: 'Für die Redaktion',
+				tagline: 'Zahlen auf einen Blick, als Bild für den Kanal',
+				description:
+					'Trage Zahlen ein, etwa Verluste, Lieferungen oder Abschüsse, und erhalte ein sauberes Diagramm im MilitärNews-Stil. Herunterladen und mit dem Beitrag senden.',
+				features: [
+					'Balken-, Linien- und weitere Diagramme',
+					'Farben und Schrift passend zu den Kanälen',
+					'Download als Bild, direkt im Browser',
+					'Auch als Mini-App im Vorschlags-Bot'
+				],
+				cta: 'Diagramm erstellen'
+			},
+			en: {
+				name: 'Charts',
+				audience: 'For editors',
+				tagline: 'Numbers at a glance, as a picture for the channel',
+				description:
+					'Enter figures such as losses, deliveries or shoot-downs and get a clean chart in the MilitärNews style. Download it and send it with your post.',
+				features: [
+					'Bar, line and other charts',
+					'Colours and type matching the channels',
+					'Download as a picture, right in the browser',
+					'Also a mini app in the suggestion bot'
+				],
+				cta: 'Make a chart'
+			}
+		}
+	},
+	{
+		id: 'ww3',
+		image: '/img/ww3.svg',
+		href: 'https://ww3-sv.vercel.app',
+		text: {
+			de: {
+				name: 'World War 3',
+				audience: 'Für Leser',
+				tagline: 'Satirische Spiele rund um Öl, Schiffe und Weltpolitik',
+				description:
+					'Eine Sammlung kleiner Cartoon-Rätsel und Arcade-Spiele, die das Weltgeschehen auf die Schippe nimmt. Läuft im Browser und als Telegram-Spiel, mit Bestenlisten für Gruppen.',
+				features: [
+					'Rund 50 Spielmodi',
+					'Im Browser oder direkt in Telegram',
+					'Bestenliste für jeden Gruppenchat',
+					'In sechs Sprachen'
+				],
+				cta: 'Jetzt spielen'
+			},
+			en: {
+				name: 'World War 3',
+				audience: 'For readers',
+				tagline: 'Satirical games about oil, shipping and world politics',
+				description:
+					'A collection of small cartoon puzzles and arcade games that pokes fun at world events. Plays in the browser and as a Telegram game, with leaderboards for groups.',
+				features: [
+					'Around 50 game modes',
+					'In the browser or right inside Telegram',
+					'A leaderboard for every group chat',
+					'In six languages'
+				],
+				cta: 'Play now'
+			}
+		}
+	},
+	{
 		id: 'docs',
 		icon: IconBookOpen,
-		href: 'https://militaernews.github.io/ptb-mn/',
+		href: '/docs',
 		text: {
 			de: {
 				name: 'Handbuch',
