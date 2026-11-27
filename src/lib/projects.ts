@@ -17,8 +17,11 @@ interface Text {
 	cta: string;
 }
 
+export type ProjectKind = 'app' | 'bot' | 'guide';
+
 export interface Project {
 	id: string;
+	kind: ProjectKind;
 	/** An image in static/img, or an icon when the project has no picture */
 	image?: string;
 	icon?: Component;
@@ -29,6 +32,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
 	{
 		id: 'newsmix',
+		kind: 'app',
 		image: '/img/newsmix.webp',
 		href: 'https://mix-sv.vercel.app',
 		text: {
@@ -64,6 +68,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'viz',
+		kind: 'app',
 		image: '/img/viz.webp',
 		href: 'https://viz-sv.vercel.app',
 		text: {
@@ -99,6 +104,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'footer',
+		kind: 'bot',
 		image: '/img/footer.webp',
 		href: 'https://t.me/nyx_footer_bot',
 		text: {
@@ -134,6 +140,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'litfass',
+		kind: 'bot',
 		image: '/img/litfass.webp',
 		href: 'https://t.me/litfass_advertisement_bot',
 		text: {
@@ -169,6 +176,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'tartaros',
+		kind: 'bot',
 		image: '/img/tartaros.webp',
 		href: 'https://t.me/tartaros_report_bot',
 		text: {
@@ -204,6 +212,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'geo',
+		kind: 'app',
 		icon: IconMap,
 		href: 'https://geo-mn.vercel.app',
 		text: {
@@ -239,6 +248,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'charts',
+		kind: 'app',
 		icon: IconChart,
 		href: 'https://chart-mn.vercel.app',
 		text: {
@@ -274,6 +284,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'ww3',
+		kind: 'app',
 		image: '/img/ww3.svg',
 		href: 'https://ww3-sv.vercel.app',
 		text: {
@@ -309,6 +320,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'docs',
+		kind: 'guide',
 		icon: IconBookOpen,
 		href: '/docs',
 		text: {
@@ -338,7 +350,7 @@ export const PROJECTS: Project[] = [
 					'Karma, moderation, captcha and whitelists',
 					'Tips and fixes for common problems'
 				],
-				cta: 'Read the handbook (German)'
+				cta: 'Read the handbook'
 			}
 		}
 	}
@@ -349,10 +361,16 @@ export const UI: Record<
 	{
 		title: string;
 		description: string;
+		eyebrow: string;
 		lead: string;
 		flowTitle: string;
 		flow: { label: string; detail: string }[];
-		projectsTitle: string;
+		appsTitle: string;
+		appsText: string;
+		botsTitle: string;
+		botsText: string;
+		guideTitle: string;
+		guideText: string;
 		contactTitle: string;
 		contactText: string;
 		contactCta: string;
@@ -363,6 +381,7 @@ export const UI: Record<
 		title: 'MilitärNews Werkzeuge',
 		description:
 			'Die Werkzeuge hinter den MilitärNews-Kanälen: Nachrichten aus aller Welt, Bildersuche, Schutz vor Spammern und Werbung für Telegram.',
+		eyebrow: 'Werkzeuge für Redaktion & Community',
 		lead: 'Die Werkzeuge hinter den MilitärNews-Kanälen: Nachrichten aus aller Welt, Bildersuche, Schutz vor Spammern und Werbung für Telegram-Kanäle und Bots.',
 		flowTitle: 'Von der Quelle in den Kanal',
 		flow: [
@@ -372,7 +391,12 @@ export const UI: Record<
 			{ label: 'MilitärNews', detail: 'in elf Sprachen' },
 			{ label: 'Leser', detail: 'mit Footer und Eigenwerbung' }
 		],
-		projectsTitle: 'Die Werkzeuge',
+		appsTitle: 'Apps',
+		appsText: 'Im Browser öffnen – für Nachrichten, Bilder, Karten und Zahlen.',
+		botsTitle: 'Telegram-Bots',
+		botsText: 'Direkt im Chat – für Kanäle, Werbung und Gruppen.',
+		guideTitle: 'Handbuch',
+		guideText: 'Alles Wichtige zur Arbeit mit den Bots – auf Deutsch und Englisch.',
 		contactTitle: 'Fragen oder Interesse?',
 		contactText:
 			'Du möchtest Zugang zu Newsmix, Werbung über litfass schalten oder einen der Bots in deinem Kanal einsetzen? Schreib uns.',
@@ -383,6 +407,7 @@ export const UI: Record<
 		title: 'MilitärNews tools',
 		description:
 			'The tools behind the MilitärNews channels: news from all over the world, picture search, protection from spammers and adverts for Telegram.',
+		eyebrow: 'Tools for editors & community',
 		lead: 'The tools behind the MilitärNews channels: news from all over the world, picture search, protection from spammers and adverts for Telegram channels and bots.',
 		flowTitle: 'From the source to the channel',
 		flow: [
@@ -392,7 +417,12 @@ export const UI: Record<
 			{ label: 'MilitärNews', detail: 'in eleven languages' },
 			{ label: 'Readers', detail: 'with footers and house adverts' }
 		],
-		projectsTitle: 'The tools',
+		appsTitle: 'Apps',
+		appsText: 'Open in your browser — for news, pictures, maps and numbers.',
+		botsTitle: 'Telegram bots',
+		botsText: 'Right in the chat — for channels, adverts and groups.',
+		guideTitle: 'Handbook',
+		guideText: 'Everything you need to work with the bots — in German and English.',
 		contactTitle: 'Questions or interested?',
 		contactText:
 			'Want access to Newsmix, adverts through litfass or one of the bots in your channel? Write to us.',

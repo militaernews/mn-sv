@@ -1,13 +1,22 @@
 import { Marked, type Tokens } from 'marked';
 import { DOCS, type DocMeta } from '../docs.js';
+import type { Lang } from '../projects.js';
 
-const SOURCES = import.meta.glob('../docs/*.md', {
-	query: '?raw',
-	import: 'default',
-	eager: true
-}) as Record<string, string>;
+const SOURCES: Record<Lang, Record<string, string>> = {
+	de: import.meta.glob('../docs/*.md', {
+		query: '?raw',
+		import: 'default',
+		eager: true
+	}) as Record<string, string>,
+	en: import.meta.glob('../docs/en/*.md', {
+		query: '?raw',
+		import: 'default',
+		eager: true
+	}) as Record<string, string>
+};
 
 export interface Doc extends DocMeta {
+	lang: Lang;
 	title: string;
 	html: string;
 	toc: { id: string; text: string }[];
@@ -21,7 +30,7 @@ const slugify = (text: string) =>
 		.toLowerCase()
 		.replace(/ß/g, 'ss')
 		.normalize('NFKD')
-		.replace(/[̀-ͯ]/g, '')
+		.replace(/[\u0300-\u036f]/g, '')
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/^-|-$/g, '');
 
@@ -42,7 +51,7 @@ function rewrite(href: string) {
 	return href;
 }
 
-function render(source: string) {
+function render(source: string, lang: Lang) {
 	const toc: Doc['toc'] = [];
 	const used = new Set<string>();
 	const marked = new Marked({
@@ -53,7 +62,7 @@ function render(source: string) {
 		renderer: {
 			heading({ tokens, depth, text }: Tokens.Heading) {
 				const label = plain(text);
-				let id = slugify(label) || 'abschnitt';
+				let id = slugify(label) || (lang === 'de' ? 'abschnitt' : 'section');
 				while (used.has(id)) id += '-';
 				used.add(id);
 				if (depth === 2) toc.push({ id, text: label });
@@ -83,13 +92,22 @@ function render(source: string) {
 	return { html, toc };
 }
 
-export function loadDoc(slug: string): Doc | undefined {
+/** One page in one language; both languages are shipped so the header switch is instant. */
+export function loadDoc(slug: string, lang: Lang): Doc | undefined {
 	const meta = DOCS.find((doc) => doc.slug === slug);
-	const source = SOURCES[`../docs/${slug}.md`];
+	const source = SOURCES[lang][`../docs/${lang === 'en' ? 'en/' : ''}${slug}.md`];
 	if (!meta || source === undefined) return undefined;
 	// The first heading becomes the page title, the rest is the body
 	const match = source.match(/^#\s+(.+)\n/m);
-	const title = match ? plain(match[1]) : meta.name;
+	const title = match ? plain(match[1]) : meta.text[lang].name;
 	const body = match ? source.replace(match[0], '') : source;
-	return { ...meta, title, ...render(body) };
+	return { ...meta, lang, title, ...render(body, lang) };
+}
+
+export function loadDocs(slug: string): Record<Lang, Doc> | undefined {
+	if (!DOCS.some((doc) => doc.slug === slug)) return undefined;
+	const de = loadDoc(slug, 'de');
+	const en = loadDoc(slug, 'en');
+	if (!de || !en) return undefined;
+	return { de, en };
 }

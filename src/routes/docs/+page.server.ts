@@ -1,3 +1,3 @@
-import { loadDoc } from '#lib/server/docs.js';
+import { loadDocs } from '#lib/server/docs.js';
 
-export const load = () => ({ doc: loadDoc('index')! });
+export const load = () => ({ docs: loadDocs('index')! });
