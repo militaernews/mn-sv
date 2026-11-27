@@ -7,7 +7,8 @@
 		<meta name="theme-color" content="#06142a" />
 		<meta name="color-scheme" content="dark light" />
 		<script>
-			// Apply a remembered light/dark choice before the first paint
+			// Apply the URL language and a remembered scheme before the first paint
+			document.documentElement.lang = location.pathname.startsWith('/en') ? 'en' : 'de';
 			try {
 				var theme = localStorage.getItem('mn-sv:theme');
 				if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;

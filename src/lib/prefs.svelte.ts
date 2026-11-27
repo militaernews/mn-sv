@@ -6,7 +6,6 @@ export const THEMES: Theme[] = ['system', 'light', 'dark'];
 const LANG_KEY = 'mn-sv:lang';
 const THEME_KEY = 'mn-sv:theme';
 
-/** Language and colour scheme, shared by every page. Pages are prerendered in German with the system scheme. */
 export const prefs = $state({ lang: 'de' as Lang, theme: 'system' as Theme, systemDark: false });
 
 let started = false;
