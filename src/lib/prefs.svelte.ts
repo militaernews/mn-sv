@@ -1,13 +1,10 @@
-import type { Lang } from './projects.js';
-
 export type Theme = 'system' | 'light' | 'dark';
 export const THEMES: Theme[] = ['system', 'light', 'dark'];
 
-const LANG_KEY = 'mn-sv:lang';
 const THEME_KEY = 'mn-sv:theme';
 
-/** Language and colour scheme, shared by every page. Pages are prerendered in German with the system scheme. */
-export const prefs = $state({ lang: 'de' as Lang, theme: 'system' as Theme, systemDark: false });
+/** Colour scheme is remembered; the language comes from the URL. Pages are prerendered in both. */
+export const prefs = $state({ theme: 'system' as Theme, systemDark: false });
 
 let started = false;
 
@@ -27,28 +24,15 @@ function write(key: string, value: string) {
 	}
 }
 
-/** Reads the remembered choices once in the browser; app.html already applied the theme before paint */
+/** Reads the remembered scheme once in the browser; app.html already applied it before paint */
 export function startPrefs() {
 	if (started) return;
 	started = true;
-	const lang = read(LANG_KEY);
-	prefs.lang =
-		lang === 'de' || lang === 'en'
-			? lang
-			: navigator.language?.toLowerCase().startsWith('de')
-				? 'de'
-				: 'en';
 	const theme = read(THEME_KEY);
 	prefs.theme = theme === 'light' || theme === 'dark' ? theme : 'system';
 	const media = matchMedia('(prefers-color-scheme: dark)');
 	prefs.systemDark = media.matches;
 	media.addEventListener('change', (event) => (prefs.systemDark = event.matches));
-}
-
-export function setLang(lang: Lang) {
-	prefs.lang = lang;
-	document.documentElement.lang = lang;
-	write(LANG_KEY, lang);
 }
 
 export function setTheme(theme: Theme) {
