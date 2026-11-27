@@ -4,7 +4,8 @@
 	import IconMoon from '~icons/lucide/moon';
 	import { page } from '$app/state';
 	import { LANGS } from './projects.js';
-	import { THEMES, prefs, setLang, setTheme, type Theme } from './prefs.svelte.js';
+	import { THEMES, prefs, setTheme, type Theme } from './prefs.svelte.js';
+	import { langFromPath, localizedHref, switchLang } from './lang.js';
 
 	const NAV = {
 		de: {
@@ -22,15 +23,21 @@
 	};
 	const ICON = { system: IconMonitor, light: IconSun, dark: IconMoon };
 
-	const nav = $derived(NAV[prefs.lang]);
-	const onDocs = $derived(page.url.pathname.startsWith('/docs'));
+	const lang = $derived(langFromPath(page.url.pathname));
+	const nav = $derived(NAV[lang]);
+	const onDocs = $derived(
+		page.url.pathname.startsWith('/docs') || page.url.pathname.startsWith('/en/docs')
+	);
 </script>
 
 <header
 	class="sticky top-0 z-20 border-b border-[var(--line)] bg-[var(--bg-glass)] backdrop-blur-xl"
 >
 	<div class="mx-auto flex max-w-6xl flex-wrap items-center gap-2 px-4 py-3 sm:px-6">
-		<a href="/" class="mr-auto flex items-center gap-2.5 font-extrabold text-[var(--strong)]">
+		<a
+			href={localizedHref('/', lang)}
+			class="mr-auto flex items-center gap-2.5 font-extrabold text-[var(--strong)]"
+		>
 			<img
 				src="/img/mn.webp"
 				alt=""
@@ -42,16 +49,17 @@
 		</a>
 		<nav class="flex text-sm font-semibold" aria-label={nav.docs}>
 			<a
-				href="/"
+				href={localizedHref('/', lang)}
 				class="rounded-full px-3 py-1.5 transition-colors hover:text-[var(--accent)]"
 				class:text-[var(--accent)]={!onDocs}
 				aria-current={!onDocs ? 'page' : undefined}>{nav.home}</a
 			>
-			<a href="/#apps" class="rounded-full px-3 py-1.5 transition-colors hover:text-[var(--accent)]"
-				>{nav.apps}</a
+			<a
+				href={localizedHref('/#apps', lang)}
+				class="rounded-full px-3 py-1.5 transition-colors hover:text-[var(--accent)]">{nav.apps}</a
 			>
 			<a
-				href="/docs"
+				href={localizedHref('/docs', lang)}
 				class="rounded-full px-3 py-1.5 transition-colors hover:text-[var(--accent)]"
 				class:text-[var(--accent)]={onDocs}
 				aria-current={onDocs ? 'page' : undefined}>{nav.docs}</a
@@ -71,8 +79,8 @@
 					class:text-[var(--accent-ink)]={prefs.theme === option}
 					class:text-[var(--muted)]={prefs.theme !== option}
 					aria-pressed={prefs.theme === option}
-					title={THEME_LABEL[prefs.lang][option]}
-					aria-label={THEME_LABEL[prefs.lang][option]}
+					title={THEME_LABEL[lang][option]}
+					aria-label={THEME_LABEL[lang][option]}
 					onclick={() => setTheme(option)}
 				>
 					<Icon class="size-4" aria-hidden="true" />
@@ -88,11 +96,11 @@
 				<button
 					type="button"
 					class="h-7 rounded-full px-2.5 font-semibold uppercase transition-colors"
-					class:bg-[var(--accent)]={prefs.lang === option}
-					class:text-[var(--accent-ink)]={prefs.lang === option}
-					class:text-[var(--muted)]={prefs.lang !== option}
-					aria-pressed={prefs.lang === option}
-					onclick={() => setLang(option)}
+					class:bg-[var(--accent)]={lang === option}
+					class:text-[var(--accent-ink)]={lang === option}
+					class:text-[var(--muted)]={lang !== option}
+					aria-pressed={lang === option}
+					onclick={() => switchLang(option)}
 				>
 					{option}
 				</button>
