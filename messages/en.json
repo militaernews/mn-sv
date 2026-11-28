@@ -122,5 +122,13 @@
 	"brandMaster": "Source files",
 	"brandPng": "PNG exports",
 	"brandMasterText": "GIMP and font masters. Open in GIMP to export PNGs.",
-	"brandPngText": "Ready-to-use PNGs for web and apps."
+	"brandPngText": "Ready-to-use PNGs for web and apps.",
+	"adminStatsTitle": "Admin statistics",
+	"adminStatsText": "Additional numbers for admins.",
+	"adminStars": "GitHub stars",
+	"adminForks": "Forks",
+	"adminIssues": "Open issues",
+	"adminChannels": "Channels",
+	"adminProjects": "Projects",
+	"adminDocs": "Handbook pages"
 }

@@ -1,31 +1,12 @@
 import { createHmac } from 'node:crypto';
 import { error, json } from '@sveltejs/kit';
 import { PLANS, type PaidPlan } from '#lib/plans.js';
+import { verifyTelegram } from '#lib/server/tg.js';
 
 const token = process.env.TELEGRAM_BOT_TOKEN ?? '';
 
-function verify(initData: string): number | null {
-	if (!token || !initData) return null;
-	const params = new URLSearchParams(initData);
-	const hash = params.get('hash') ?? '';
-	params.delete('hash');
-	const check = [...params.entries()]
-		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([key, value]) => `${key}=${value}`)
-		.join('\n');
-	const secret = createHmac('sha256', 'WebAppData').update(token).digest();
-	const expected = createHmac('sha256', secret).update(check).digest('hex');
-	if (expected !== hash) return null;
-	try {
-		const user = JSON.parse(params.get('user') ?? 'null');
-		return typeof user?.id === 'number' ? user.id : null;
-	} catch {
-		return null;
-	}
-}
-
 export async function POST({ request }) {
-	const uid = verify(request.headers.get('x-telegram-init-data') ?? '');
+	const uid = verifyTelegram(request.headers.get('x-telegram-init-data') ?? '');
 	if (!uid) throw error(401, 'Invalid Telegram launch data');
 
 	const { action, plan } = (await request.json()) as { action?: string; plan?: string };
@@ -50,6 +31,15 @@ export async function POST({ request }) {
 	}
 
 	if (action === 'activate') {
+		// Verify the actual Telegram Stars payment through the bot API before granting access.
+		const updates = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`).then(
+			(r) => r.json()
+		);
+		const paymentPayload = `mn:${selected}:${uid}`;
+		const paid = (updates.result ?? []).some(
+			(update: any) => update.message?.successful_payment?.invoice_payload === paymentPayload
+		);
+		if (!paid) throw error(402, 'Payment not confirmed');
 		const exp = Date.now() + PLANS[selected].days * 86_400_000;
 		const payload = Buffer.from(JSON.stringify({ plan: selected, uid, exp })).toString('base64url');
 		const sig = createHmac('sha256', token).update(payload).digest('base64url');

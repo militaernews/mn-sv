@@ -12,6 +12,7 @@
 	import IconUsers from '~icons/lucide/users';
 	import IconBarChart from '~icons/lucide/chart-no-axes-column-increasing';
 	import SeoHead from './SeoHead.svelte';
+	import AdminStats from './AdminStats.svelte';
 	import { m } from './paraglide/messages.js';
 	import { localeState } from './locale.svelte.js';
 	import { prefs } from './prefs.svelte.js';
@@ -103,7 +104,7 @@
 				: 'p-5 sm:p-6'}"
 		>
 			<span
-				class="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-[var(--accent)] to-transparent opacity-50 transition-opacity duration-300 group-hover:opacity-100"
+				class="absolute inset-x-0 top-0 h-1 bg-[var(--accent)] opacity-50 transition-opacity duration-300 group-hover:opacity-100"
 			></span>
 			<div class="flex items-center gap-4">
 				{#if project.image}
@@ -167,23 +168,23 @@
 
 	<div class="relative overflow-x-clip">
 		<!-- Radar rings behind the hero; Telegram keeps a calm, compact start -->
-		{#if !inTg}
-			<svg
-				class="pointer-events-none absolute top-[-260px] left-1/2 -z-0 w-[1200px] max-w-none -translate-x-1/2 opacity-60"
-				viewBox="0 0 1100 1100"
-				aria-hidden="true"
-			>
-				{#each [120, 220, 320, 420, 520] as r (r)}
-					<circle cx="550" cy="550" {r} fill="none" stroke="var(--ring)" stroke-width="2" />
-				{/each}
-				<line x1="550" y1="20" x2="550" y2="1080" stroke="var(--ring)" stroke-width="2" />
-				<line x1="20" y1="550" x2="1080" y2="550" stroke="var(--ring)" stroke-width="2" />
-				<path d="M550 550 L550 30 A520 520 0 0 1 918 182 Z" fill="var(--ring)" />
-				<circle cx="760" cy="390" r="6" fill="var(--accent)" opacity="0.5" />
-				<circle cx="330" cy="700" r="5" fill="var(--accent)" opacity="0.4" />
-				<circle cx="690" cy="810" r="4" fill="var(--accent)" opacity="0.3" />
-			</svg>
-		{/if}
+		<svg
+			class="pointer-events-none absolute top-[-220px] left-1/2 -z-0 w-[1200px] max-w-none -translate-x-1/2 {inTg
+				? 'opacity-25'
+				: 'opacity-60'}"
+			viewBox="0 0 1100 1100"
+			aria-hidden="true"
+		>
+			{#each [120, 220, 320, 420, 520] as r (r)}
+				<circle cx="550" cy="550" {r} fill="none" stroke="var(--ring)" stroke-width="2" />
+			{/each}
+			<line x1="550" y1="20" x2="550" y2="1080" stroke="var(--ring)" stroke-width="2" />
+			<line x1="20" y1="550" x2="1080" y2="550" stroke="var(--ring)" stroke-width="2" />
+			<path d="M550 550 L550 30 A520 520 0 0 1 918 182 Z" fill="var(--ring)" />
+			<circle cx="760" cy="390" r="6" fill="var(--accent)" opacity="0.5" />
+			<circle cx="330" cy="700" r="5" fill="var(--accent)" opacity="0.4" />
+			<circle cx="690" cy="810" r="4" fill="var(--accent)" opacity="0.3" />
+		</svg>
 
 		<main class="relative mx-auto max-w-6xl px-4 sm:px-6 {inTg ? 'pb-10' : 'pb-20'}">
 			<header
@@ -203,9 +204,7 @@
 						? 'mt-4 size-24'
 						: 'mt-8 size-32 sm:size-40'}"
 				/>
-				<h1
-					class="mt-7 bg-linear-to-r from-[var(--strong)] to-[var(--accent)] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl"
-				>
+				<h1 class="mt-7 text-4xl font-extrabold tracking-tight text-[var(--strong)] sm:text-6xl">
 					{ui.title}
 				</h1>
 				<p class="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--muted)] sm:text-xl">
@@ -232,7 +231,7 @@
 
 			<section id="flow" aria-labelledby="flow-title" class="scroll-mt-24">
 				<div
-					class="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] via-[var(--card)] to-[var(--bg-2)] shadow-sm {inTg
+					class="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--card)] shadow-sm {inTg
 						? 'p-4'
 						: 'p-6 sm:p-8'}"
 				>
@@ -394,13 +393,14 @@
 				<ul class="grid grid-cols-2 gap-3 sm:grid-cols-4">
 					{#each CHANNEL_STATS as stat (stat.label.de)}
 						<li
-							class="rounded-2xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] to-[var(--card)] p-5 text-center shadow-sm"
+							class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 text-center shadow-sm"
 						>
 							<div class="text-2xl font-extrabold text-[var(--accent)]">{stat.value}</div>
 							<div class="mt-1 text-xs font-semibold text-[var(--muted)]">{stat.label[lang]}</div>
 						</li>
 					{/each}
 				</ul>
+				<AdminStats />
 			</section>
 
 			<section
@@ -411,7 +411,7 @@
 				{@render sectionHead(IconBook, ui.guideTitle, ui.guideText)}
 				<h2 id="handbook-title" class="sr-only">{ui.guideTitle}</h2>
 				<article
-					class="group relative overflow-hidden rounded-3xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] to-[var(--card)] p-6 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-8"
+					class="group relative overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--card)] p-6 shadow-sm transition-all duration-300 hover:shadow-lg sm:p-8"
 				>
 					<IconBook
 						class="pointer-events-none absolute -right-8 -bottom-12 size-64 text-[var(--accent)]/5"
@@ -450,7 +450,7 @@
 				aria-labelledby="contact-title"
 				class="relative {inTg
 					? 'mt-12'
-					: 'mt-20'} overflow-hidden rounded-3xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] via-[var(--card)] to-[var(--bg-2)] p-6 text-center shadow-sm sm:p-12"
+					: 'mt-20'} overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--card)] p-6 text-center shadow-sm sm:p-12"
 			>
 				<div
 					class="pointer-events-none absolute -top-24 -left-24 size-64 rounded-full border border-[var(--ring)]"
