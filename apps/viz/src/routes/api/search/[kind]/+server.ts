@@ -5,6 +5,9 @@ import type { RequestHandler } from './$types';
 // ever talks to this SvelteKit server - it never learns viz-rs's address or its
 // API key. Bodies (multipart field "file", or JSON {"q"}) pass through unchanged.
 export const POST: RequestHandler = async ({ request, params, url, getClientAddress }) => {
+	if (params.kind !== 'image' && params.kind !== 'text') {
+		return new Response('Unknown search kind', { status: 400 });
+	}
 	const contentType =
 		params.kind === 'text' ? 'application/json' : (request.headers.get('Content-Type') ?? '');
 

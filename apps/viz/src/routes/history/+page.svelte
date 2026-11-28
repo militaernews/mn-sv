@@ -1,7 +1,7 @@
 <script lang="ts">
 	import SearchResultCell from '$lib/component/SearchResultCell.svelte';
 	import DetailsModal from '$lib/component/DetailsModal.svelte';
-	import { browser } from '$app/environment';
+	const browser = !import.meta.env.SSR;
 
 	// Icons
 	import FluentArrowLeft24Regular from '~icons/fluent/arrow-left-24-regular';

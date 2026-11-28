@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	const browser = !import.meta.env.SSR;
 	import BottomSheet from '$lib/component/BottomSheet.svelte';
 	import Button from '$lib/component/ui/Button.svelte';
 	import FluentImage24Regular from '~icons/fluent/image-24-regular';

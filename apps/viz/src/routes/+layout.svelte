@@ -1,10 +1,9 @@
 <script lang="ts">
 	import '../app.css';
-	import { browser } from '$app/environment';
+	const browser = !import.meta.env.SSR;
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import CookieBanner from '$lib/component/CookieBanner.svelte';
 	import { getTelegramWebApp, initTelegramWebApp } from '$lib/telegram';
 
 	let { children } = $props();
@@ -54,7 +53,3 @@
 <div class="min-h-screen">
 	{@render children()}
 </div>
-
-{#if !inTelegram}
-	<CookieBanner />
-{/if}

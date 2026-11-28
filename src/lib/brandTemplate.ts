@@ -1,3 +1,5 @@
+import opentype from 'opentype.js';
+
 export type BrandVariant = 'wide' | 'talk';
 
 export interface BrandInput {
@@ -9,12 +11,56 @@ export interface BrandInput {
 	font?: 'hp' | 'blackout' | 'noto';
 	fontData?: string;
 	fontMime?: string;
+	/** Font bytes used for measuring and, for PNG, for drawing glyph outlines. */
+	fontBuffer?: ArrayBuffer;
+	/** Draw text as paths instead of editable <text>. Needed for renderers without @font-face. */
+	outlineText?: boolean;
 }
 
 const FONT_FAMILY = 'BrandFont';
 
 const esc = (value: string) =>
 	value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const BASE_SPACING = 6;
+const SUB_SPACING = 4;
+
+/** Measure a line in font units so the layout fits regardless of the chosen font's widths. */
+function textWidth(font: opentype.Font, value: string, size: number, spacing: number): number {
+	const scale = size / font.unitsPerEm;
+	const glyphs = Array.from(value).map(
+		(char) => font.charToGlyph(char) ?? font.charToGlyph(String.fromCharCode(0))
+	);
+	const advance = glyphs.reduce((total, glyph) => total + (glyph.advanceWidth ?? 0) * scale, 0);
+	return advance + Math.max(0, glyphs.length - 1) * spacing;
+}
+
+/** Lay out glyph outlines on a baseline, centred and spaced like the editable <text>. */
+function outlinedText(
+	font: opentype.Font,
+	value: string,
+	x: number,
+	y: number,
+	size: number,
+	spacing: number,
+	fill: string
+): string {
+	const scale = size / font.unitsPerEm;
+	const glyphs = Array.from(value).map(
+		(char) => font.charToGlyph(char) ?? font.charToGlyph(String.fromCharCode(0))
+	);
+	// getPath() rewrites advanceWidth for CFF fonts — capture widths first.
+	const advances = glyphs.map((glyph) => glyph.advanceWidth ?? 0);
+	const width = textWidth(font, value, size, spacing);
+	let cursor = x - width / 2;
+	const paths = glyphs.map((glyph, index) => {
+		const data = glyph.getPath(cursor, y, size)?.toPathData(1) ?? '';
+		const path = `<path d="${data}" fill="${fill}"/>`;
+		cursor += advances[index] * scale + spacing;
+		return path;
+	});
+	return paths.join('');
+}
 
 export function renderBrandSvg(input: BrandInput): string {
 	const wide = input.variant === 'wide';
@@ -39,9 +85,41 @@ export function renderBrandSvg(input: BrandInput): string {
 		const y2 = (cy + Math.sin(angle) * outer).toFixed(1);
 		return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#9be7ff" stroke-opacity="0.45" stroke-width="2"/>`;
 	}).join('');
-	const fontSize = wide ? 180 : 130;
-	const line2Y = cy + fontSize * 0.92;
-	const subtitleY = line2Y + fontSize * 0.7;
+
+	const font = input.fontBuffer ? opentype.parse(input.fontBuffer) : undefined;
+	const lineSize = wide ? 180 : 130;
+	const subSize = wide ? 34 : 30;
+	let scale = 1;
+	if (font) {
+		const maxWidth = width * 0.86;
+		const widest = Math.max(
+			textWidth(font, input.line1, lineSize, BASE_SPACING),
+			textWidth(font, input.line2, lineSize, BASE_SPACING),
+			input.subline ? textWidth(font, input.subline, subSize, SUB_SPACING) : 0
+		);
+		if (widest > maxWidth) scale = maxWidth / widest;
+	}
+	const fontSize = lineSize * scale;
+	const subtitleSize = subSize * scale;
+	// Extra space below each baseline so descenders (g, p, ß) are never clipped.
+	const line2Y = cy + fontSize * 1.05;
+	const subtitleY = line2Y + fontSize * 0.62;
+
+	const text = (
+		value: string,
+		y: number,
+		size: number,
+		spacing: number,
+		fill: string,
+		family: string,
+		weight: number
+	) =>
+		font && input.outlineText
+			? outlinedText(font, value, cx, y, size, spacing, fill)
+			: `<text x="${cx}" y="${y}" text-anchor="middle" font-family="${family}" font-weight="${weight}" font-size="${size.toFixed(1)}" fill="${fill}" letter-spacing="${spacing}">${esc(value)}</text>`;
+
+	const lineFamily = `${FONT_FAMILY}, Impact, sans-serif`;
+	const subFamily = `${FONT_FAMILY}, sans-serif`;
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
 ${input.fontData ? `<style>@font-face{font-family:'${FONT_FAMILY}';src:url(data:${input.fontMime ?? 'font/ttf'};base64,${input.fontData});}</style>` : ''}
@@ -52,8 +130,8 @@ ${rings}
 <line x1="${cx - radius}" y1="${cy}" x2="${cx + radius}" y2="${cy}" stroke="#9be7ff" stroke-opacity="0.22" stroke-width="2"/>
 ${ticks}
 <path d="M${cx} ${cy} L${cx} ${cy - radius * 0.92} A${(radius * 0.92).toFixed(1)} ${(radius * 0.92).toFixed(1)} 0 0 1 ${(cx + radius * 0.55).toFixed(1)} ${(cy - radius * 0.7).toFixed(1)} Z" fill="${esc(input.accent)}" fill-opacity="0.16"/>
-<text x="${cx}" y="${cy}" text-anchor="middle" font-family="${FONT_FAMILY}, Impact, sans-serif" font-weight="900" font-size="${fontSize}" fill="#f2fbff" letter-spacing="6">${esc(input.line1)}</text>
-<text x="${cx}" y="${line2Y}" text-anchor="middle" font-family="${FONT_FAMILY}, Impact, sans-serif" font-weight="900" font-size="${fontSize}" fill="#f2fbff" letter-spacing="6">${esc(input.line2)}</text>
-${input.subline ? `<text x="${cx}" y="${subtitleY}" text-anchor="middle" font-family="${FONT_FAMILY}, sans-serif" font-weight="700" font-size="${wide ? 34 : 30}" fill="${esc(input.accent)}" letter-spacing="4">${esc(input.subline)}</text>` : ''}
+${text(input.line1, cy, fontSize, BASE_SPACING, '#f2fbff', lineFamily, 900)}
+${text(input.line2, line2Y, fontSize, BASE_SPACING, '#f2fbff', lineFamily, 900)}
+${input.subline ? text(input.subline, subtitleY, subtitleSize, SUB_SPACING, esc(input.accent), subFamily, 700) : ''}
 </svg>`;
 }

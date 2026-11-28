@@ -3,7 +3,7 @@
 	import SearchResultCell from '$lib/component/SearchResultCell.svelte';
 	import ImageCropPicker from '$lib/component/ImageCropPicker.svelte';
 	import WelcomeTutorial from '$lib/component/WelcomeTutorial.svelte';
-	import { browser } from '$app/environment';
+	const browser = !import.meta.env.SSR;
 	import FluentSearch24Regular from '~icons/fluent/search-24-regular';
 	import FluentImage24Regular from '~icons/fluent/image-24-regular';
 	import FluentCrop24Regular from '~icons/fluent/crop-24-regular';

@@ -10,8 +10,8 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"fmt": "bun fmt",
+		"lint": "bun lint"
 	},
 	"devDependencies": {
 		"@eslint/compat": "2.1.1",
@@ -19,7 +19,7 @@
 		"@iconify-json/circle-flags": "1.2.14",
 		"@iconify-json/fluent": "1.2.62",
 		"@iconify-json/fluent-emoji": "1.2.7",
-		"@iconify-json/lucide": "1.2.149",
+		"@iconify-json/lucide": "1.2.161",
 		"@iconify/svelte": "5.2.4",
 		"@sveltejs/adapter-auto": "9.0.0",
 		"@sveltejs/adapter-vercel": "7.0.5",
