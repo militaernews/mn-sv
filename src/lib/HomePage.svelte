@@ -179,7 +179,6 @@
 					class="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--card)] px-4 py-1.5 text-[0.7rem] font-bold tracking-widest text-[var(--accent)] uppercase shadow-sm"
 				>
 					<span class="size-1.5 rounded-full bg-[var(--accent)]"></span>
-					{ui.eyebrow}
 				</span>
 				<img
 					src="/img/mn.webp"
