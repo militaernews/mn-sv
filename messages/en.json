@@ -153,5 +153,8 @@
 	"brandFont": "Font",
 	"brandFontHp": "HP Simplified",
 	"brandFontBlackout": "BlackedOut",
-	"brandFontNoto": "Noto Sans"
+	"brandFontNoto": "Noto Sans",
+	"navMenu": "Menu",
+	"navClose": "Close menu",
+	"backToTop": "Back to top"
 }

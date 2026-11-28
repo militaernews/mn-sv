@@ -46,7 +46,7 @@
 	</div>
 
 	<!-- Offer Price -->
-	<div class="{mainPriceClass} font-bold text-primary">
+	<div class="{mainPriceClass} text-primary font-bold">
 		{formatPrice(price, currency)}
 	</div>
 </div>

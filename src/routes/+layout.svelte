@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import SiteHeader from '#lib/SiteHeader.svelte';
+	import BackToTop from '#lib/BackToTop.svelte';
 	import { localeState } from '#lib/locale.svelte.js';
 	import { startPrefs } from '#lib/prefs.svelte.js';
 	import { startTelegram } from '#lib/telegram.js';
@@ -30,3 +31,5 @@
 <SiteHeader />
 
 {@render children()}
+
+<BackToTop />

@@ -560,7 +560,7 @@
 				{#each COL_TYPE_CYCLE as t}
 					<button
 						type="button"
-						class="btn join-item flex-1 btn-sm {modalColType === t ? 'btn-primary' : 'btn-outline'}"
+						class="btn join-item btn-sm flex-1 {modalColType === t ? 'btn-primary' : 'btn-outline'}"
 						onclick={() => setModalColType(t)}
 					>
 						{t === 'date' ? '📅' : t === 'number' ? '#' : 'T'}&nbsp;{t}
@@ -580,7 +580,7 @@
 						oninput={(e) => setModalColor((e.target as HTMLInputElement).value)}
 						class="h-10 w-16 cursor-pointer rounded border"
 					/>
-					<span class="font-mono text-sm text-base-content/70">{modalColor}</span>
+					<span class="text-base-content/70 font-mono text-sm">{modalColor}</span>
 				</div>
 			</div>
 		{/if}
@@ -589,7 +589,7 @@
 		{#if (chartMode === 'bar' ? barTable.headers : lineTable.headers).length > 2 && modalColIdx > 0}
 			<button
 				type="button"
-				class="btn mb-3 w-full btn-outline btn-error btn-sm"
+				class="btn btn-outline btn-error btn-sm mb-3 w-full"
 				onclick={() => {
 					removeColumn(modalColIdx);
 					modalOpen = false;
@@ -599,7 +599,7 @@
 			</button>
 		{/if}
 
-		<button type="button" class="btn w-full btn-primary btn-sm" onclick={() => (modalOpen = false)}>
+		<button type="button" class="btn btn-primary btn-sm w-full" onclick={() => (modalOpen = false)}>
 			Done
 		</button>
 	</div>
@@ -613,7 +613,7 @@
 <header class="app-header card bg-base-100 shadow-xl">
 	<div class="card-body flex-row flex-wrap items-center justify-between gap-3 p-4">
 		<div class="flex items-center gap-3">
-			<IBarChart class="size-7 text-primary" />
+			<IBarChart class="text-primary size-7" />
 			<div>
 				<h1 class="text-xl font-extrabold tracking-tight">Military Loss Chart Builder</h1>
 				<p class="text-xs opacity-60">Turn a table into a shareable chart</p>
@@ -636,20 +636,20 @@
 	<div class="card bg-base-100 shadow-xl">
 		<div class="card-body space-y-4 p-4">
 			<h2 class="card-title gap-2 text-lg">
-				<ITune class="size-5 text-primary" /> Configuration
+				<ITune class="text-primary size-5" /> Configuration
 			</h2>
 
 			<div class="join w-full">
 				<button
 					type="button"
-					class="btn join-item flex-1 btn-sm {chartMode === 'bar' ? 'btn-primary' : 'btn-outline'}"
+					class="btn join-item btn-sm flex-1 {chartMode === 'bar' ? 'btn-primary' : 'btn-outline'}"
 					onclick={() => (chartMode = 'bar')}
 				>
 					<IBarChart class="mr-1 inline size-4" /> Bar
 				</button>
 				<button
 					type="button"
-					class="btn join-item flex-1 btn-sm {chartMode === 'line' ? 'btn-primary' : 'btn-outline'}"
+					class="btn join-item btn-sm flex-1 {chartMode === 'line' ? 'btn-primary' : 'btn-outline'}"
 					onclick={() => (chartMode = 'line')}
 				>
 					<ILineChart class="mr-1 inline size-4" /> Line
@@ -661,7 +661,7 @@
 				<div class="join w-full">
 					<button
 						type="button"
-						class="btn join-item flex-1 btn-sm {orientation === 'landscape'
+						class="btn join-item btn-sm flex-1 {orientation === 'landscape'
 							? 'btn-primary'
 							: 'btn-outline'}"
 						onclick={() => (orientation = 'landscape')}
@@ -670,7 +670,7 @@
 					</button>
 					<button
 						type="button"
-						class="btn join-item flex-1 btn-sm {orientation === 'portrait'
+						class="btn join-item btn-sm flex-1 {orientation === 'portrait'
 							? 'btn-primary'
 							: 'btn-outline'}"
 						onclick={() => (orientation = 'portrait')}
@@ -713,7 +713,7 @@
 			</div>
 
 			{#if showAxisLabels}
-				<div class="space-y-2 rounded-lg border border-base-300 bg-base-200/50 p-3">
+				<div class="border-base-300 bg-base-200/50 space-y-2 rounded-lg border p-3">
 					<div class="form-control">
 						<label class="label py-0.5">
 							<span class="label-text text-xs">X-axis label</span>
@@ -743,7 +743,7 @@
 
 			<button
 				type="button"
-				class="btn w-full btn-primary btn-sm"
+				class="btn btn-primary btn-sm w-full"
 				onclick={exportAsImage}
 				disabled={isExporting}
 			>
@@ -760,7 +760,7 @@
 				<div
 					bind:this={chartElement}
 					data-export-chart
-					class="relative w-full rounded-lg bg-[#141214] p-4 pr-6 text-neutral-content ring-1 ring-white/10"
+					class="text-neutral-content relative w-full rounded-lg bg-[#141214] p-4 pr-6 ring-1 ring-white/10"
 					style={figureStyle}
 				>
 					<Branding isMobile={false} />
@@ -835,7 +835,7 @@
 							</div>
 							<!-- end relative wrapper -->
 						{:else}
-							<p class="py-12 text-center text-sm text-base-content/40">No data to display</p>
+							<p class="text-base-content/40 py-12 text-center text-sm">No data to display</p>
 						{/if}
 						<div class="mt-4 flex flex-wrap justify-center gap-2 text-xs md:text-sm">
 							{#each legendItems as item (item)}
@@ -891,7 +891,7 @@
 							</div>
 							<!-- end relative wrapper -->
 						{:else}
-							<p class="py-12 text-center text-sm text-base-content/40">No data to display</p>
+							<p class="text-base-content/40 py-12 text-center text-sm">No data to display</p>
 						{/if}
 						<div class="mt-3 flex flex-wrap justify-center gap-2 text-xs md:text-sm">
 							{#each lineSeriesData as s (s.key)}
@@ -912,7 +912,7 @@
 			<div class="card-body p-4">
 				<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
 					<h2 class="card-title gap-2 text-base">
-						<ITable class="size-4 text-primary" /> Data Editor
+						<ITable class="text-primary size-4" /> Data Editor
 					</h2>
 					<div class="flex flex-wrap gap-1">
 						<button type="button" class="btn btn-outline btn-xs" onclick={addRow}>+ Row</button>
@@ -924,12 +924,12 @@
 				</div>
 
 				{#if csvPasteError}
-					<p class="mb-2 text-xs text-error">{csvPasteError}</p>
+					<p class="text-error mb-2 text-xs">{csvPasteError}</p>
 				{/if}
 
 				{#if chartMode === 'bar'}
-					<div class="overflow-x-auto rounded-lg border border-base-300">
-						<table class="table w-full table-xs">
+					<div class="border-base-300 overflow-x-auto rounded-lg border">
+						<table class="table-xs table w-full">
 							<thead>
 								<tr class="bg-base-200">
 									{#each barTable.headers as _h, colIdx (colIdx)}
@@ -938,11 +938,11 @@
 												<input
 													type="text"
 													bind:value={barTable.headers[colIdx]}
-													class="input min-w-12 flex-1 input-ghost px-1 text-xs font-semibold input-xs focus:bg-base-100"
+													class="input input-ghost input-xs focus:bg-base-100 min-w-12 flex-1 px-1 text-xs font-semibold"
 												/>
 												<button
 													type="button"
-													class="btn shrink-0 btn-ghost px-0.5 text-base-content/30 btn-xs hover:text-primary"
+													class="btn btn-ghost text-base-content/30 btn-xs hover:text-primary shrink-0 px-0.5"
 													onclick={(e) => openColModal(e, colIdx)}
 													title="Column settings"
 												>
@@ -967,7 +967,7 @@
 															? 'date'
 															: 'text'}
 													bind:value={row[colIdx]}
-													class="input w-full min-w-12 input-ghost px-2 text-xs input-xs focus:bg-base-100
+													class="input input-ghost input-xs focus:bg-base-100 w-full min-w-12 px-2 text-xs
 														{colType === 'number' ? 'text-right tabular-nums' : ''}"
 												/>
 											</td>
@@ -975,7 +975,7 @@
 										<td class="w-6 p-0">
 											<button
 												type="button"
-												class="btn btn-ghost px-1 text-error opacity-0 btn-xs group-hover:opacity-100"
+												class="btn btn-ghost text-error btn-xs px-1 opacity-0 group-hover:opacity-100"
 												onclick={() => removeRow(rowIdx)}
 												title="Delete row"
 											>
@@ -988,8 +988,8 @@
 						</table>
 					</div>
 				{:else}
-					<div class="overflow-x-auto rounded-lg border border-base-300">
-						<table class="table w-full table-xs">
+					<div class="border-base-300 overflow-x-auto rounded-lg border">
+						<table class="table-xs table w-full">
 							<thead>
 								<tr class="bg-base-200">
 									{#each lineTable.headers as _h, colIdx (colIdx)}
@@ -998,11 +998,11 @@
 												<input
 													type="text"
 													bind:value={lineTable.headers[colIdx]}
-													class="input min-w-12 flex-1 input-ghost px-1 text-xs font-semibold input-xs focus:bg-base-100"
+													class="input input-ghost input-xs focus:bg-base-100 min-w-12 flex-1 px-1 text-xs font-semibold"
 												/>
 												<button
 													type="button"
-													class="btn shrink-0 btn-ghost px-0.5 text-base-content/30 btn-xs hover:text-primary"
+													class="btn btn-ghost text-base-content/30 btn-xs hover:text-primary shrink-0 px-0.5"
 													onclick={(e) => openColModal(e, colIdx)}
 													title="Column settings"
 												>
@@ -1027,7 +1027,7 @@
 															? 'date'
 															: 'text'}
 													bind:value={row[colIdx]}
-													class="input w-full min-w-12 input-ghost px-2 text-xs input-xs focus:bg-base-100
+													class="input input-ghost input-xs focus:bg-base-100 w-full min-w-12 px-2 text-xs
 														{colType === 'number' ? 'text-right tabular-nums' : ''}"
 												/>
 											</td>
@@ -1035,7 +1035,7 @@
 										<td class="w-6 p-0">
 											<button
 												type="button"
-												class="btn btn-ghost px-1 text-error opacity-0 btn-xs group-hover:opacity-100"
+												class="btn btn-ghost text-error btn-xs px-1 opacity-0 group-hover:opacity-100"
 												onclick={() => removeRow(rowIdx)}
 												title="Delete row"
 											>
@@ -1053,7 +1053,7 @@
 	</div>
 
 	<div>
-		<p class="mb-1 text-xs text-base-content/50">Examples</p>
+		<p class="text-base-content/50 mb-1 text-xs">Examples</p>
 		<div class="flex flex-wrap gap-1">
 			{#if chartMode === 'bar'}
 				<button type="button" class="btn btn-outline btn-xs" onclick={loadBarExample1}>
