@@ -149,5 +149,9 @@
 	"brandRender": "Render preview",
 	"brandSvg": "Download SVG",
 	"brandPresets": "Presets",
-	"brandEditable": "The text stays editable inside the SVG."
+	"brandEditable": "The text stays editable inside the SVG.",
+	"brandFont": "Font",
+	"brandFontHp": "HP Simplified",
+	"brandFontBlackout": "BlackedOut",
+	"brandFontNoto": "Noto Sans"
 }

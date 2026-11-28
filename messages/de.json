@@ -149,5 +149,9 @@
 	"brandRender": "Vorschau erstellen",
 	"brandSvg": "SVG herunterladen",
 	"brandPresets": "Vorlagen",
-	"brandEditable": "Der Text ist im SVG direkt änderbar."
+	"brandEditable": "Der Text ist im SVG direkt änderbar.",
+	"brandFont": "Schrift",
+	"brandFontHp": "HP Simplified",
+	"brandFontBlackout": "BlackedOut",
+	"brandFontNoto": "Noto Sans"
 }

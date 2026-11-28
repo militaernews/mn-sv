@@ -6,7 +6,12 @@ export interface BrandInput {
 	subline: string;
 	variant: BrandVariant;
 	accent: string;
+	font?: 'hp' | 'blackout' | 'noto';
+	fontData?: string;
+	fontMime?: string;
 }
+
+const FONT_FAMILY = 'BrandFont';
 
 const esc = (value: string) =>
 	value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -39,6 +44,7 @@ export function renderBrandSvg(input: BrandInput): string {
 	const subtitleY = line2Y + fontSize * 0.7;
 
 	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
+${input.fontData ? `<style>@font-face{font-family:'${FONT_FAMILY}';src:url(data:${input.fontMime ?? 'font/ttf'};base64,${input.fontData});}</style>` : ''}
 <rect width="${width}" height="${height}" fill="#06142a"/>
 <circle cx="${cx}" cy="${cy}" r="${radius}" fill="#0d2648" stroke="${esc(input.accent)}" stroke-opacity="0.6" stroke-width="3"/>
 ${rings}
@@ -46,8 +52,8 @@ ${rings}
 <line x1="${cx - radius}" y1="${cy}" x2="${cx + radius}" y2="${cy}" stroke="#9be7ff" stroke-opacity="0.22" stroke-width="2"/>
 ${ticks}
 <path d="M${cx} ${cy} L${cx} ${cy - radius * 0.92} A${(radius * 0.92).toFixed(1)} ${(radius * 0.92).toFixed(1)} 0 0 1 ${(cx + radius * 0.55).toFixed(1)} ${(cy - radius * 0.7).toFixed(1)} Z" fill="${esc(input.accent)}" fill-opacity="0.16"/>
-<text x="${cx}" y="${cy}" text-anchor="middle" font-family="BlackedOut, Impact, 'Arial Black', sans-serif" font-weight="900" font-size="${fontSize}" fill="#f2fbff" letter-spacing="6">${esc(input.line1)}</text>
-<text x="${cx}" y="${line2Y}" text-anchor="middle" font-family="BlackedOut, Impact, 'Arial Black', sans-serif" font-weight="900" font-size="${fontSize}" fill="#f2fbff" letter-spacing="6">${esc(input.line2)}</text>
-${input.subline ? `<text x="${cx}" y="${subtitleY}" text-anchor="middle" font-family="'HP Simplified', sans-serif" font-weight="700" font-size="${wide ? 34 : 30}" fill="${esc(input.accent)}" letter-spacing="4">${esc(input.subline)}</text>` : ''}
+<text x="${cx}" y="${cy}" text-anchor="middle" font-family="${FONT_FAMILY}, Impact, sans-serif" font-weight="900" font-size="${fontSize}" fill="#f2fbff" letter-spacing="6">${esc(input.line1)}</text>
+<text x="${cx}" y="${line2Y}" text-anchor="middle" font-family="${FONT_FAMILY}, Impact, sans-serif" font-weight="900" font-size="${fontSize}" fill="#f2fbff" letter-spacing="6">${esc(input.line2)}</text>
+${input.subline ? `<text x="${cx}" y="${subtitleY}" text-anchor="middle" font-family="${FONT_FAMILY}, sans-serif" font-weight="700" font-size="${wide ? 34 : 30}" fill="${esc(input.accent)}" letter-spacing="4">${esc(input.subline)}</text>` : ''}
 </svg>`;
 }

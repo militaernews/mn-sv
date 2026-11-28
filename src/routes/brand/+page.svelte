@@ -27,6 +27,7 @@
 	let subline = $state('');
 	let variant = $state<'wide' | 'talk'>('wide');
 	let accent = $state('#2ec5ff');
+	let font = $state<'hp' | 'blackout' | 'noto'>('hp');
 	let svgUrl = $state('');
 	let pngUrl = $state('');
 	let busy = $state(false);
@@ -36,7 +37,7 @@
 		const response = await fetch('/api/brand/render', {
 			method: 'POST',
 			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify({ line1, line2, subline, variant, accent })
+			body: JSON.stringify({ line1, line2, subline, variant, accent, font })
 		});
 		if (response.ok) {
 			const data = await response.json();

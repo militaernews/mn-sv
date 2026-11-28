@@ -1,5 +1,7 @@
 import { error, json } from '@sveltejs/kit';
 import sharp from 'sharp';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { renderBrandSvg, type BrandInput } from '#lib/brandTemplate.js';
 
 export async function POST({ request }) {
@@ -18,7 +20,21 @@ export async function POST({ request }) {
 	const variant = body.variant === 'talk' ? 'talk' : 'wide';
 	const accent = /^#[0-9a-fA-F]{6}$/.test(body.accent ?? '') ? body.accent! : '#2ec5ff';
 
-	const svg = renderBrandSvg({ line1, line2, subline, variant, accent });
+	const font: 'hp' | 'blackout' | 'noto' =
+		body.font === 'blackout' || body.font === 'noto' ? body.font : 'hp';
+	const files = {
+		hp: ['HPSimplified.ttf', 'font/ttf'],
+		blackout: ['BlackedOut-Regular.otf', 'font/otf'],
+		noto: ['NotoSans-Regular.ttf', 'font/ttf']
+	} as const;
+	const [fontFile, fontMime] = files[font];
+	let fontData = '';
+	try {
+		fontData = (await readFile(resolve(process.cwd(), 'static/fonts', fontFile))).toString(
+			'base64'
+		);
+	} catch {}
+	const svg = renderBrandSvg({ line1, line2, subline, variant, accent, font, fontData, fontMime });
 	const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
 	return json({
