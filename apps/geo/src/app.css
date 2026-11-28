@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms';
+@plugin 'daisyui' {
+	themes: dark --default;
+}
+
+@layer base {
+	@theme {
+		--font-sans: 'HPSimplified', system-ui, sans-serif;
+	}
+
+	@font-face {
+		font-family: 'HPSimplified';
+		src: url('/fonts/HPSimplified.ttf') format('truetype');
+
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@keyframes slide-up {
+		from {
+			transform: translateY(100%);
+		}
+		to {
+			transform: translateY(0);
+		}
+	}
+
+	.animate-slide-up {
+		animation: slide-up 0.25s ease-out;
+	}
+}
+
+/* litfass-style navy palette */
+:root[data-theme='dark'] {
+	--color-base-100: #0d2648;
+	--color-base-200: #0a1f3d;
+	--color-base-300: #1c3a63;
+	--color-base-content: #e6f6ff;
+	--color-primary: #9be7ff;
+	--color-primary-content: #06142a;
+	--color-secondary: #2ec5ff;
+	--color-secondary-content: #06142a;
+	--color-accent: #2ec5ff;
+	--color-accent-content: #06142a;
+	--color-neutral: #06142a;
+	--color-neutral-content: #e6f6ff;
+	--color-success: #4ade80;
+	--color-error: #ff7a6b;
+	--color-warning: #facc15;
+	--radius-box: 1rem;
+	--radius-btn: 999px;
+}
+html {
+	background: #06142a;
+}
+body {
+	background: radial-gradient(ellipse 80% 40% at 50% -10%, #0a1f3d, transparent), #06142a;
+	color: #e6f6ff;
+}
+.card {
+	border: 1px solid #1c3a63;
+	box-shadow: 0 12px 36px #0003;
+}
+.btn {
+	box-shadow: 0 4px 14px #0002;
+}
+input,
+select,
+textarea {
+	border-radius: 0.75rem;
+}
+::selection {
+	background: #2ec5ff;
+	color: #06142a;
+}
+/* Layout polish */
+.btn {
+	transition:
+		transform 0.15s ease,
+		box-shadow 0.15s ease;
+}
+.btn:hover {
+	transform: translateY(-1px);
+}
+.card {
+	transition: box-shadow 0.2s ease;
+}
+.card:hover {
+	box-shadow: 0 18px 45px #0003;
+}
+.badge-success {
+	box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-success) 25%, transparent);
+}
+@media (max-width: 640px) {
+	.btn {
+		min-height: 40px;
+	}
+}

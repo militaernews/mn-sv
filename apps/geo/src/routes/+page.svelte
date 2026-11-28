@@ -1,0 +1,522 @@
+<script lang="ts">
+	// Svelte Components
+	import Sidebar from '$lib/component/Sidebar.svelte';
+	import EditorModal from '$lib/component/EditorModal.svelte';
+	import MapContainer from '$lib/component/MapContainer.svelte';
+	import MapModal from '$lib/component/MapModal.svelte';
+	import StreetView from '$lib/component/StreetView.svelte';
+	import InfrastructureSearch from '$lib/component/InfrastructureSearch.svelte';
+	import Ruler from '$lib/component/Ruler.svelte';
+	import GeolocalizationPanel from '$lib/component/GeolocalizationPanel.svelte';
+	import OSINTToolbar from '$lib/component/OSINTToolbar.svelte';
+	import ThreeDView from '$lib/component/ThreeDView.svelte';
+	import LayersPanel from '$lib/component/LayersPanel.svelte';
+	import IconFluentMap24Regular from '~icons/lucide/map';
+	import type { Circle } from '$lib/Circle';
+
+	// Svelte Stores and Utilities
+	import { writable, derived } from 'svelte/store';
+	import html2canvas from 'html2canvas-pro';
+	import { createPersistentState } from '$lib/utils/storeutils';
+	import { defaultMapSources } from '$lib/defaults';
+
+	let isMobile = $state(false);
+	let mapElement = $state<HTMLDivElement | null>(null);
+
+	$effect(() => {
+		const checkMobile = () => {
+			isMobile = window.innerWidth < 768;
+		};
+
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+
+		return () => {
+			window.removeEventListener('resize', checkMobile);
+		};
+	});
+
+	// --- Initial State Definitions ---
+	const [initialDisplayLegend, saveDisplayLegend] = createPersistentState('displayLegend', true);
+	let displayLegend = $state(initialDisplayLegend);
+
+	const [initialMapSources, saveMapSources] = createPersistentState(
+		'customMapSources',
+		defaultMapSources
+	);
+	let mapSources = $state(initialMapSources);
+
+	const defaultMapIndex = Math.max(
+		0,
+		defaultMapSources.findIndex((source) => source.name === 'OpenStreetMap')
+	);
+	const [initialSelectedMapIndex, saveSelectedMapIndex] = createPersistentState(
+		'selectedMapIndex',
+		defaultMapIndex,
+		String,
+		Number
+	);
+	let selectedMapIndex = $state(initialSelectedMapIndex);
+
+	const [initialCircles, saveCircles] = createPersistentState<Circle[]>('mapCircles', []);
+	const circles = writable<Circle[]>(initialCircles);
+
+	const [initialLegendTexts, saveLegendTexts] = createPersistentState(
+		'mapLegendTexts',
+		new Map<number, string>(),
+		(map) => JSON.stringify(Object.fromEntries(map)),
+		(json) => new Map(Object.entries(JSON.parse(json)))
+	);
+	const legendTexts = writable(initialLegendTexts);
+
+	const [initialNextId, saveNextId] = createPersistentState('nextCircleId', 1, String, Number);
+	let nextId = $state(initialNextId);
+
+	// --- Reactive State ($state, $derived) ---
+	let isAddingCircle = $state(false);
+	let showMapModal = $state(false);
+	let newMapName = $state('');
+	let newMapUrl = $state('');
+	let isCapturingScreenshot = $state(false);
+	let editingCircle = $state<Circle | null>(null);
+
+	// New feature states
+	let useLeaflet = $state(false);
+	let showStreetView = $state(false);
+	let streetViewLat = $state(0);
+	let streetViewLng = $state(0);
+	let measureMode = $state<'distance' | 'area' | 'none'>('none');
+	let measureValue = $state(0);
+	let showInfraSearch = $state(false);
+	let searchResults = $state<any[]>([]);
+	let showStreetViewPlaces = $state(false);
+	let showGeolocalization = $state(false);
+	let show3D = $state(false);
+	let uncheckedOnly = $state(false);
+	let showLayers = $state(false);
+	let geoToolTab = $state<'image-overlay' | 'sun'>('image-overlay');
+	let showOSINTToolbar = $state(true);
+
+	function openSunTool() {
+		geoToolTab = 'sun';
+		showGeolocalization = true;
+	}
+
+	// Central map state for synchronization
+	let mapLat = $state(48.8827);
+	let mapLng = $state(37.9248);
+	let mapZoom = $state(13);
+
+	const currentMapUrl = $derived(mapSources[selectedMapIndex]?.url || '');
+
+	const checkedSpots = $derived($circles.filter((circle) => circle.isChecked).length);
+	const visibleCircles = $derived(
+		uncheckedOnly ? $circles.filter((circle) => !circle.isChecked) : $circles
+	);
+
+	const usedColors = derived(circles, ($circles) => {
+		return new Set($circles.map((c) => c.colorIndex));
+	});
+
+	const activeLegendEntries = derived([usedColors, legendTexts], ([$usedColors, $legendTexts]) => {
+		return Array.from($legendTexts.entries()).filter(([colorIndex]) => $usedColors.has(colorIndex));
+	});
+
+	// --- Side Effects ($effect and Store Subscriptions) ---
+	$effect(() => {
+		saveDisplayLegend(displayLegend);
+	});
+
+	$effect(() => {
+		saveMapSources(mapSources);
+	});
+
+	$effect(() => {
+		saveSelectedMapIndex(selectedMapIndex);
+	});
+
+	$effect(() => {
+		const unsubscribe = circles.subscribe((value) => {
+			saveCircles(value);
+		});
+		return unsubscribe;
+	});
+
+	$effect(() => {
+		const unsubscribe = legendTexts.subscribe((value) => {
+			saveLegendTexts(value);
+		});
+		return unsubscribe;
+	});
+
+	$effect(() => {
+		saveNextId(nextId);
+	});
+
+	// --- Event Handlers ---
+	function toggleMeasure(mode: 'distance' | 'area' | 'none') {
+		measureMode = mode;
+		measureValue = 0;
+	}
+
+	function toggleChecked(circle: Circle) {
+		circles.update((list) =>
+			list.map((item) => (item.id === circle.id ? { ...item, isChecked: !item.isChecked } : item))
+		);
+	}
+
+	async function runInfraSearch(type: string, query: string) {
+		const around = `around:5000,${mapLat},${mapLng}`;
+		const filter =
+			type === 'power'
+				? '[power=line]'
+				: type === 'bridge'
+					? '[bridge]'
+					: type === 'tree'
+						? '[natural=tree]'
+						: '[barrier=fence]';
+		const name = query.replace(/["\\]/g, '');
+		const overpass = `[out:json][timeout:25];nwr(${around})${filter}["name"~"${name}",i];out center 30;`;
+		try {
+			const response = await fetch(
+				`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpass)}`
+			);
+			if (!response.ok) return;
+			const data = await response.json();
+			const found: Circle[] = (data.elements ?? [])
+				.map((element: any, index: number) => ({
+					id: nextId + index,
+					x: 0,
+					y: 0,
+					lat: element.lat ?? element.center?.lat,
+					lng: element.lon ?? element.center?.lon,
+					text: element.tags?.name ?? type,
+					colorIndex: 0,
+					rectExpandLeft: false,
+					useDottedBorder: false,
+					markerMode: 'leaflet' as const
+				}))
+				.filter(
+					(circle: Circle) => typeof circle.lat === 'number' && typeof circle.lng === 'number'
+				);
+			if (found.length) {
+				nextId += found.length;
+				circles.update((list) => [...list, ...found]);
+			}
+		} catch (error) {
+			console.error('Overpass search failed:', error);
+		}
+	}
+
+	function switchMapByIndex(index: number) {
+		selectedMapIndex = index;
+	}
+
+	function addCircle() {
+		isAddingCircle = true;
+		editingCircle = {
+			id: nextId,
+			x: 0,
+			y: 0,
+			rectExpandLeft: false,
+			useDottedBorder: false,
+			lat: mapLat,
+			lng: mapLng,
+			text: '',
+			symbol: 'X',
+			colorIndex: 0,
+			color: '#ffcc00'
+		};
+		nextId++;
+	}
+
+	function removeCircle(id: number) {
+		circles.update((circs) => circs.filter((c) => c.id !== id));
+	}
+
+	async function captureScreenshot() {
+		if (!mapElement) return;
+
+		isCapturingScreenshot = true;
+		try {
+			const canvas = await html2canvas(mapElement, {
+				backgroundColor: null,
+				scale: 2
+			});
+
+			const link = document.createElement('a');
+			link.href = canvas.toDataURL('image/png');
+			link.download = `map-screenshot-${Date.now()}.png`;
+			link.click();
+		} catch (error) {
+			console.error('Screenshot failed:', error);
+		} finally {
+			isCapturingScreenshot = false;
+		}
+	}
+
+	function saveEditor() {
+		if (!editingCircle) return;
+
+		if (isAddingCircle) {
+			circles.update((circs) => [...circs, editingCircle!]);
+		} else {
+			circles.update((circs) =>
+				circs.map((c) => (c.id === editingCircle!.id ? editingCircle! : c))
+			);
+		}
+
+		const current = editingCircle!;
+		const colorIndex = current.colorIndex || 0;
+		legendTexts.update((map) => {
+			const newMap = new Map(map);
+			newMap.set(colorIndex, current.text);
+			return newMap;
+		});
+
+		isAddingCircle = false;
+		editingCircle = null;
+	}
+
+	function openEditor(circle: Circle) {
+		editingCircle = { ...circle };
+	}
+
+	function cancelEditor() {
+		editingCircle = null;
+		isAddingCircle = false;
+	}
+
+	function selectColor(colorIndex: number) {
+		if (editingCircle) {
+			editingCircle.colorIndex = colorIndex;
+		}
+	}
+
+	function handleCirclesUpdate(updatedCircles: Circle[]) {
+		circles.set(updatedCircles);
+	}
+
+	function handleLocationSelect(lat: number, lng: number) {
+		streetViewLat = lat;
+		streetViewLng = lng;
+		showStreetView = true;
+	}
+</script>
+
+<svelte:head>
+	<title>OSINT Geolocalization Tool</title>
+</svelte:head>
+
+<div class="flex h-dvh w-screen flex-col text-slate-100">
+	<!-- Top OSINT Toolbar (desktop only; its tools move into the mobile bottom sheet) -->
+	{#if showOSINTToolbar && !isMobile}
+		<OSINTToolbar
+			{mapLat}
+			{mapLng}
+			{mapZoom}
+			onToggleGeolocalization={() => (showGeolocalization = !showGeolocalization)}
+			isGeolocalizationActive={showGeolocalization}
+			onOpenSunTool={openSunTool}
+			isSunToolActive={showGeolocalization && geoToolTab === 'sun'}
+			onToggle3D={() => (show3D = !show3D)}
+			is3DActive={show3D}
+			onToggleLayers={() => (showLayers = !showLayers)}
+			isLayersActive={showLayers}
+			onToggleOsm={() => (showInfraSearch = !showInfraSearch)}
+			isOsmActive={showInfraSearch}
+			{checkedSpots}
+			onToggleUnchecked={() => (uncheckedOnly = !uncheckedOnly)}
+			{uncheckedOnly}
+		/>
+	{/if}
+
+	<!-- Main Content Area -->
+	<div class="flex flex-1 overflow-hidden">
+		<!-- Left Sidebar -->
+		<Sidebar
+			{displayLegend}
+			{isCapturingScreenshot}
+			{mapSources}
+			{selectedMapIndex}
+			onAddCircle={addCircle}
+			onToggleLegend={() => (displayLegend = !displayLegend)}
+			onCaptureScreenshot={captureScreenshot}
+			onOpenMapModal={() => (showMapModal = true)}
+			onSwitchMap={switchMapByIndex}
+			onRemoveCustomMap={(idx) => {}}
+			onClearCirclesAndLegend={() => {}}
+			{isMobile}
+			onToggleLeaflet={() => (useLeaflet = !useLeaflet)}
+			isLeafletActive={useLeaflet}
+			onToggleInfraSearch={() => (showInfraSearch = !showInfraSearch)}
+			isInfraSearchActive={showInfraSearch}
+			onToggleMeasure={toggleMeasure}
+			{measureMode}
+			circles={visibleCircles}
+			onImportMarkers={(imported) => {
+				circles.set(imported);
+			}}
+			onToggleGeolocalization={() => (showGeolocalization = !showGeolocalization)}
+			isGeolocalizationActive={showGeolocalization}
+			onOpenSunTool={openSunTool}
+			isSunToolActive={showGeolocalization && geoToolTab === 'sun'}
+		/>
+
+		<!-- Map Container -->
+		<div class="relative flex flex-grow flex-col" bind:this={mapElement}>
+			{#if useLeaflet}
+				{#await import('$lib/component/LeafletMap.svelte')}
+					<div class="flex h-full items-center justify-center">
+						{#if IconFluentMap24Regular}
+							<IconFluentMap24Regular class="text-base-content/50 size-12 animate-pulse" />
+						{/if}
+					</div>
+				{:then { default: LeafletMap }}
+					<LeafletMap
+						{measureMode}
+						{searchResults}
+						bind:showStreetViewPlaces
+						bind:lat={mapLat}
+						bind:lng={mapLng}
+						bind:zoom={mapZoom}
+						circles={visibleCircles}
+						onLocationSelect={handleLocationSelect}
+						onMeasureUpdate={(v) => (measureValue = v)}
+					/>
+				{/await}
+			{:else}
+				<MapContainer
+					{currentMapUrl}
+					circles={visibleCircles}
+					onCircleEdit={openEditor}
+					onToggleChecked={toggleChecked}
+					onCirclesUpdate={handleCirclesUpdate}
+					{displayLegend}
+					legendTexts={$legendTexts}
+					onLegendChange={(map) => legendTexts.set(map)}
+					{activeLegendEntries}
+					{isMobile}
+					lat={mapLat}
+					lng={mapLng}
+					zoom={mapZoom}
+				/>
+			{/if}
+
+			{#if showLayers}
+				<LayersPanel
+					sources={mapSources}
+					selectedIndex={selectedMapIndex}
+					onSelect={switchMapByIndex}
+					onClose={() => (showLayers = false)}
+				/>
+			{/if}
+
+			{#if show3D}
+				<ThreeDView lat={mapLat} lng={mapLng} zoom={mapZoom} onClose={() => (show3D = false)} />
+			{/if}
+
+			{#if showStreetView}
+				<StreetView
+					lat={streetViewLat}
+					lng={streetViewLng}
+					onClose={() => (showStreetView = false)}
+				/>
+			{/if}
+
+			{#if showInfraSearch}
+				<InfrastructureSearch
+					onSearch={runInfraSearch}
+					onResults={(results) => (searchResults = results)}
+				/>
+			{/if}
+
+			{#if measureMode !== 'none'}
+				<Ruler
+					distance={measureValue}
+					isActive={true}
+					onToggle={() => (measureMode = 'none')}
+					onClear={() => (measureValue = 0)}
+				/>
+			{/if}
+
+			<!-- Geolocalization Panel -->
+			{#if showGeolocalization}
+				<GeolocalizationPanel
+					{mapLat}
+					{mapLng}
+					{mapZoom}
+					onClose={() => (showGeolocalization = false)}
+					bind:selectedTool={geoToolTab}
+				/>
+			{/if}
+		</div>
+
+		<!-- Right Info Panel (collapsible) -->
+		<div class="hidden w-80 overflow-y-auto border-l border-slate-700 bg-slate-800 lg:block">
+			<div class="space-y-4 p-4">
+				<div class="divider my-2">Koordinaten</div>
+				<div class="space-y-2 text-xs">
+					<div class="flex justify-between">
+						<span class="opacity-70">Breite:</span>
+						<span class="font-mono">{(mapLat ?? 0).toFixed(6)}</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="opacity-70">Länge:</span>
+						<span class="font-mono">{(mapLng ?? 0).toFixed(6)}</span>
+					</div>
+					<div class="flex justify-between">
+						<span class="opacity-70">Zoom:</span>
+						<span class="font-mono">{mapZoom}</span>
+					</div>
+				</div>
+
+				<div class="divider my-2">Marker ({$circles.length})</div>
+				<div class="max-h-48 space-y-2 overflow-y-auto">
+					{#each $circles as circle}
+						<div class="rounded bg-slate-700 p-2 text-xs">
+							<div class="truncate font-bold">{circle.text || 'Unnamed'}</div>
+							<div class="font-mono opacity-70">
+								{(circle.lat ?? 0).toFixed(4)}, {(circle.lng ?? 0).toFixed(4)}
+							</div>
+						</div>
+					{/each}
+				</div>
+
+				<div class="divider my-2">Legende</div>
+				<div class="space-y-1">
+					{#each $activeLegendEntries as [colorIndex, text]}
+						<div class="flex items-center gap-2 text-xs">
+							<div
+								class="h-4 w-4 rounded"
+								style="background-color: {mapSources[selectedMapIndex]?.color || '#ffcc00'}"
+							></div>
+							<span>{text}</span>
+						</div>
+					{/each}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{#if editingCircle}
+	<EditorModal
+		circle={editingCircle}
+		isNew={isAddingCircle}
+		onCancel={cancelEditor}
+		onSave={saveEditor}
+		onRemove={() => removeCircle(editingCircle?.id ?? 0)}
+		onColorSelect={selectColor}
+	/>
+{/if}
+
+<MapModal
+	showModal={showMapModal}
+	mapName={newMapName}
+	mapUrl={newMapUrl}
+	onAddMap={() => {}}
+	onClose={() => (showMapModal = false)}
+	onUpdateMapName={(n) => (newMapName = n)}
+	onUpdateMapUrl={(u) => (newMapUrl = u)}
+/>
