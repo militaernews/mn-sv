@@ -10,6 +10,7 @@
 		currentMapUrl,
 		circles,
 		onCircleEdit,
+		onToggleChecked,
 		onCirclesUpdate,
 		displayLegend,
 		legendTexts,
@@ -23,6 +24,7 @@
 		currentMapUrl: string;
 		circles: Circle[];
 		onCircleEdit: (circle: Circle) => void;
+		onToggleChecked: (circle: Circle) => void;
 		onCirclesUpdate: (updatedCircles: Circle[]) => void;
 		displayLegend: boolean;
 		legendTexts: Map<number, string>;
@@ -155,6 +157,7 @@
 			{circle}
 			onDragStart={(e) => handlePointerDown(e, circle.id)}
 			onEdit={onCircleEdit}
+			{onToggleChecked}
 		/>
 	{/each}
 

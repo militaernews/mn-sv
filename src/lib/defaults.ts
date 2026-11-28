@@ -260,5 +260,23 @@ export const defaultMapSources: MapSource[] = [
 		url: 'https://satellites.pro/Ukraine_map#48.882780,37.924805,7',
 		isCustom: false,
 		category: 'Standard'
+	},
+	{
+		name: 'OpenTopoMap',
+		url: 'https://opentopomap.org/#map=13/48.8827/37.9248',
+		isCustom: false,
+		category: 'Additional layers'
+	},
+	{
+		name: 'OpenStreetMap cycle',
+		url: 'https://www.openstreetmap.org/export/embed.html?bbox=37.7%2C48.8%2C38.1%2C48.95&layer=cyclemap',
+		isCustom: false,
+		category: 'Additional layers'
+	},
+	{
+		name: 'Esri World Imagery',
+		url: 'https://www.arcgis.com/home/webmap/viewer.html?webmap=15a8c4a4b5e64e4e9d2c8e6f6e5d4b3a',
+		isCustom: false,
+		category: 'Additional layers'
 	}
 ];

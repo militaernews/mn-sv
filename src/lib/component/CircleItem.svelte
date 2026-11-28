@@ -5,11 +5,13 @@
 	const {
 		circle,
 		onDragStart,
-		onEdit
+		onEdit,
+		onToggleChecked
 	}: {
 		circle: Circle;
 		onDragStart: (e: PointerEvent) => void;
 		onEdit: (circle: Circle) => void;
+		onToggleChecked: (circle: Circle) => void;
 	} = $props();
 
 	const fontColor = $derived(presetColors[circle.colorIndex]?.useDarkFont ? '#000000' : '#ffffff');
@@ -46,6 +48,16 @@
 		class:border-dotted={circle.useDottedBorder}
 		class:border-solid={!circle.useDottedBorder}
 	></div>
+	<button
+		type="button"
+		class="btn btn-xs absolute -top-2 -left-2 z-20 rounded-full"
+		class:btn-success={circle.isChecked}
+		class:btn-ghost={!circle.isChecked}
+		title="Toggle checked"
+		onclick={() => onToggleChecked(circle)}
+	>
+		✓
+	</button>
 	<button
 		type="button"
 		class="text-md absolute cursor-pointer px-2 py-1"

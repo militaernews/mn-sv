@@ -10,7 +10,14 @@
 		onToggleGeolocalization,
 		isGeolocalizationActive,
 		onOpenSunTool,
-		isSunToolActive
+		isSunToolActive,
+		onToggle3D,
+		is3DActive,
+		onToggleLayers,
+		isLayersActive,
+		onToggleOsm,
+		isOsmActive,
+		checkedSpots
 	}: {
 		mapLat: number;
 		mapLng: number;
@@ -19,6 +26,13 @@
 		isGeolocalizationActive: boolean;
 		onOpenSunTool: () => void;
 		isSunToolActive: boolean;
+		onToggle3D: () => void;
+		is3DActive: boolean;
+		onToggleLayers: () => void;
+		isLayersActive: boolean;
+		onToggleOsm: () => void;
+		isOsmActive: boolean;
+		checkedSpots: number;
 	} = $props();
 </script>
 
@@ -53,6 +67,30 @@
 
 	<!-- Right: Tools -->
 	<div class="flex items-center gap-2">
+		<button
+			class="btn btn-sm {is3DActive ? 'btn-primary' : 'btn-ghost'} hover:bg-primary/10 gap-2"
+			onclick={onToggle3D}
+			title="3D buildings"
+		>
+			3D
+		</button>
+		<button
+			class="btn btn-sm {isOsmActive ? 'btn-primary' : 'btn-ghost'} hover:bg-primary/10 gap-2"
+			onclick={onToggleOsm}
+			title="OpenStreetMap search"
+		>
+			OSM
+		</button>
+		<button
+			class="btn btn-sm {isLayersActive ? 'btn-primary' : 'btn-ghost'} hover:bg-primary/10 gap-2"
+			onclick={onToggleLayers}
+			title="Additional layers"
+		>
+			Layers
+		</button>
+
+		<span class="badge badge-success" title="Checked spots">{checkedSpots} ✓</span>
+
 		<button
 			class="btn btn-sm {isSunToolActive ? 'btn-primary' : 'btn-ghost'} hover:bg-primary/10 gap-2"
 			onclick={onOpenSunTool}

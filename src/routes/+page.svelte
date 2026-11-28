@@ -9,6 +9,8 @@
 	import Ruler from '$lib/component/Ruler.svelte';
 	import GeolocalizationPanel from '$lib/component/GeolocalizationPanel.svelte';
 	import OSINTToolbar from '$lib/component/OSINTToolbar.svelte';
+	import ThreeDView from '$lib/component/ThreeDView.svelte';
+	import LayersPanel from '$lib/component/LayersPanel.svelte';
 	import IconFluentMap24Regular from '~icons/fluent-emoji/world-map';
 	import type { Circle } from '$lib/Circle';
 
@@ -89,6 +91,8 @@
 	let searchResults = $state<any[]>([]);
 	let showStreetViewPlaces = $state(false);
 	let showGeolocalization = $state(false);
+	let show3D = $state(false);
+	let showLayers = $state(false);
 	let geoToolTab = $state<'image-overlay' | 'sun'>('image-overlay');
 	let showOSINTToolbar = $state(true);
 
@@ -103,6 +107,8 @@
 	let mapZoom = $state(13);
 
 	const currentMapUrl = $derived(mapSources[selectedMapIndex]?.url || '');
+
+	const checkedSpots = $derived($circles.filter((circle) => circle.isChecked).length);
 
 	const usedColors = derived(circles, ($circles) => {
 		return new Set($circles.map((c) => c.colorIndex));
@@ -147,6 +153,55 @@
 	function toggleMeasure(mode: 'distance' | 'area' | 'none') {
 		measureMode = mode;
 		measureValue = 0;
+	}
+
+	function toggleChecked(circle: Circle) {
+		circles.update((list) =>
+			list.map((item) => (item.id === circle.id ? { ...item, isChecked: !item.isChecked } : item))
+		);
+	}
+
+	async function runInfraSearch(type: string, query: string) {
+		const around = `around:5000,${mapLat},${mapLng}`;
+		const filter =
+			type === 'power'
+				? '[power=line]'
+				: type === 'bridge'
+					? '[bridge]'
+					: type === 'tree'
+						? '[natural=tree]'
+						: '[barrier=fence]';
+		const name = query.replace(/["\\]/g, '');
+		const overpass = `[out:json][timeout:25];nwr(${around})${filter}["name"~"${name}",i];out center 30;`;
+		try {
+			const response = await fetch(
+				`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(overpass)}`
+			);
+			if (!response.ok) return;
+			const data = await response.json();
+			const found: Circle[] = (data.elements ?? [])
+				.map((element: any, index: number) => ({
+					id: nextId + index,
+					x: 0,
+					y: 0,
+					lat: element.lat ?? element.center?.lat,
+					lng: element.lon ?? element.center?.lon,
+					text: element.tags?.name ?? type,
+					colorIndex: 0,
+					rectExpandLeft: false,
+					useDottedBorder: false,
+					markerMode: 'leaflet' as const
+				}))
+				.filter(
+					(circle: Circle) => typeof circle.lat === 'number' && typeof circle.lng === 'number'
+				);
+			if (found.length) {
+				nextId += found.length;
+				circles.update((list) => [...list, ...found]);
+			}
+		} catch (error) {
+			console.error('Overpass search failed:', error);
+		}
 	}
 
 	function switchMapByIndex(index: number) {
@@ -260,6 +315,13 @@
 			isGeolocalizationActive={showGeolocalization}
 			onOpenSunTool={openSunTool}
 			isSunToolActive={showGeolocalization && geoToolTab === 'sun'}
+			onToggle3D={() => (show3D = !show3D)}
+			is3DActive={show3D}
+			onToggleLayers={() => (showLayers = !showLayers)}
+			isLayersActive={showLayers}
+			onToggleOsm={() => (showInfraSearch = !showInfraSearch)}
+			isOsmActive={showInfraSearch}
+			{checkedSpots}
 		/>
 	{/if}
 
@@ -322,6 +384,7 @@
 					{currentMapUrl}
 					circles={$circles}
 					onCircleEdit={openEditor}
+					onToggleChecked={toggleChecked}
 					onCirclesUpdate={handleCirclesUpdate}
 					{displayLegend}
 					legendTexts={$legendTexts}
@@ -334,6 +397,19 @@
 				/>
 			{/if}
 
+			{#if showLayers}
+				<LayersPanel
+					sources={mapSources}
+					selectedIndex={selectedMapIndex}
+					onSelect={switchMapByIndex}
+					onClose={() => (showLayers = false)}
+				/>
+			{/if}
+
+			{#if show3D}
+				<ThreeDView lat={mapLat} lng={mapLng} zoom={mapZoom} onClose={() => (show3D = false)} />
+			{/if}
+
 			{#if showStreetView}
 				<StreetView
 					lat={streetViewLat}
@@ -344,7 +420,7 @@
 
 			{#if showInfraSearch}
 				<InfrastructureSearch
-					onSearch={() => {}}
+					onSearch={runInfraSearch}
 					onResults={(results) => (searchResults = results)}
 				/>
 			{/if}
