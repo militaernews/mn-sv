@@ -37,12 +37,17 @@
 		"vite": "8.3.5"
 	},
 	"imports": {
-		"#lib/*": "./src/lib/*"
+		"#lib/*": "./src/lib/*",
+		"#geo/*": "./src/lib/apps/geo/lib/*"
 	},
 	"workspaces": [
 		"apps/*"
 	],
 	"dependencies": {
-		"sharp": "^0.35.5"
+		"html2canvas-pro": "^2.6.5",
+		"leaflet": "^1.9.4",
+		"maplibre-gl": "^6.20.0",
+		"sharp": "^0.35.5",
+		"sveaflet": "^0.1.5"
 	}
 }
