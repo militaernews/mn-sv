@@ -10,12 +10,18 @@
 	const NAV = {
 		de: {
 			home: 'Start',
-			apps: 'Apps',
+			tools: 'Tools',
 			docs: 'Handbuch',
 			theme: 'Darstellung',
 			language: 'Sprache'
 		},
-		en: { home: 'Home', apps: 'Apps', docs: 'Handbook', theme: 'Appearance', language: 'Language' }
+		en: {
+			home: 'Home',
+			tools: 'Tools',
+			docs: 'Handbook',
+			theme: 'Appearance',
+			language: 'Language'
+		}
 	};
 	const THEME_LABEL: Record<'de' | 'en', Record<Theme, string>> = {
 		de: { system: 'Wie das System', light: 'Hell', dark: 'Dunkel' },
@@ -55,8 +61,8 @@
 				aria-current={!onDocs ? 'page' : undefined}>{nav.home}</a
 			>
 			<a
-				href={localizedHref('/#apps', lang)}
-				class="rounded-full px-3 py-1.5 transition-colors hover:text-[var(--accent)]">{nav.apps}</a
+				href={localizedHref('/#tools', lang)}
+				class="rounded-full px-3 py-1.5 transition-colors hover:text-[var(--accent)]">{nav.tools}</a
 			>
 			<a
 				href={localizedHref('/docs', lang)}

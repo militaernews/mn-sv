@@ -9,15 +9,27 @@
 	import IconBook from '~icons/lucide/book-open';
 	import IconGrid from '~icons/lucide/layout-grid';
 	import IconBot from '~icons/lucide/bot';
+	import IconGamepad from '~icons/lucide/gamepad-2';
+	import IconUsers from '~icons/lucide/users';
+	import IconBarChart from '~icons/lucide/chart-no-axes-column-increasing';
 	import SeoHead from './SeoHead.svelte';
 	import { langFromPath, localizedHref } from './lang.js';
-	import { CONTACT, PROJECTS, UI, type Project, type ProjectKind } from './projects.js';
+	import {
+		CHANNELS,
+		COMMUNITY_STATS,
+		CONTACT,
+		PROJECTS,
+		UI,
+		type Project,
+		type ProjectKind
+	} from './projects.js';
 
 	const lang = $derived(langFromPath(page.url.pathname));
 	const ui = $derived(UI[lang]);
 
 	const byKind = (kind: ProjectKind) => PROJECTS.filter((project) => project.kind === kind);
-	const apps = byKind('app');
+	const tools = byKind('tool');
+	const games = byKind('game');
 	const bots = byKind('bot');
 	const guide = byKind('guide')[0];
 	const guideText = $derived(guide.text[lang]);
@@ -156,11 +168,11 @@
 			</p>
 			<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
 				<a
-					href="#apps"
+					href="#tools"
 					class="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-bold text-[var(--accent-ink)] shadow-md transition hover:brightness-110"
 				>
 					<IconGrid class="size-4" aria-hidden="true" />
-					{ui.appsTitle}
+					{ui.toolsTitle}
 					<IconArrowRight class="size-4" aria-hidden="true" />
 				</a>
 				<a
@@ -182,14 +194,27 @@
 			</h2>
 			<ol class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-stretch sm:justify-center">
 				{#each ui.flow as step, index (step.label)}
+					{@const adStep = step.label === 'Werbung' || step.label === 'Advertising'}
 					<li class="flex flex-col items-center gap-2 sm:flex-row">
 						<div
-							class="flex w-full items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--card)] px-4 py-3 shadow-sm sm:w-auto"
+							class="flex w-full items-center gap-3 rounded-2xl border px-4 py-3 shadow-sm sm:w-auto"
+							class:border-[var(--accent)]={adStep}
+							class:bg-[var(--accent-soft)]={adStep}
+							class:border-[var(--line)]={!adStep}
+							class:bg-[var(--card)]={!adStep}
 						>
 							<span
-								class="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--accent-soft)] text-sm font-extrabold text-[var(--accent)]"
+								class="grid size-8 shrink-0 place-items-center rounded-full text-sm font-extrabold"
+								class:bg-[var(--accent)]={adStep}
+								class:text-[var(--accent-ink)]={adStep}
+								class:bg-[var(--accent-soft)]={!adStep}
+								class:text-[var(--accent)]={!adStep}
 							>
-								{index + 1}
+								{#if adStep}
+									<IconSend class="size-4" aria-hidden="true" />
+								{:else}
+									{index + 1}
+								{/if}
 							</span>
 							<div>
 								<div class="text-sm font-bold">{step.label}</div>
@@ -207,11 +232,21 @@
 			</ol>
 		</section>
 
-		<section id="apps" aria-labelledby="apps-title" class="mt-20 scroll-mt-24">
-			{@render sectionHead(IconGrid, ui.appsTitle, ui.appsText)}
-			<h2 id="apps-title" class="sr-only">{ui.appsTitle}</h2>
+		<section id="tools" aria-labelledby="tools-title" class="mt-20 scroll-mt-24">
+			{@render sectionHead(IconGrid, ui.toolsTitle, ui.toolsText)}
+			<h2 id="tools-title" class="sr-only">{ui.toolsTitle}</h2>
 			<div class="grid gap-5 md:grid-cols-2">
-				{#each apps as project (project.id)}
+				{#each tools as project (project.id)}
+					{@render card(project)}
+				{/each}
+			</div>
+		</section>
+
+		<section id="games" aria-labelledby="games-title" class="mt-20 scroll-mt-24">
+			{@render sectionHead(IconGamepad, ui.gamesTitle, ui.gamesText)}
+			<h2 id="games-title" class="sr-only">{ui.gamesTitle}</h2>
+			<div class="grid gap-5 md:grid-cols-2">
+				{#each games as project (project.id)}
 					{@render card(project)}
 				{/each}
 			</div>
@@ -225,6 +260,44 @@
 					{@render card(project)}
 				{/each}
 			</div>
+		</section>
+
+		<section id="channels" aria-labelledby="channels-title" class="mt-20 scroll-mt-24">
+			{@render sectionHead(IconUsers, ui.channelsTitle, ui.channelsText)}
+			<h2 id="channels-title" class="sr-only">{ui.channelsTitle}</h2>
+			<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+				{#each CHANNELS as channel (channel.username)}
+					<li>
+						<a
+							href="https://t.me/{channel.username}"
+							target="_blank"
+							rel="noopener"
+							class="flex h-full items-center gap-3 rounded-xl border border-[var(--line)] bg-[var(--card)] px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--accent)]/50 hover:shadow-md"
+						>
+							<span class="text-2xl" aria-hidden="true">{channel.flag}</span>
+							<span class="min-w-0">
+								<span class="block text-sm font-bold">{channel.language[lang]}</span>
+								<span class="block truncate text-xs text-[var(--muted)]">@{channel.username}</span>
+							</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</section>
+
+		<section id="stats" aria-labelledby="stats-title" class="mt-20 scroll-mt-24">
+			{@render sectionHead(IconBarChart, ui.statsTitle, ui.statsText)}
+			<h2 id="stats-title" class="sr-only">{ui.statsTitle}</h2>
+			<ul class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+				{#each COMMUNITY_STATS as stat (stat.label.de)}
+					<li
+						class="rounded-2xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] to-[var(--card)] p-5 text-center shadow-sm"
+					>
+						<div class="text-2xl font-extrabold text-[var(--accent)]">{stat.value}</div>
+						<div class="mt-1 text-xs font-semibold text-[var(--muted)]">{stat.label[lang]}</div>
+					</li>
+				{/each}
+			</ul>
 		</section>
 
 		<section id="handbook" aria-labelledby="handbook-title" class="mt-20 scroll-mt-24">

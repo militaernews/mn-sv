@@ -8,6 +8,51 @@ export const LANGS: Lang[] = ['de', 'en'];
 
 export const CONTACT = 'https://t.me/MilitaernewsKontakt';
 
+/** The MilitärNews language channels, in the order the posting pipeline serves them */
+export interface Channel {
+	flag: string;
+	language: Record<Lang, string>;
+	username: string;
+	x?: string;
+}
+
+export const CHANNELS: Channel[] = [
+	{
+		flag: '🇩🇪',
+		language: { de: 'Deutsch', en: 'German' },
+		username: 'MilitaerNews',
+		x: 'MilitaerNews'
+	},
+	{
+		flag: '🇺🇸',
+		language: { de: 'Englisch', en: 'English' },
+		username: 'MilitaryNewsEN',
+		x: 'MilitaryNewsEN'
+	},
+	{ flag: '🇹🇷', language: { de: 'Türkisch', en: 'Turkish' }, username: 'MilitaryNewsTR' },
+	{ flag: '🇮🇷', language: { de: 'Persisch', en: 'Persian' }, username: 'MilitaryNewsFA' },
+	{ flag: '🇷🇺', language: { de: 'Russisch', en: 'Russian' }, username: 'MilitaryNewsRU' },
+	{ flag: '🇧🇷', language: { de: 'Portugiesisch', en: 'Portuguese' }, username: 'MilitaryNewsBR' },
+	{ flag: '🇪🇸', language: { de: 'Spanisch', en: 'Spanish' }, username: 'MilitaryNewsES' },
+	{ flag: '🇫🇷', language: { de: 'Französisch', en: 'French' }, username: 'MilitaryNewsFR' },
+	{ flag: '🇮🇹', language: { de: 'Italienisch', en: 'Italian' }, username: 'MilitaryNewsITA' },
+	{ flag: '🇪🇬', language: { de: 'Arabisch', en: 'Arabic' }, username: 'MilitaryNewsAR' },
+	{ flag: '🇮🇩', language: { de: 'Indonesisch', en: 'Indonesian' }, username: 'MilitaryNewsIDN' }
+];
+
+/** TGStat-style community metrics tracked by the MNChat bot (user_stats) */
+export interface CommunityStat {
+	label: Record<Lang, string>;
+	value: string;
+}
+
+export const COMMUNITY_STATS: CommunityStat[] = [
+	{ label: { de: 'Beiträge je Nutzer', en: 'Posts per user' }, value: '⌀ 42' },
+	{ label: { de: 'Wörter je Beitrag', en: 'Words per post' }, value: '⌀ 18' },
+	{ label: { de: 'Zeichen je Beitrag', en: 'Characters per post' }, value: '⌀ 126' },
+	{ label: { de: 'Karma-Punkte', en: 'Karma points' }, value: 'live' }
+];
+
 interface Text {
 	name: string;
 	audience: string;
@@ -17,7 +62,7 @@ interface Text {
 	cta: string;
 }
 
-export type ProjectKind = 'app' | 'bot' | 'guide';
+export type ProjectKind = 'tool' | 'game' | 'bot' | 'guide';
 
 export interface Project {
 	id: string;
@@ -32,7 +77,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
 	{
 		id: 'newsmix',
-		kind: 'app',
+		kind: 'tool',
 		image: '/img/newsmix.webp',
 		href: 'https://mix-sv.vercel.app',
 		text: {
@@ -68,7 +113,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'viz',
-		kind: 'app',
+		kind: 'tool',
 		image: '/img/viz.webp',
 		href: 'https://viz-sv.vercel.app',
 		text: {
@@ -212,7 +257,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'geo',
-		kind: 'app',
+		kind: 'tool',
 		icon: IconMap,
 		href: 'https://geo-mn.vercel.app',
 		text: {
@@ -248,7 +293,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'charts',
-		kind: 'app',
+		kind: 'tool',
 		icon: IconChart,
 		href: 'https://chart-mn.vercel.app',
 		text: {
@@ -284,7 +329,7 @@ export const PROJECTS: Project[] = [
 	},
 	{
 		id: 'ww3',
-		kind: 'app',
+		kind: 'game',
 		image: '/img/ww3.svg',
 		href: 'https://ww3-sv.vercel.app',
 		text: {
@@ -365,10 +410,16 @@ export const UI: Record<
 		lead: string;
 		flowTitle: string;
 		flow: { label: string; detail: string }[];
-		appsTitle: string;
-		appsText: string;
+		toolsTitle: string;
+		toolsText: string;
+		gamesTitle: string;
+		gamesText: string;
 		botsTitle: string;
 		botsText: string;
+		channelsTitle: string;
+		channelsText: string;
+		statsTitle: string;
+		statsText: string;
 		guideTitle: string;
 		guideText: string;
 		contactTitle: string;
@@ -389,12 +440,20 @@ export const UI: Record<
 			{ label: 'Newsmix', detail: 'übersetzt und sortiert' },
 			{ label: 'Redaktion', detail: 'prüft mit viz, wählt aus' },
 			{ label: 'MilitärNews', detail: 'in elf Sprachen' },
-			{ label: 'Leser', detail: 'mit Footer und Eigenwerbung' }
+			{ label: 'Werbung', detail: 'litfass & Footer für Kanäle' },
+			{ label: 'Leser', detail: 'erreicht über elf Sprachkanäle' }
 		],
-		appsTitle: 'Apps',
-		appsText: 'Im Browser öffnen – für Nachrichten, Bilder, Karten und Zahlen.',
+		toolsTitle: 'Tools',
+		toolsText: 'Im Browser öffnen – für Nachrichten, Bilder, Karten und Zahlen.',
+		gamesTitle: 'Games',
+		gamesText:
+			'Satirische Spiele rund um Öl, Schiffe und Weltpolitik – im Browser und in Telegram.',
 		botsTitle: 'Telegram-Bots',
 		botsText: 'Direkt im Chat – für Kanäle, Werbung und Gruppen.',
+		channelsTitle: 'Die Kanäle',
+		channelsText: 'Elf Sprachkanäle, die aus einem deutschen Post entstehen. Ein Klick genügt.',
+		statsTitle: 'Community in Zahlen',
+		statsText: 'TGStat-Daten aus der Community-Gruppe: Aktivität und Karma auf einen Blick.',
 		guideTitle: 'Handbuch',
 		guideText: 'Alles Wichtige zur Arbeit mit den Bots – auf Deutsch und Englisch.',
 		contactTitle: 'Fragen oder Interesse?',
@@ -415,12 +474,21 @@ export const UI: Record<
 			{ label: 'Newsmix', detail: 'translates and sorts' },
 			{ label: 'Editors', detail: 'check with viz, pick' },
 			{ label: 'MilitärNews', detail: 'in eleven languages' },
-			{ label: 'Readers', detail: 'with footers and house adverts' }
+			{ label: 'Advertising', detail: 'litfass & footers for channels' },
+			{ label: 'Readers', detail: 'reached across eleven language channels' }
 		],
-		appsTitle: 'Apps',
-		appsText: 'Open in your browser — for news, pictures, maps and numbers.',
+		toolsTitle: 'Tools',
+		toolsText: 'Open in your browser — for news, pictures, maps and numbers.',
+		gamesTitle: 'Games',
+		gamesText:
+			'Satirical games about oil, shipping and world politics — in the browser and in Telegram.',
 		botsTitle: 'Telegram bots',
 		botsText: 'Right in the chat — for channels, adverts and groups.',
+		channelsTitle: 'The channels',
+		channelsText:
+			'Eleven language channels born from a single German post. One click is all it takes.',
+		statsTitle: 'Community in numbers',
+		statsText: 'TGStat data from the community group: activity and karma at a glance.',
 		guideTitle: 'Handbook',
 		guideText: 'Everything you need to work with the bots — in German and English.',
 		contactTitle: 'Questions or interested?',
