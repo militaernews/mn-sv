@@ -92,6 +92,7 @@
 	let showStreetViewPlaces = $state(false);
 	let showGeolocalization = $state(false);
 	let show3D = $state(false);
+	let uncheckedOnly = $state(false);
 	let showLayers = $state(false);
 	let geoToolTab = $state<'image-overlay' | 'sun'>('image-overlay');
 	let showOSINTToolbar = $state(true);
@@ -109,6 +110,9 @@
 	const currentMapUrl = $derived(mapSources[selectedMapIndex]?.url || '');
 
 	const checkedSpots = $derived($circles.filter((circle) => circle.isChecked).length);
+	const visibleCircles = $derived(
+		uncheckedOnly ? $circles.filter((circle) => !circle.isChecked) : $circles
+	);
 
 	const usedColors = derived(circles, ($circles) => {
 		return new Set($circles.map((c) => c.colorIndex));
@@ -322,6 +326,8 @@
 			onToggleOsm={() => (showInfraSearch = !showInfraSearch)}
 			isOsmActive={showInfraSearch}
 			{checkedSpots}
+			onToggleUnchecked={() => (uncheckedOnly = !uncheckedOnly)}
+			{uncheckedOnly}
 		/>
 	{/if}
 
@@ -347,7 +353,7 @@
 			isInfraSearchActive={showInfraSearch}
 			onToggleMeasure={toggleMeasure}
 			{measureMode}
-			circles={$circles}
+			circles={visibleCircles}
 			onImportMarkers={(imported) => {
 				circles.set(imported);
 			}}
@@ -374,7 +380,7 @@
 						bind:lat={mapLat}
 						bind:lng={mapLng}
 						bind:zoom={mapZoom}
-						circles={$circles}
+						circles={visibleCircles}
 						onLocationSelect={handleLocationSelect}
 						onMeasureUpdate={(v) => (measureValue = v)}
 					/>
@@ -382,7 +388,7 @@
 			{:else}
 				<MapContainer
 					{currentMapUrl}
-					circles={$circles}
+					circles={visibleCircles}
 					onCircleEdit={openEditor}
 					onToggleChecked={toggleChecked}
 					onCirclesUpdate={handleCirclesUpdate}

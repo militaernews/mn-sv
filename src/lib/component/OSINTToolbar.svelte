@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import FluentEmojiMagnifyingGlass from '~icons/fluent-emoji/magnifying-glass-tilted-left';
 	import FluentEmojiSun from '~icons/fluent-emoji/sun';
 	import CrosshairsIcon from '~icons/fluent/target-20-regular';
@@ -17,7 +18,9 @@
 		isLayersActive,
 		onToggleOsm,
 		isOsmActive,
-		checkedSpots
+		checkedSpots,
+		onToggleUnchecked,
+		uncheckedOnly
 	}: {
 		mapLat: number;
 		mapLng: number;
@@ -33,11 +36,13 @@
 		onToggleOsm: () => void;
 		isOsmActive: boolean;
 		checkedSpots: number;
+		onToggleUnchecked: () => void;
+		uncheckedOnly: boolean;
 	} = $props();
 </script>
 
 <div
-	class="flex items-center justify-between gap-4 border-b border-slate-700 bg-slate-800 px-4 py-3"
+	class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700 bg-slate-800 px-4 py-3"
 >
 	<!-- Left: Title and Status -->
 	<div class="flex items-center gap-3">
@@ -45,13 +50,13 @@
 			<FluentEmojiMagnifyingGlass class="text-primary size-6" />
 			<div>
 				<h1 class="text-lg font-bold">OSINT Geolocalization</h1>
-				<p class="text-xs opacity-60">Footage Verification & OSINT Intelligence</p>
+				<p class="hidden text-xs opacity-60 sm:block">Footage Verification & OSINT Intelligence</p>
 			</div>
 		</div>
 	</div>
 
 	<!-- Center: Coordinate Display -->
-	<div class="flex items-center gap-6 text-sm">
+	<div class="hidden items-center gap-6 text-sm md:flex">
 		<div class="flex flex-col gap-1">
 			<span class="text-xs opacity-60">LOCATION</span>
 			<span class="font-mono font-bold">
@@ -67,6 +72,16 @@
 
 	<!-- Right: Tools -->
 	<div class="flex items-center gap-2">
+		<button
+			class="btn btn-sm {uncheckedOnly ? 'btn-primary' : 'btn-ghost'} hover:bg-primary/10 gap-2"
+			onclick={onToggleUnchecked}
+			title="Show unchecked spots only"
+		>
+			Unchecked
+		</button>
+		<button class="btn btn-sm btn-ghost" onclick={() => goto('/settings')}>Settings</button>
+		<button class="btn btn-sm btn-ghost" onclick={() => goto('/about')}>About</button>
+
 		<button
 			class="btn btn-sm {is3DActive ? 'btn-primary' : 'btn-ghost'} hover:bg-primary/10 gap-2"
 			onclick={onToggle3D}
