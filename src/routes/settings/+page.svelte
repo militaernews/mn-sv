@@ -204,6 +204,7 @@
 		>
 			<a class="text-[var(--accent)] hover:underline" href="/about">{s('navAbout')}</a>
 			<a class="text-[var(--accent)] hover:underline" href="/docs">{s('navDocs')}</a>
+			<a class="text-[var(--accent)] hover:underline" href="/brand">{s('brandTitle')}</a>
 			<a class="text-[var(--accent)] hover:underline" href="/legal/imprint">{s('footerLegal')}</a>
 		</nav>
 	</main>

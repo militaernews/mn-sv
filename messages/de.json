@@ -107,5 +107,20 @@
 	"planPriority": "Alle Funktionen",
 	"navChangelog": "Änderungen",
 	"changelogTitle": "Änderungsprotokoll",
-	"changelogText": "Was sich an MilitärNews geändert hat – nach Datum sortiert."
+	"changelogText": "Was sich an MilitärNews geändert hat – nach Datum sortiert.",
+	"brandTitle": "Brand-Verwaltung",
+	"brandText": "Quelldateien im Ordner brand/ ansehen und ersetzen.",
+	"brandAdminOnly": "Nur für Admins.",
+	"brandUpload": "Datei hochladen",
+	"brandReplace": "Ersetzen",
+	"brandDelete": "Löschen",
+	"brandSaved": "Datei gespeichert.",
+	"brandFailed": "Speichern fehlgeschlagen.",
+	"brandName": "Dateiname",
+	"brandSelect": "Datei wählen",
+	"brandDownload": "Herunterladen",
+	"brandMaster": "Quelldateien",
+	"brandPng": "PNG-Exporte",
+	"brandMasterText": "GIMP- und Font-Quellen. Für PNG-Export in GIMP öffnen.",
+	"brandPngText": "Fertige PNGs für Web und Apps."
 }

@@ -15,7 +15,7 @@ The header leads to `/settings` (language and appearance), `/changelog` (date-gr
 
 The three tools live in `apps/viz`, `apps/geo` and `apps/charts` as Bun workspaces, with their full
 Git history preserved. See `HISTORY.md`. Shared design rules for all sites and bots are in
-`STYLEGUIDE.md`; commit messages must follow `AGENTS.md`.
+`STYLEGUIDE.md`; commit messages must follow `AGENTS.md`. Brand source files are in `brand/`.
 
 Appearance follows the system colour scheme in a browser. Inside Telegram, the WebApp colour scheme
 and colours are used instead, updates live when Telegram's theme changes, and external links open

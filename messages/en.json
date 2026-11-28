@@ -107,5 +107,20 @@
 	"planPriority": "Everything",
 	"navChangelog": "Changelog",
 	"changelogTitle": "Changelog",
-	"changelogText": "What changed in MilitärNews — grouped by date."
+	"changelogText": "What changed in MilitärNews — grouped by date.",
+	"brandTitle": "Brand manager",
+	"brandText": "View and replace the source files in brand/.",
+	"brandAdminOnly": "Admins only.",
+	"brandUpload": "Upload file",
+	"brandReplace": "Replace",
+	"brandDelete": "Delete",
+	"brandSaved": "File saved.",
+	"brandFailed": "Could not save the file.",
+	"brandName": "File name",
+	"brandSelect": "Choose file",
+	"brandDownload": "Download",
+	"brandMaster": "Source files",
+	"brandPng": "PNG exports",
+	"brandMasterText": "GIMP and font masters. Open in GIMP to export PNGs.",
+	"brandPngText": "Ready-to-use PNGs for web and apps."
 }
