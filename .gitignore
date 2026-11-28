@@ -4,3 +4,6 @@
 .vercel
 .env
 .env.*
+
+src/lib/paraglide/
+project.inlang/cache/

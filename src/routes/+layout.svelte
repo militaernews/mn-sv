@@ -1,9 +1,8 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import { page } from '$app/state';
 	import SiteHeader from '#lib/SiteHeader.svelte';
-	import { langFromPath } from '#lib/lang.js';
+	import { localeState } from '#lib/locale.svelte.js';
 	import { startPrefs } from '#lib/prefs.svelte.js';
 
 	let { children } = $props();
@@ -11,7 +10,7 @@
 	onMount(startPrefs);
 
 	$effect(() => {
-		document.documentElement.lang = langFromPath(page.url.pathname);
+		document.documentElement.lang = localeState.value;
 	});
 </script>
 

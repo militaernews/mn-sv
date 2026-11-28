@@ -1,3 +1,4 @@
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
@@ -7,6 +8,11 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 export default defineConfig({
 	plugins: [
+		paraglideVitePlugin({
+			project: './project.inlang',
+			outdir: './src/lib/paraglide',
+			strategy: ['localStorage', 'preferredLanguage', 'baseLocale']
+		}),
 		sveltekit({
 			preprocess: vitePreprocess(),
 			// Every page is prerendered; the fallback function runs on Vercel's Bun runtime (bunVersion in vercel.json)
