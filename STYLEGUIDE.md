@@ -15,20 +15,20 @@ Applies to every MilitärNews web app and Telegram bot, including `apps/viz`, `a
 
 Dark theme is the default. These are the canonical values:
 
-| Token | Dark | Light |
-| --- | --- | --- |
-| Page | `#06142a` | `#eef6fc` |
-| Surface | `#0a1f3d` | `#dcecf8` |
-| Card | `#0d2648` | `#ffffff` |
-| Border | `#1c3a63` | `#c9d9ea` |
-| Text | `#e6f6ff` | `#0b1d33` |
-| Muted | `#9fb6c9` | `#4a5d73` |
-| Primary | `#9be7ff` | `#0c3a6b` |
-| Accent | `#2ec5ff` | `#0a7fbf` |
+| Token     | Dark      | Light     |
+| --------- | --------- | --------- |
+| Page      | `#06142a` | `#eef6fc` |
+| Surface   | `#0a1f3d` | `#dcecf8` |
+| Card      | `#0d2648` | `#ffffff` |
+| Border    | `#1c3a63` | `#c9d9ea` |
+| Text      | `#e6f6ff` | `#0b1d33` |
+| Muted     | `#9fb6c9` | `#4a5d73` |
+| Primary   | `#9be7ff` | `#0c3a6b` |
+| Accent    | `#2ec5ff` | `#0a7fbf` |
 | On accent | `#06142a` | `#ffffff` |
-| Success | `#4ade80` | `#0a7f5b` |
-| Warning | `#facc15` | `#8a5a00` |
-| Danger | `#ff7a6b` | `#b42318` |
+| Success   | `#4ade80` | `#0a7f5b` |
+| Warning   | `#facc15` | `#8a5a00` |
+| Danger    | `#ff7a6b` | `#b42318` |
 
 Use daisyUI variables (`--color-base-100`, `--color-primary`, …) in Svelte apps so themes
 switch cleanly. Never hardcode a single theme's colour in a component.
