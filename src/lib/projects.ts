@@ -1,7 +1,5 @@
 import type { Component } from 'svelte';
 import IconBookOpen from '~icons/lucide/book-open';
-import IconMap from '~icons/lucide/map';
-import IconChart from '~icons/lucide/chart-column';
 import IconGlobe from '~icons/lucide/globe';
 import IconLanguages from '~icons/lucide/languages';
 import IconScanEye from '~icons/lucide/scan-eye';
@@ -384,7 +382,7 @@ export const PROJECTS: Project[] = [
 	{
 		id: 'geo',
 		kind: 'tool',
-		icon: IconMap,
+		image: '/img/geo.webp',
 		href: 'https://geo-mn.vercel.app',
 		text: {
 			de: {
@@ -420,7 +418,7 @@ export const PROJECTS: Project[] = [
 	{
 		id: 'charts',
 		kind: 'tool',
-		icon: IconChart,
+		image: '/img/charts.webp',
 		href: 'https://chart-mn.vercel.app',
 		text: {
 			de: {
