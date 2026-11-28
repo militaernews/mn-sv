@@ -92,6 +92,35 @@
 	let isExporting = $state(false);
 	let isLoaded = $state(false);
 	let csvPasteError = $state('');
+	let toast = $state('');
+
+	function notify(message: string) {
+		toast = message;
+		setTimeout(() => (toast = ''), 2600);
+	}
+
+	function normalizeTable(table: TableState): TableState {
+		return {
+			headers: table.headers.map((h) => h.trim() || 'Column'),
+			colTypes: table.colTypes,
+			rows: table.rows
+				.map((row) => row.map((cell) => String(cell ?? '').trim()))
+				.filter((row) => row.some((cell) => cell !== ''))
+		};
+	}
+
+	function loadExample() {
+		if (chartMode === 'bar') loadBarExample1();
+		else loadLineExample1();
+		notify('Example loaded');
+	}
+
+	function clearData() {
+		if (chartMode === 'bar')
+			barTable = { headers: ['Category', 'Value'], colTypes: ['text', 'number'], rows: [] };
+		else lineTable = { headers: ['Date', 'Value'], colTypes: ['date', 'number'], rows: [] };
+		notify('Data cleared');
+	}
 
 	async function pasteCSVFromClipboard() {
 		csvPasteError = '';
@@ -106,8 +135,9 @@
 				csvPasteError = 'Could not parse clipboard as CSV — need ≥2 columns and a header row.';
 				return;
 			}
-			if (chartMode === 'bar') barTable = parsed;
-			else lineTable = parsed;
+			if (chartMode === 'bar') barTable = normalizeTable(parsed);
+			else lineTable = normalizeTable(parsed);
+			notify('CSV imported');
 		} catch {
 			csvPasteError = 'Clipboard access denied. Please allow clipboard permissions and try again.';
 		}
@@ -580,6 +610,27 @@
 	</form>
 </dialog>
 
+<header class="app-header card bg-base-100 shadow-xl">
+	<div class="card-body flex-row flex-wrap items-center justify-between gap-3 p-4">
+		<div class="flex items-center gap-3">
+			<IBarChart class="size-7 text-primary" />
+			<div>
+				<h1 class="text-xl font-extrabold tracking-tight">Military Loss Chart Builder</h1>
+				<p class="text-xs opacity-60">Turn a table into a shareable chart</p>
+			</div>
+		</div>
+		<div class="flex flex-wrap items-center gap-2">
+			<button class="btn btn-outline btn-sm" onclick={loadExample}>Example</button>
+			<button class="btn btn-outline btn-sm" onclick={clearData}>Clear</button>
+			<a class="btn btn-ghost btn-sm" href="/settings">Settings</a>
+			<a class="btn btn-ghost btn-sm" href="/about">About</a>
+			<button class="btn btn-primary btn-sm" onclick={exportAsImage}>
+				<ICamera class="size-4" /> Export
+			</button>
+		</div>
+	</div>
+</header>
+
 <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
 	<!-- ── CONFIG PANEL ── -->
 	<div class="card bg-base-100 shadow-xl">
@@ -1022,3 +1073,5 @@
 		</div>
 	</div>
 </div>
+
+{#if toast}<div class="toast toast-end"><div class="alert alert-success">{toast}</div></div>{/if}
