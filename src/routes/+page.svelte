@@ -4,16 +4,16 @@
 	import html2canvas from 'html2canvas-pro';
 	import Branding from '$lib/components/Branding.svelte';
 	import { Plot, BarX, RuleX, AxisX, AxisY, Line, Dot, Text } from 'svelteplot';
-	import IBarChart from '~icons/fluent/chart-multiple-24-regular';
-	import ILineChart from '~icons/fluent/arrow-trending-24-regular';
-	import ICamera from '~icons/fluent/camera-16-regular';
-	import IClipboard from '~icons/fluent/clipboard-paste-20-regular';
-	import IDismiss from '~icons/fluent/dismiss-16-regular';
-	import ISettings from '~icons/fluent/settings-16-regular';
-	import ILandscape from '~icons/fluent/rectangle-landscape-24-regular';
-	import IPortrait from '~icons/fluent/rectangle-portrait-24-regular';
-	import ITune from '~icons/fluent/options-24-regular';
-	import ITable from '~icons/fluent/table-24-regular';
+	import IBarChart from '~icons/lucide/chart-column';
+	import ILineChart from '~icons/lucide/chart-line';
+	import ICamera from '~icons/lucide/camera';
+	import IClipboard from '~icons/lucide/clipboard';
+	import IDismiss from '~icons/lucide/x';
+	import ISettings from '~icons/lucide/settings';
+	import ILandscape from '~icons/lucide/rectangle-horizontal';
+	import IPortrait from '~icons/lucide/rectangle-vertical';
+	import ITune from '~icons/lucide/sliders-horizontal';
+	import ITable from '~icons/lucide/table';
 
 	type ChartMode = 'bar' | 'line';
 	type Orientation = 'landscape' | 'portrait';

@@ -14,7 +14,7 @@
 </svelte:head>
 
 <div
-	class="flex min-h-dvh w-dvw items-center justify-center bg-neutral p-4"
+	class="flex min-h-dvh w-dvw items-center justify-center bg-base-100 p-4"
 	style="font-family:'HP Simplified'"
 >
 	<div class="flex w-full flex-col">
