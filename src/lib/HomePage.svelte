@@ -185,51 +185,74 @@
 			</div>
 		</header>
 
-		<section aria-labelledby="flow-title" class="scroll-mt-24">
-			<h2
-				id="flow-title"
-				class="mb-6 text-center text-sm font-bold tracking-widest text-[var(--muted)] uppercase"
+		<section id="flow" aria-labelledby="flow-title" class="scroll-mt-24">
+			<div
+				class="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] via-[var(--card)] to-[var(--bg-2)] p-6 shadow-sm sm:p-8"
 			>
-				{ui.flowTitle}
-			</h2>
-			<ol class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-stretch sm:justify-center">
-				{#each ui.flow as step, index (step.label)}
-					{@const adStep = step.label === 'Werbung' || step.label === 'Advertising'}
-					<li class="flex flex-col items-center gap-2 sm:flex-row">
-						<div
-							class="flex w-full items-center gap-3 rounded-2xl border px-4 py-3 shadow-sm sm:w-auto"
-							class:border-[var(--accent)]={adStep}
-							class:bg-[var(--accent-soft)]={adStep}
-							class:border-[var(--line)]={!adStep}
-							class:bg-[var(--card)]={!adStep}
+				<div
+					class="pointer-events-none absolute -top-20 -right-20 size-64 rounded-full border border-[var(--ring)]"
+				></div>
+				<div class="relative text-center">
+					<span
+						class="inline-flex items-center gap-2 rounded-full bg-[var(--accent-soft)] px-3 py-1 text-[0.65rem] font-bold tracking-widest text-[var(--accent)] uppercase"
+					>
+						<span class="size-1.5 animate-pulse rounded-full bg-[var(--accent)]"></span>
+						{lang === 'de' ? 'So läuft es' : 'How it works'}
+					</span>
+					<h2 id="flow-title" class="mt-3 text-xl font-extrabold text-[var(--strong)] sm:text-2xl">
+						{ui.flowTitle}
+					</h2>
+				</div>
+
+				<ol class="relative mt-10 flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-0">
+					{#each ui.flow as step, index (step.label)}
+						{@const adStep = step.label === 'Werbung' || step.label === 'Advertising'}
+						{@const StepIcon = step.icon}
+						<li
+							class="relative flex flex-1 flex-row items-center gap-4 lg:flex-col lg:items-center lg:gap-0 lg:text-center"
 						>
-							<span
-								class="grid size-8 shrink-0 place-items-center rounded-full text-sm font-extrabold"
-								class:bg-[var(--accent)]={adStep}
-								class:text-[var(--accent-ink)]={adStep}
-								class:bg-[var(--accent-soft)]={!adStep}
-								class:text-[var(--accent)]={!adStep}
-							>
-								{#if adStep}
-									<IconSend class="size-4" aria-hidden="true" />
-								{:else}
+							<!-- Animated track from this node to the next one -->
+							{#if index < ui.flow.length - 1}
+								<div
+									class="flow-track absolute top-7 left-1/2 z-0 hidden h-0.5 w-full lg:block"
+									aria-hidden="true"
+								></div>
+							{/if}
+							<div class="relative z-10 shrink-0">
+								<div
+									class="grid size-14 place-items-center rounded-2xl border shadow-lg transition-transform duration-300 hover:scale-110"
+									class:border-[var(--accent)]={adStep}
+									class:bg-[var(--accent)]={adStep}
+									class:text-[var(--accent-ink)]={adStep}
+									class:shadow-[0_0_2rem_var(--ring)]={adStep}
+									class:border-[var(--line)]={!adStep}
+									class:bg-[var(--card)]={!adStep}
+									class:text-[var(--accent)]={!adStep}
+								>
+									<StepIcon class="size-6" aria-hidden="true" />
+								</div>
+								<span
+									class="absolute -top-2 -right-2 grid size-5 place-items-center rounded-full border border-[var(--line)] bg-[var(--bg-2)] text-[0.65rem] font-extrabold text-[var(--muted)]"
+								>
 									{index + 1}
-								{/if}
-							</span>
-							<div>
-								<div class="text-sm font-bold">{step.label}</div>
-								<div class="text-xs text-[var(--muted)]">{step.detail}</div>
+								</span>
 							</div>
-						</div>
-						{#if index < ui.flow.length - 1}
-							<IconChevronRight
-								class="size-5 shrink-0 rotate-90 text-[var(--accent)] sm:rotate-0"
-								aria-hidden="true"
-							/>
-						{/if}
-					</li>
-				{/each}
-			</ol>
+							<div class="min-w-0 lg:mt-4 lg:px-1">
+								<div class="text-sm font-extrabold" class:text-[var(--accent)]={adStep}>
+									{step.label}
+								</div>
+								<div class="mt-0.5 text-xs leading-snug text-[var(--muted)]">{step.detail}</div>
+							</div>
+							{#if index < ui.flow.length - 1}
+								<IconChevronRight
+									class="size-5 shrink-0 rotate-90 text-[var(--accent)] lg:hidden"
+									aria-hidden="true"
+								/>
+							{/if}
+						</li>
+					{/each}
+				</ol>
+			</div>
 		</section>
 
 		<section id="tools" aria-labelledby="tools-title" class="mt-20 scroll-mt-24">

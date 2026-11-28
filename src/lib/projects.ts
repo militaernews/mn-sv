@@ -2,6 +2,12 @@ import type { Component } from 'svelte';
 import IconBookOpen from '~icons/lucide/book-open';
 import IconMap from '~icons/lucide/map';
 import IconChart from '~icons/lucide/chart-column';
+import IconGlobe from '~icons/lucide/globe';
+import IconLanguages from '~icons/lucide/languages';
+import IconScanEye from '~icons/lucide/scan-eye';
+import IconRadio from '~icons/lucide/radio';
+import IconMegaphone from '~icons/lucide/megaphone';
+import IconUsersRound from '~icons/lucide/users-round';
 
 export type Lang = 'de' | 'en';
 export const LANGS: Lang[] = ['de', 'en'];
@@ -409,7 +415,7 @@ export const UI: Record<
 		eyebrow: string;
 		lead: string;
 		flowTitle: string;
-		flow: { label: string; detail: string }[];
+		flow: { label: string; detail: string; icon: Component }[];
 		toolsTitle: string;
 		toolsText: string;
 		gamesTitle: string;
@@ -436,12 +442,12 @@ export const UI: Record<
 		lead: 'Die Werkzeuge hinter den MilitärNews-Kanälen: Nachrichten aus aller Welt, Bildersuche, Schutz vor Spammern und Werbung für Telegram-Kanäle und Bots.',
 		flowTitle: 'Von der Quelle in den Kanal',
 		flow: [
-			{ label: 'Quellen', detail: 'Nachrichtenkanäle weltweit' },
-			{ label: 'Newsmix', detail: 'übersetzt und sortiert' },
-			{ label: 'Redaktion', detail: 'prüft mit viz, wählt aus' },
-			{ label: 'MilitärNews', detail: 'in elf Sprachen' },
-			{ label: 'Werbung', detail: 'litfass & Footer für Kanäle' },
-			{ label: 'Leser', detail: 'erreicht über elf Sprachkanäle' }
+			{ label: 'Quellen', detail: 'Nachrichtenkanäle weltweit', icon: IconGlobe },
+			{ label: 'Newsmix', detail: 'übersetzt und sortiert', icon: IconLanguages },
+			{ label: 'Redaktion', detail: 'prüft mit viz, wählt aus', icon: IconScanEye },
+			{ label: 'MilitärNews', detail: 'in elf Sprachen', icon: IconRadio },
+			{ label: 'Werbung', detail: 'litfass & Footer für Kanäle', icon: IconMegaphone },
+			{ label: 'Leser', detail: 'erreicht über elf Sprachkanäle', icon: IconUsersRound }
 		],
 		toolsTitle: 'Tools',
 		toolsText: 'Im Browser öffnen – für Nachrichten, Bilder, Karten und Zahlen.',
@@ -470,12 +476,12 @@ export const UI: Record<
 		lead: 'The tools behind the MilitärNews channels: news from all over the world, picture search, protection from spammers and adverts for Telegram channels and bots.',
 		flowTitle: 'From the source to the channel',
 		flow: [
-			{ label: 'Sources', detail: 'news channels worldwide' },
-			{ label: 'Newsmix', detail: 'translates and sorts' },
-			{ label: 'Editors', detail: 'check with viz, pick' },
-			{ label: 'MilitärNews', detail: 'in eleven languages' },
-			{ label: 'Advertising', detail: 'litfass & footers for channels' },
-			{ label: 'Readers', detail: 'reached across eleven language channels' }
+			{ label: 'Sources', detail: 'news channels worldwide', icon: IconGlobe },
+			{ label: 'Newsmix', detail: 'translates and sorts', icon: IconLanguages },
+			{ label: 'Editors', detail: 'check with viz, pick', icon: IconScanEye },
+			{ label: 'MilitärNews', detail: 'in eleven languages', icon: IconRadio },
+			{ label: 'Advertising', detail: 'litfass & footers for channels', icon: IconMegaphone },
+			{ label: 'Readers', detail: 'reached across eleven language channels', icon: IconUsersRound }
 		],
 		toolsTitle: 'Tools',
 		toolsText: 'Open in your browser — for news, pictures, maps and numbers.',

@@ -78,6 +78,30 @@ body {
 	color: var(--accent-ink);
 }
 
+/* Workflow pipeline: a flowing gradient along the connector track */
+@keyframes flow-dash {
+	to {
+		background-position: 3rem 0;
+	}
+}
+
+.flow-track {
+	background-image: linear-gradient(
+		90deg,
+		var(--accent) 0 40%,
+		transparent 40% 60%,
+		var(--accent) 60% 100%
+	);
+	background-size: 3rem 100%;
+	animation: flow-dash 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.flow-track {
+		animation: none;
+	}
+}
+
 :focus-visible {
 	outline: 2px solid var(--accent);
 	outline-offset: 3px;
