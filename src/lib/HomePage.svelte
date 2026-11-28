@@ -329,7 +329,15 @@
 								rel="noopener"
 								class="flex h-full items-center gap-3 rounded-xl border border-[var(--line)] bg-[var(--card)] px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--accent)]/50 hover:shadow-md"
 							>
-								<span class="text-2xl" aria-hidden="true">{channel.flag}</span>
+								<img
+									src={`/img/channels/${channel.username}.webp`}
+									alt=""
+									width="40"
+									height="40"
+									loading="lazy"
+									decoding="async"
+									class="size-10 shrink-0 rounded-full object-cover ring-2 ring-[var(--accent)]/20"
+								/>
 								<span class="min-w-0">
 									<span class="block text-sm font-bold">{channel.language[lang]}</span>
 									<span class="block truncate text-xs text-[var(--muted)]">@{channel.username}</span
