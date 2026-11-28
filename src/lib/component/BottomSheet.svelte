@@ -1,5 +1,5 @@
 <script lang="ts">
-	import FluentEmojiCrossMark from '~icons/fluent-emoji/cross-mark';
+	import FluentEmojiCrossMark from '~icons/lucide/x';
 
 	let {
 		open = $bindable(false),

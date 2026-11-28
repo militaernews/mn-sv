@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Circle } from '$lib/Circle';
 	import { presetColors } from '$lib/defaults';
-	import FluentEmojiPencil from '~icons/fluent-emoji/pencil';
-	import FluentEmojiRoundPushpin from '~icons/fluent-emoji/round-pushpin';
+	import FluentEmojiPencil from '~icons/lucide/pencil';
+	import FluentEmojiRoundPushpin from '~icons/lucide/map-pin';
 
 	const {
 		circle,

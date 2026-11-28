@@ -11,7 +11,7 @@
 	import OSINTToolbar from '$lib/component/OSINTToolbar.svelte';
 	import ThreeDView from '$lib/component/ThreeDView.svelte';
 	import LayersPanel from '$lib/component/LayersPanel.svelte';
-	import IconFluentMap24Regular from '~icons/fluent-emoji/world-map';
+	import IconFluentMap24Regular from '~icons/lucide/map';
 	import type { Circle } from '$lib/Circle';
 
 	// Svelte Stores and Utilities

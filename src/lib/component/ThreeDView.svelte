@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as maplibregl from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
-	import IconDismiss from '~icons/fluent/dismiss-16-regular';
+	import IconDismiss from '~icons/lucide/x';
 
 	let { lat, lng, zoom, onClose }: { lat: number; lng: number; zoom: number; onClose: () => void } =
 		$props();

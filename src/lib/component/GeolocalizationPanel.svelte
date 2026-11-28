@@ -1,8 +1,8 @@
 <script lang="ts">
-	import FluentEmojiXMark from '~icons/fluent-emoji/cross-mark';
-	import FluentEmojiCamera from '~icons/fluent-emoji/camera';
-	import FluentEmojiSun from '~icons/fluent-emoji/sun';
-	import FluentEmojiRuler from '~icons/fluent-emoji/straight-ruler';
+	import FluentEmojiXMark from '~icons/lucide/x';
+	import FluentEmojiCamera from '~icons/lucide/camera';
+	import FluentEmojiSun from '~icons/lucide/sun';
+	import FluentEmojiRuler from '~icons/lucide/ruler';
 
 	let {
 		mapLat,

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import FluentEmojiPlus from '~icons/fluent-emoji/plus';
+	import FluentEmojiPlus from '~icons/lucide/plus';
 
 	const {
 		showModal,

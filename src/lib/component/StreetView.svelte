@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import FluentEmojiCrossMark from '~icons/fluent-emoji/cross-mark';
+	import FluentEmojiCrossMark from '~icons/lucide/x';
 
 	const {
 		lat,

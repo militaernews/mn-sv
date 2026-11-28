@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconSettings from '~icons/fluent/settings-16-regular';
-	import IconInfo from '~icons/fluent/info-16-regular';
+	import IconSettings from '~icons/lucide/settings';
+	import IconInfo from '~icons/lucide/info';
 	let { isMobile }: { isMobile: boolean } = $props();
 </script>
 

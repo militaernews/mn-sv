@@ -1,10 +1,10 @@
 <script lang="ts">
-	import FluentEmojiXMark from '~icons/fluent-emoji/cross-mark';
-	import FluentEmojiDatabase from '~icons/fluent-emoji/database';
-	import FluentEmojiFire from '~icons/fluent-emoji/fire';
-	import FluentEmojiAirplane from '~icons/fluent-emoji/airplane';
-	import FluentEmojiShip from '~icons/fluent-emoji/ship';
-	import FluentEmojiSatellite from '~icons/fluent-emoji/satellite';
+	import FluentEmojiXMark from '~icons/lucide/x';
+	import FluentEmojiDatabase from '~icons/lucide/database';
+	import FluentEmojiFire from '~icons/lucide/flame';
+	import FluentEmojiAirplane from '~icons/lucide/plane';
+	import FluentEmojiShip from '~icons/lucide/ship';
+	import FluentEmojiSatellite from '~icons/lucide/satellite';
 
 	let {
 		onClose

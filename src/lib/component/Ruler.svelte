@@ -1,6 +1,6 @@
 <script lang="ts">
-	import FluentEmojiStraightRuler from '~icons/fluent-emoji/straight-ruler';
-	import FluentEmojiCrossMark from '~icons/fluent-emoji/cross-mark';
+	import FluentEmojiStraightRuler from '~icons/lucide/ruler';
+	import FluentEmojiCrossMark from '~icons/lucide/x';
 
 	const {
 		distance,

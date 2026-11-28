@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import FluentEmojiMagnifyingGlass from '~icons/fluent-emoji/magnifying-glass-tilted-left';
-	import FluentEmojiSun from '~icons/fluent-emoji/sun';
-	import CrosshairsIcon from '~icons/fluent/target-20-regular';
+	import FluentEmojiMagnifyingGlass from '~icons/lucide/search';
+	import FluentEmojiSun from '~icons/lucide/sun';
+	import CrosshairsIcon from '~icons/lucide/crosshair';
 
 	let {
 		mapLat,

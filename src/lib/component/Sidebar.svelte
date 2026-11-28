@@ -1,17 +1,17 @@
 <script lang="ts">
-	import FluentEmojiFloppyDisk from '~icons/fluent-emoji/floppy-disk';
-	import FluentEmojiRoundPushpin from '~icons/fluent-emoji/round-pushpin';
-	import FluentEmojiWorldMap from '~icons/fluent-emoji/world-map';
-	import FluentEmojiWastebasket from '~icons/fluent-emoji/wastebasket';
-	import FluentEmojiEye from '~icons/fluent-emoji/eye';
-	import FluentEmojiPlus from '~icons/fluent-emoji/plus';
-	import FluentEmojiCrossMark from '~icons/fluent-emoji/cross-mark';
-	import FluentEmojiMap from '~icons/fluent-emoji/world-map';
-	import FluentEmojiMagnifyingGlass from '~icons/fluent-emoji/magnifying-glass-tilted-left';
-	import FluentEmojiStraightRuler from '~icons/fluent-emoji/straight-ruler';
-	import FluentEmojiTriangularRuler from '~icons/fluent-emoji/triangular-ruler';
-	import FluentEmojiSun from '~icons/fluent-emoji/sun';
-	import CrosshairsIcon from '~icons/fluent/target-20-regular';
+	import FluentEmojiFloppyDisk from '~icons/lucide/save';
+	import FluentEmojiRoundPushpin from '~icons/lucide/map-pin';
+	import FluentEmojiWorldMap from '~icons/lucide/map';
+	import FluentEmojiWastebasket from '~icons/lucide/trash';
+	import FluentEmojiEye from '~icons/lucide/eye';
+	import FluentEmojiPlus from '~icons/lucide/plus';
+	import FluentEmojiCrossMark from '~icons/lucide/x';
+	import FluentEmojiMap from '~icons/lucide/map';
+	import FluentEmojiMagnifyingGlass from '~icons/lucide/search';
+	import FluentEmojiStraightRuler from '~icons/lucide/ruler';
+	import FluentEmojiTriangularRuler from '~icons/lucide/triangle';
+	import FluentEmojiSun from '~icons/lucide/sun';
+	import CrosshairsIcon from '~icons/lucide/crosshair';
 	import BottomSheet from '$lib/component/BottomSheet.svelte';
 	import type { MapSource } from '$lib/MapSource';
 

@@ -1,12 +1,12 @@
 <!-- src/routes/+error.svelte -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import FluentEmojiCrossMark from '~icons/fluent-emoji/cross-mark';
-	import FluentEmojiFaceWithRaisedEyebrow from '~icons/fluent-emoji/face-with-raised-eyebrow';
-	import FluentEmojiMagnifyingGlassTiltedLeft from '~icons/fluent-emoji/magnifying-glass-tilted-left';
-	import FluentEmojiWarning from '~icons/fluent-emoji/warning';
-	import FluentEmojiSos from '~icons/fluent-emoji/sos-button';
-	import FluentArrowLeft24Regular from '~icons/fluent/arrow-left-24-regular';
+	import FluentEmojiCrossMark from '~icons/lucide/x';
+	import FluentEmojiFaceWithRaisedEyebrow from '~icons/lucide/info';
+	import FluentEmojiMagnifyingGlassTiltedLeft from '~icons/lucide/search';
+	import FluentEmojiWarning from '~icons/lucide/triangle-alert';
+	import FluentEmojiSos from '~icons/lucide/life-buoy';
+	import FluentArrowLeft24Regular from '~icons/lucide/arrow-left';
 	import { page } from '$app/state';
 
 	const status = $derived(page.status);

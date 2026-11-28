@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import FluentEmojiMagnifyingGlass from '~icons/fluent-emoji/magnifying-glass-tilted-left';
-	import FluentEmojiBridge from '~icons/fluent-emoji/bridge-at-night';
-	import FluentEmojiEvergreenTree from '~icons/fluent-emoji/evergreen-tree';
-	import FluentEmojiZap from '~icons/fluent-emoji/high-voltage';
-	import FluentEmojiConstruction from '~icons/fluent-emoji/construction-worker';
+	import FluentEmojiMagnifyingGlass from '~icons/lucide/search';
+	import FluentEmojiBridge from '~icons/lucide/bridge';
+	import FluentEmojiEvergreenTree from '~icons/lucide/tree-pine';
+	import FluentEmojiZap from '~icons/lucide/zap';
+	import FluentEmojiConstruction from '~icons/lucide/hard-hat';
 
 	const {
 		onSearch,

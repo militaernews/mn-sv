@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { MapSource } from '$lib/MapSource';
-	import IconDismiss from '~icons/fluent/dismiss-16-regular';
+	import IconDismiss from '~icons/lucide/x';
 
 	let {
 		sources,

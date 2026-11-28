@@ -33,6 +33,49 @@
 	}
 }
 
+/* litfass-style navy palette */
+:root[data-theme='dark'] {
+	--color-base-100: #0d2648;
+	--color-base-200: #0a1f3d;
+	--color-base-300: #1c3a63;
+	--color-base-content: #e6f6ff;
+	--color-primary: #9be7ff;
+	--color-primary-content: #06142a;
+	--color-secondary: #2ec5ff;
+	--color-secondary-content: #06142a;
+	--color-accent: #2ec5ff;
+	--color-accent-content: #06142a;
+	--color-neutral: #06142a;
+	--color-neutral-content: #e6f6ff;
+	--color-success: #4ade80;
+	--color-error: #ff7a6b;
+	--color-warning: #facc15;
+	--radius-box: 1rem;
+	--radius-btn: 999px;
+}
+html {
+	background: #06142a;
+}
+body {
+	background: radial-gradient(ellipse 80% 40% at 50% -10%, #0a1f3d, transparent), #06142a;
+	color: #e6f6ff;
+}
+.card {
+	border: 1px solid #1c3a63;
+	box-shadow: 0 12px 36px #0003;
+}
+.btn {
+	box-shadow: 0 4px 14px #0002;
+}
+input,
+select,
+textarea {
+	border-radius: 0.75rem;
+}
+::selection {
+	background: #2ec5ff;
+	color: #06142a;
+}
 /* Layout polish */
 .btn {
 	transition:
