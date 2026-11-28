@@ -9,9 +9,13 @@ The projects and their texts are in `src/lib/projects.ts`; pictures are in `stat
 handbook lives in `src/lib/docs/` with an English translation in `src/lib/docs/en/` and is rendered
 by `src/lib/server/docs.ts`.
 
-The header leads to `/settings` (language, appearance and the changelog from `src/lib/changelog.md`)
-and `/about` (support contact and the four `/legal/*` pages). The legal texts live in
+The header leads to `/settings` (language and appearance), `/changelog` (date-grouped changes) and
+`/about` (support contact and the four `/legal/*` pages). The legal texts live in
 `src/lib/legal/{de,en}/`; operator details are still marked as TODO placeholders.
+
+The three tools live in `apps/viz`, `apps/geo` and `apps/charts` as Bun workspaces, with their full
+Git history preserved. See `HISTORY.md`. Shared design rules for all sites and bots are in
+`STYLEGUIDE.md`; commit messages must follow `AGENTS.md`.
 
 Appearance follows the system colour scheme in a browser. Inside Telegram, the WebApp colour scheme
 and colours are used instead, updates live when Telegram's theme changes, and external links open
