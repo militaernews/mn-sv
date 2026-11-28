@@ -42,11 +42,7 @@
 					{:else}
 						<div></div>
 					{/if}
-					<button
-						class="btn btn-ghost btn-xs h-6 w-6 p-0"
-						onclick={handleClose}
-						aria-label="Close"
-					>
+					<button class="btn btn-ghost btn-xs h-6 w-6 p-0" onclick={handleClose} aria-label="Close">
 						<FluentEmojiCrossMark class="size-4" />
 					</button>
 				</div>

@@ -1,16 +1,23 @@
 <script lang="ts">
 	import FluentEmojiPlus from '~icons/fluent-emoji/plus';
 
-	const { showModal, mapName, mapUrl, onAddMap, onClose, onUpdateMapName, onUpdateMapUrl } =
-		$props<{
-			showModal: boolean;
-			mapName: string;
-			mapUrl: string;
-			onAddMap: () => void;
-			onClose: () => void;
-			onUpdateMapName: (name: string) => void;
-			onUpdateMapUrl: (url: string) => void;
-		}>();
+	const {
+		showModal,
+		mapName,
+		mapUrl,
+		onAddMap,
+		onClose,
+		onUpdateMapName,
+		onUpdateMapUrl
+	}: {
+		showModal: boolean;
+		mapName: string;
+		mapUrl: string;
+		onAddMap: () => void;
+		onClose: () => void;
+		onUpdateMapName: (name: string) => void;
+		onUpdateMapUrl: (url: string) => void;
+	} = $props();
 </script>
 
 {#if showModal}

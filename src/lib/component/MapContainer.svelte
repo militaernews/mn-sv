@@ -13,24 +13,26 @@
 		onCirclesUpdate,
 		displayLegend,
 		legendTexts,
+		onLegendChange,
 		activeLegendEntries,
 		isMobile,
 		lat,
 		lng,
 		zoom
-	} = $props<{
+	}: {
 		currentMapUrl: string;
 		circles: Circle[];
 		onCircleEdit: (circle: Circle) => void;
 		onCirclesUpdate: (updatedCircles: Circle[]) => void;
 		displayLegend: boolean;
 		legendTexts: Map<number, string>;
+		onLegendChange: (map: Map<number, string>) => void;
 		activeLegendEntries: Readable<[number, string][]>;
 		isMobile: boolean;
 		lat: number;
 		lng: number;
 		zoom: number;
-	}>();
+	} = $props();
 
 	let isMapLoading = $state(true);
 	let iframeRef: HTMLIFrameElement | null = null;
@@ -120,13 +122,13 @@
 	});
 </script>
 
-	<div
-		class="relative h-full flex-grow overflow-hidden z-0"
-		id="container"
-		onpointermove={handlePointerMove}
-		onpointerup={handlePointerUp}
-		onpointercancel={handlePointerUp}
-	>
+<div
+	class="relative z-0 h-full flex-grow overflow-hidden"
+	id="container"
+	onpointermove={handlePointerMove}
+	onpointerup={handlePointerUp}
+	onpointercancel={handlePointerUp}
+>
 	<div class=" z-0 h-full w-full">
 		{#if isMapLoading}
 			<div class="bg-base-100 absolute inset-0 z-10 flex items-center justify-center">
@@ -160,9 +162,9 @@
 		<Legend
 			entries={$activeLegendEntries}
 			onChange={(colorIndex, value) => {
-				const map = new Map($legendTexts);
+				const map = new Map(legendTexts);
 				map.set(colorIndex, value);
-				legendTexts.set(map);
+				onLegendChange(map);
 			}}
 		/>
 	{/if}

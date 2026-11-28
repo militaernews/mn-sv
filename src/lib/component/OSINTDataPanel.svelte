@@ -6,9 +6,11 @@
 	import FluentEmojiShip from '~icons/fluent-emoji/ship';
 	import FluentEmojiSatellite from '~icons/fluent-emoji/satellite';
 
-	let { onClose } = $props<{
+	let {
+		onClose
+	}: {
 		onClose: () => void;
-	}>();
+	} = $props();
 
 	let activeTab = $state('overview');
 	let firmsEnabled = $state(false);

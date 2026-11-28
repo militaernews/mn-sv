@@ -31,7 +31,6 @@ export async function captureScreenshot2(): Promise<void> {
 
 		// Clean up
 		container.classList.remove('temp-screenshot');
-		document.head.removeChild(style);
 
 		// Download the screenshot
 		canvas.toBlob((blob) => {

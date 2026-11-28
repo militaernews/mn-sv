@@ -1,8 +1,9 @@
+import adapter from '@sveltejs/adapter-vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig } from 'vite';
 import Icons from 'unplugin-icons/vite';
-import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
 export default defineConfig({
 	plugins: [
@@ -10,37 +11,13 @@ export default defineConfig({
 			compiler: 'svelte',
 			autoInstall: true
 		}),
-		sveltekit(),
-		tailwindcss({ optimize: { minify: true } }),
-		SvelteKitPWA()
-		/*{
-			strategies: 'injectManifest',
-			srcDir: 'src',
-			filename: 'service-worker.js',
-			manifest: {
-				name: 'Viz.rs',
-				short_name: 'Viz.rs',
-				theme_color: '#ff3e00',
-				icons: [
-					{
-						src: 'favicon.png',
-						sizes: '16x16',
-						type: 'image/png'
-					},
-					{
-						src: 'favicon.png',
-						sizes: '32x32',
-						type: 'image/png'
-					},
-					{
-						src: 'favicon.png',
-						sizes: '48x48',
-						type: 'image/png'
-					}
-				]
-			}
-			// other pwa options 
-		} */
+		sveltekit({
+			alias: { $lib: 'src/lib' },
+			preprocess: vitePreprocess(),
+			compilerOptions: { runes: true },
+			adapter: adapter()
+		}),
+		tailwindcss({ optimize: { minify: true } })
 	],
 	server: {
 		allowedHosts: true,

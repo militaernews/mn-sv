@@ -22,9 +22,9 @@
 	<p>The data controller responsible for your personal data is:</p>
 	<p>
 		<strong>Militaernews</strong><br />
-		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt"
-			>https://t.me/MilitaernewsKontakt</a
-		>
+		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt">
+			https://t.me/MilitaernewsKontakt
+		</a>
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">3. What Personal Data We Collect</h2>
@@ -80,9 +80,9 @@
 	</ul>
 	<p>
 		To exercise any of these rights, contact us at:
-		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt"
-			>https://t.me/MilitaernewsKontakt</a
-		>
+		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt">
+			https://t.me/MilitaernewsKontakt
+		</a>
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">8. Data Retention</h2>
@@ -110,9 +110,9 @@
 	</p>
 	<p>
 		<strong>Data Protection Officer (DPO)</strong> (if applicable):<br />
-		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt"
-			>https://t.me/MilitaernewsKontakt</a
-		>
+		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt">
+			https://t.me/MilitaernewsKontakt
+		</a>
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">12. Complaints</h2>

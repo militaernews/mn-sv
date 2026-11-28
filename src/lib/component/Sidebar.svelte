@@ -40,7 +40,7 @@
 		isGeolocalizationActive,
 		onOpenSunTool,
 		isSunToolActive
-	} = $props<{
+	}: {
 		displayLegend: boolean;
 		isCapturingScreenshot: boolean;
 		mapSources: MapSource[];
@@ -65,7 +65,7 @@
 		isGeolocalizationActive: boolean;
 		onOpenSunTool: () => void;
 		isSunToolActive: boolean;
-	}>();
+	} = $props();
 
 	let showMobilePanel = $state(false);
 
@@ -102,15 +102,15 @@
 		<div class="dropdown dropdown-bottom">
 			<label
 				tabindex="0"
-				class="btn btn-circle btn-primary btn-md shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 ease-out"
+				class="btn btn-circle btn-primary btn-md shadow-lg transition-all duration-200 ease-out hover:scale-110 hover:shadow-xl"
 			>
 				<FluentEmojiPlus class="size-6" />
 			</label>
 			<ul
 				tabindex="0"
-				class="dropdown-content menu bg-base-100 rounded-lg z-[4001] mt-3 w-80 p-2 shadow-2xl border border-base-300/50 backdrop-blur-sm max-h-[80vh] overflow-y-auto flex-nowrap"
+				class="dropdown-content menu bg-base-100 border-base-300/50 z-[4001] mt-3 max-h-[80vh] w-80 flex-nowrap overflow-y-auto rounded-lg border p-2 shadow-2xl backdrop-blur-sm"
 			>
-				<li class="menu-title text-xs opacity-40 font-semibold tracking-wide">Tools</li>
+				<li class="menu-title text-xs font-semibold tracking-wide opacity-40">Tools</li>
 				<li>
 					<button class="hover:bg-primary/10 transition-colors duration-150" onclick={onAddCircle}>
 						<FluentEmojiRoundPushpin class="size-5" />
@@ -119,7 +119,9 @@
 				</li>
 				<li>
 					<button
-						class="{displayLegend ? 'bg-primary/20 text-primary' : ''} hover:bg-primary/15 transition-colors duration-150"
+						class="{displayLegend
+							? 'bg-primary/20 text-primary'
+							: ''} hover:bg-primary/15 transition-colors duration-150"
 						onclick={onToggleLegend}
 					>
 						<FluentEmojiEye class="size-5" />
@@ -128,7 +130,9 @@
 				</li>
 				<li>
 					<button
-						class="{isLeafletActive ? 'bg-primary/20 text-primary' : ''} hover:bg-primary/15 transition-colors duration-150"
+						class="{isLeafletActive
+							? 'bg-primary/20 text-primary'
+							: ''} hover:bg-primary/15 transition-colors duration-150"
 						onclick={onToggleLeaflet}
 					>
 						<FluentEmojiMap class="size-5" />
@@ -137,7 +141,9 @@
 				</li>
 				<li>
 					<button
-						class="{isInfraSearchActive ? 'bg-primary/20 text-primary' : ''} hover:bg-primary/15 transition-colors duration-150"
+						class="{isInfraSearchActive
+							? 'bg-primary/20 text-primary'
+							: ''} hover:bg-primary/15 transition-colors duration-150"
 						onclick={onToggleInfraSearch}
 					>
 						<FluentEmojiMagnifyingGlass class="size-5" />
@@ -146,10 +152,12 @@
 				</li>
 
 				<div class="divider my-2 opacity-10"></div>
-				<li class="menu-title text-xs opacity-40 font-semibold tracking-wide">Measurement</li>
+				<li class="menu-title text-xs font-semibold tracking-wide opacity-40">Measurement</li>
 				<li>
 					<button
-						class="{measureMode === 'distance' ? 'bg-primary text-primary-content' : ''} hover:bg-primary/20 transition-colors duration-150"
+						class="{measureMode === 'distance'
+							? 'bg-primary text-primary-content'
+							: ''} hover:bg-primary/20 transition-colors duration-150"
 						onclick={() => onToggleMeasure('distance')}
 					>
 						<FluentEmojiStraightRuler class="size-5" />
@@ -158,7 +166,9 @@
 				</li>
 				<li>
 					<button
-						class="{measureMode === 'area' ? 'bg-primary text-primary-content' : ''} hover:bg-primary/20 transition-colors duration-150"
+						class="{measureMode === 'area'
+							? 'bg-primary text-primary-content'
+							: ''} hover:bg-primary/20 transition-colors duration-150"
 						onclick={() => onToggleMeasure('area')}
 					>
 						<FluentEmojiTriangularRuler class="size-5" />
@@ -167,7 +177,7 @@
 				</li>
 
 				<div class="divider my-2 opacity-10"></div>
-				<li class="menu-title text-xs opacity-40 font-semibold tracking-wide">Data</li>
+				<li class="menu-title text-xs font-semibold tracking-wide opacity-40">Data</li>
 				<li>
 					<button
 						class="hover:bg-primary/10 transition-colors duration-150 disabled:opacity-50"
@@ -229,7 +239,7 @@
 				</li>
 
 				<div class="divider my-2 opacity-10"></div>
-				<li class="menu-title text-xs opacity-40 font-semibold tracking-wide">Maps</li>
+				<li class="menu-title text-xs font-semibold tracking-wide opacity-40">Maps</li>
 				<li>
 					<button onclick={onOpenMapModal}>
 						<FluentEmojiPlus class="size-5" />
@@ -238,9 +248,11 @@
 				</li>
 
 				{#each Object.entries(groupedMaps) as [category, maps]}
-					<div class="collapse collapse-arrow join-item border-base-300 border-b last:border-b-0">
+					<div class="collapse-arrow join-item border-base-300 collapse border-b last:border-b-0">
 						<input type="checkbox" class="min-h-0" />
-						<div class="collapse-title min-h-0 py-2 px-4 text-xs font-bold opacity-60 uppercase tracking-wider">
+						<div
+							class="collapse-title min-h-0 px-4 py-2 text-xs font-bold tracking-wider uppercase opacity-60"
+						>
 							{category}
 						</div>
 						<div class="collapse-content p-0">
@@ -248,13 +260,13 @@
 								{#each maps as map}
 									<li>
 										<div
-											class="flex items-center justify-between p-2 {selectedMapIndex === map.index &&
-											!isLeafletActive
+											class="flex items-center justify-between p-2 {selectedMapIndex ===
+												map.index && !isLeafletActive
 												? 'bg-primary/10 text-primary font-bold'
 												: ''}"
 										>
 											<button
-												class="flex-1 text-left text-xs truncate"
+												class="flex-1 truncate text-left text-xs"
 												onclick={() => onSwitchMap(map.index)}
 											>
 												{map.name}
@@ -331,7 +343,9 @@
 					: ''}"
 				onclick={handleActionClick(onToggleLeaflet)}
 			>
-				<FluentEmojiMap class="size-6 {isLeafletActive ? 'text-primary' : 'text-base-content/70'}" />
+				<FluentEmojiMap
+					class="size-6 {isLeafletActive ? 'text-primary' : 'text-base-content/70'}"
+				/>
 				<span class="text-xs">Leaflet</span>
 			</button>
 
@@ -394,12 +408,12 @@
 		<!-- Map list grouped -->
 		<div class="space-y-2">
 			{#each Object.entries(groupedMaps) as [category, maps]}
-				<div class="text-[10px] font-bold opacity-40 uppercase px-2">{category}</div>
+				<div class="px-2 text-[10px] font-bold uppercase opacity-40">{category}</div>
 				<div class="space-y-1">
 					{#each maps as map}
 						<div
 							class="hover:bg-base-200/50 flex items-center gap-2 rounded-lg p-2 {selectedMapIndex ===
-							map.index && !isLeafletActive
+								map.index && !isLeafletActive
 								? 'bg-primary/20'
 								: ''}"
 						>

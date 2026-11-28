@@ -10,13 +10,13 @@
 		mapZoom,
 		onClose,
 		selectedTool = $bindable('image-overlay')
-	} = $props<{
+	}: {
 		mapLat: number;
 		mapLng: number;
 		mapZoom: number;
 		onClose: () => void;
 		selectedTool?: 'image-overlay' | 'sun';
-	}>();
+	} = $props();
 
 	let imageUrl = $state('');
 	let imageOpacity = $state(0.5);
@@ -61,8 +61,7 @@
 				0.040849 * Math.sin(2 * B));
 
 		// Cooper (1969) equation - peaks at the summer solstice (day ~172), unlike a plain sin(B).
-		const declRad =
-			((23.45 * Math.PI) / 180) * Math.sin(((2 * Math.PI) / 365) * (284 + dayOfYear));
+		const declRad = ((23.45 * Math.PI) / 180) * Math.sin(((2 * Math.PI) / 365) * (284 + dayOfYear));
 
 		const utcHours = date.getUTCHours() + date.getUTCMinutes() / 60;
 		const solarTime = utcHours + lng / 15 + eotMinutes / 60;
@@ -79,11 +78,12 @@
 		const azDenom = Math.cos(latRad) * Math.sin(zenithRad);
 		let azimuthDeg: number;
 		if (Math.abs(azDenom) > 0.001) {
-			let azRad =
-				(Math.sin(latRad) * Math.cos(zenithRad) - Math.sin(declRad)) / azDenom;
+			let azRad = (Math.sin(latRad) * Math.cos(zenithRad) - Math.sin(declRad)) / azDenom;
 			azRad = Math.acos(Math.max(-1, Math.min(1, azRad)));
 			azimuthDeg =
-				hourAngleDeg > 0 ? (((azRad * 180) / Math.PI + 180) % 360) : ((540 - (azRad * 180) / Math.PI) % 360);
+				hourAngleDeg > 0
+					? ((azRad * 180) / Math.PI + 180) % 360
+					: (540 - (azRad * 180) / Math.PI) % 360;
 		} else {
 			azimuthDeg = lat > 0 ? 180 : 0;
 		}

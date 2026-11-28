@@ -1,7 +1,7 @@
 <!-- src/lib/components/maps/InteractiveMap.svelte -->
 <script lang="ts">
 	import { Map, TileLayer, Marker } from 'sveaflet';
-	import { browser } from '$app/environment';
+	const browser = !import.meta.env.SSR;
 
 	interface InteractiveMapProps {
 		latitude: number;

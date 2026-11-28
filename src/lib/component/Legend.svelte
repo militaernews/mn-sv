@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { presetColors } from '$lib/defaults';
 
-	const { entries = [], onChange } = $props<{
+	const {
+		entries = [],
+		onChange
+	}: {
 		entries: [number, string][];
 		onChange: (colorIndex: number, text: string) => void;
-	}>();
+	} = $props();
 </script>
 
 <div class="bg-base-200 absolute right-0 bottom-0 z-10 space-y-3 rounded-tl-lg p-3">
@@ -18,7 +21,7 @@
 				class="  text-sm"
 				type="text"
 				value={text}
-				oninput={(e) => onChange(colorIndex, e.target.value)}
+				oninput={(e) => onChange(colorIndex, (e.currentTarget as HTMLInputElement).value)}
 			/>
 		</div>
 	{/each}

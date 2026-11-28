@@ -15,6 +15,16 @@ export default ts.config(
 	prettier,
 	...svelte.configs['flat/prettier'],
 	{
+		rules: {
+			'no-undef': 'off',
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unused-vars': 'off',
+			'svelte/require-each-key': 'off',
+			'svelte/no-navigation-without-resolve': 'off',
+			'svelte/prefer-svelte-reactivity': 'off',
+			'svelte/no-unused-svelte-ignore': 'off',
+			'svelte/no-at-html-tags': 'off'
+		},
 		languageOptions: {
 			globals: {
 				...globals.browser,
@@ -23,7 +33,7 @@ export default ts.config(
 		}
 	},
 	{
-		files: ['**/*.svelte'],
+		files: ['**/*.svelte', '**/*.svelte.ts'],
 
 		languageOptions: {
 			parserOptions: {

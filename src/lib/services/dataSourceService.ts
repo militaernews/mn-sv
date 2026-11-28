@@ -49,7 +49,7 @@ export async function fetchNASAEonetData(
 		if (!response.ok) throw new Error(`NASA EONET API error: ${response.statusText}`);
 
 		const data = await response.json();
-		
+
 		return (data.events || []).flatMap((event: any) => {
 			return event.geometry.map((geom: any) => ({
 				lat: geom.coordinates[1],
@@ -76,7 +76,7 @@ export async function fetchNASAFirmsData(
 ): Promise<FireData[]> {
 	// Falls kein Key vorhanden ist, nutze EONET
 	if (!apiKey) return fetchNASAEonetData(bounds, daysBack);
-	
+
 	try {
 		const endDate = new Date();
 		const startDate = new Date(endDate.getTime() - daysBack * 24 * 60 * 60 * 1000);
@@ -117,9 +117,12 @@ export async function fetchNASAFirmsData(
  * ADS-B Exchange API - Flugverkehrsdaten
  * Kostenlose API ohne Authentifizierung
  */
-export async function fetchADSBExchangeData(
-	bounds: { north: number; south: number; east: number; west: number }
-): Promise<FlightData[]> {
+export async function fetchADSBExchangeData(bounds: {
+	north: number;
+	south: number;
+	east: number;
+	west: number;
+}): Promise<FlightData[]> {
 	try {
 		// ADS-B Exchange API mit Bounding Box
 		const url = `https://adsbexchange-api.abcs.io/api/aircraft/json?bounds=${bounds.south},${bounds.west},${bounds.north},${bounds.east}`;
@@ -156,9 +159,12 @@ export async function fetchADSBExchangeData(
  * Maritime Tracker API - Schiffsverfolgungsdaten
  * Nutzt OpenSeaMap oder ähnliche öffentliche APIs
  */
-export async function fetchMaritimeTrackerData(
-	bounds: { north: number; south: number; east: number; west: number }
-): Promise<VesselData[]> {
+export async function fetchMaritimeTrackerData(bounds: {
+	north: number;
+	south: number;
+	east: number;
+	west: number;
+}): Promise<VesselData[]> {
 	try {
 		// Schiffe im Bereich abrufen (vereinfachte API)
 		const url = `https://www.marinetraffic.com/api/v3/json/absmproximitysearch?key=YOUR_KEY&timespan=60&box=${bounds.south},${bounds.west},${bounds.north},${bounds.east}`;
@@ -175,9 +181,12 @@ export async function fetchMaritimeTrackerData(
 /**
  * Mock-Daten für Maritime Tracker (für Demo ohne API-Key)
  */
-function getMockMaritimeData(
-	bounds: { north: number; south: number; east: number; west: number }
-): VesselData[] {
+function getMockMaritimeData(bounds: {
+	north: number;
+	south: number;
+	east: number;
+	west: number;
+}): VesselData[] {
 	return [
 		{
 			mmsi: '636019827',

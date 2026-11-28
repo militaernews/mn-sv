@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Map, TileLayer, Marker, Polyline, Polygon, Popup, DivIcon } from 'sveaflet';
-	import { browser } from '$app/environment';
+	const browser = !import.meta.env.SSR;
 	import 'leaflet/dist/leaflet.css';
 	import { onMount } from 'svelte';
 	import DataSourcePanel from './DataSourcePanel.svelte';
@@ -16,7 +16,7 @@
 		lng = $bindable(37.9248),
 		zoom = $bindable(13),
 		circles = []
-	} = $props<{
+	}: {
 		onLocationSelect?: (lat: number, lng: number) => void;
 		measureMode?: 'distance' | 'area' | 'none';
 		onMeasureUpdate?: (value: number, type: 'distance' | 'area') => void;
@@ -26,7 +26,7 @@
 		lng?: number;
 		zoom?: number;
 		circles?: any[];
-	}>();
+	} = $props();
 
 	let points = $state<[number, number][]>([]);
 	let map: any = $state(null);
@@ -91,8 +91,7 @@
 		const dLon = toRad(b[1] - a[1]);
 		const sinDLat = Math.sin(dLat / 2);
 		const sinDLon = Math.sin(dLon / 2);
-		const h =
-			sinDLat * sinDLat + Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * sinDLon * sinDLon;
+		const h = sinDLat * sinDLat + Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * sinDLon * sinDLon;
 		return 2 * R * Math.asin(Math.sqrt(h));
 	}
 
@@ -156,164 +155,196 @@
 	}
 </script>
 
-	<div class="relative h-full w-full z-0">
-		{#if browser}
-			<Map
-				options={{ center: [lat, lng], zoom: zoom }}
-				bind:instance={map}
-				onclick={handleMapClick}
-				onmoveend={handleMapMove}
-				onzoomend={handleMapMove}
-			>
+<div class="relative z-0 h-full w-full">
+	{#if browser}
+		<Map
+			options={{ center: [lat, lng], zoom: zoom }}
+			bind:instance={map}
+			onclick={handleMapClick}
+			onmoveend={handleMapMove}
+			onzoomend={handleMapMove}
+		>
+			<TileLayer
+				url={activeLayer}
+				options={{ attribution: 'Map data &copy; OpenStreetMap contributors' }}
+			/>
+
+			{#if showStreetViewPlaces}
 				<TileLayer
-					url={activeLayer}
-					options={{ attribution: 'Map data &copy; OpenStreetMap contributors' }}
+					url="https://tiles.mapillary.com/maps/v1/mapillary_tiles/{'{z}'}/{'{x}'}/{'{y}'}.png?access_token=MLY|4712345678901234|your_token_here"
+					options={{
+						attribution: 'Mapillary',
+						opacity: 0.6,
+						zIndex: 500
+					}}
 				/>
+			{/if}
 
-					{#if showStreetViewPlaces}
-						<TileLayer
-							url="https://tiles.mapillary.com/maps/v1/mapillary_tiles/{'{z}'}/{'{x}'}/{'{y}'}.png?access_token=MLY|4712345678901234|your_token_here"
-							options={{ 
-								attribution: 'Mapillary',
-								opacity: 0.6,
-								zIndex: 500
-							}}
-						/>
-					{/if}
+			{#if points.length > 0}
+				{#each points as point}
+					<Marker latLng={point} />
+				{/each}
 
-				{#if points.length > 0}
-					{#each points as point}
-						<Marker latLng={point} />
-					{/each}
-
-					{#if points.length >= 2}
-						{#if points.length >= 3 && measureMode === 'area'}
-							<Polygon latLngs={points} options={{ color: 'red' }} />
-						{:else}
-							<Polyline latLngs={points} options={{ color: 'blue' }} />
-						{/if}
+				{#if points.length >= 2}
+					{#if points.length >= 3 && measureMode === 'area'}
+						<Polygon latLngs={points} options={{ color: 'red' }} />
+					{:else}
+						<Polyline latLngs={points} options={{ color: 'blue' }} />
 					{/if}
 				{/if}
+			{/if}
 
-					{#if searchResults.length > 0}
-						{#each searchResults as result}
-							<Marker latLng={[result.lat, result.lon]}>
-								<Popup>
-									<div class="p-1">
-										<p class="text-xs font-bold">{result.display_name}</p>
-									</div>
-								</Popup>
-							</Marker>
-						{/each}
-					{/if}
+			{#if searchResults.length > 0}
+				{#each searchResults as result}
+					<Marker latLng={[result.lat, result.lon]}>
+						<Popup>
+							<div class="p-1">
+								<p class="text-xs font-bold">{result.display_name}</p>
+							</div>
+						</Popup>
+					</Marker>
+				{/each}
+			{/if}
 
-					{#if fireData.length > 0}
-						{#each fireData as fire}
-							<Marker latLng={[fire.lat, fire.lng]}>
-								<DivIcon options={{
-									html: `<div style="background-color: #ff6b35; width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">🔥</div>`,
-									className: 'fire-marker',
-									iconSize: [20, 20],
-									iconAnchor: [10, 10]
-								}} />
-								<Popup>
-									<div class="p-1 text-xs">
-										<p class="font-bold">Fire Detection</p>
-										<p>Confidence: {(fire.confidence ?? 0).toFixed(1)}%</p>
-										<p>Date: {new Date(fire.date).toLocaleDateString()}</p>
-									</div>
-								</Popup>
-							</Marker>
-						{/each}
-					{/if}
+			{#if fireData.length > 0}
+				{#each fireData as fire}
+					<Marker latLng={[fire.lat, fire.lng]}>
+						<DivIcon
+							options={{
+								html: `<div style="background-color: #ff6b35; width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">🔥</div>`,
+								className: 'fire-marker',
+								iconSize: [20, 20],
+								iconAnchor: [10, 10]
+							}}
+						/>
+						<Popup>
+							<div class="p-1 text-xs">
+								<p class="font-bold">Fire Detection</p>
+								<p>Confidence: {(fire.confidence ?? 0).toFixed(1)}%</p>
+								<p>Date: {new Date(fire.date).toLocaleDateString()}</p>
+							</div>
+						</Popup>
+					</Marker>
+				{/each}
+			{/if}
 
-					{#if flightData.length > 0}
-						{#each flightData as flight}
-							<Marker latLng={[flight.lat, flight.lng]}>
-								<DivIcon options={{
-									html: `<div style="background-color: #4a90e2; width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">✈️</div>`,
-									className: 'flight-marker',
-									iconSize: [20, 20],
-									iconAnchor: [10, 10]
-								}} />
-								<Popup>
-									<div class="p-1 text-xs">
-										<p class="font-bold">{flight.callsign}</p>
-										<p>ICAO: {flight.icao}</p>
-										<p>Altitude: {flight.altitude} ft</p>
-										<p>Speed: {flight.speed} kts</p>
-									</div>
-								</Popup>
-							</Marker>
-						{/each}
-					{/if}
+			{#if flightData.length > 0}
+				{#each flightData as flight}
+					<Marker latLng={[flight.lat, flight.lng]}>
+						<DivIcon
+							options={{
+								html: `<div style="background-color: #4a90e2; width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">✈️</div>`,
+								className: 'flight-marker',
+								iconSize: [20, 20],
+								iconAnchor: [10, 10]
+							}}
+						/>
+						<Popup>
+							<div class="p-1 text-xs">
+								<p class="font-bold">{flight.callsign}</p>
+								<p>ICAO: {flight.icao}</p>
+								<p>Altitude: {flight.altitude} ft</p>
+								<p>Speed: {flight.speed} kts</p>
+							</div>
+						</Popup>
+					</Marker>
+				{/each}
+			{/if}
 
-					{#if vesselData.length > 0}
-						{#each vesselData as vessel}
-							<Marker latLng={[vessel.lat, vessel.lng]}>
-								<DivIcon options={{
-									html: `<div style="background-color: #2ecc71; width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">⛴️</div>`,
-									className: 'vessel-marker',
-									iconSize: [20, 20],
-									iconAnchor: [10, 10]
-								}} />
-								<Popup>
-									<div class="p-1 text-xs">
-										<p class="font-bold">{vessel.name}</p>
-										<p>MMSI: {vessel.mmsi}</p>
-										<p>Type: {vessel.shipType}</p>
-										<p>Speed: {vessel.speed} kts</p>
-									</div>
-								</Popup>
-							</Marker>
-						{/each}
-					{/if}
+			{#if vesselData.length > 0}
+				{#each vesselData as vessel}
+					<Marker latLng={[vessel.lat, vessel.lng]}>
+						<DivIcon
+							options={{
+								html: `<div style="background-color: #2ecc71; width: 20px; height: 20px; border: 2px solid white; border-radius: 50%; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">⛴️</div>`,
+								className: 'vessel-marker',
+								iconSize: [20, 20],
+								iconAnchor: [10, 10]
+							}}
+						/>
+						<Popup>
+							<div class="p-1 text-xs">
+								<p class="font-bold">{vessel.name}</p>
+								<p>MMSI: {vessel.mmsi}</p>
+								<p>Type: {vessel.shipType}</p>
+								<p>Speed: {vessel.speed} kts</p>
+							</div>
+						</Popup>
+					</Marker>
+				{/each}
+			{/if}
 
-					{#if circles.length > 0}
-						{#each circles as circle}
-							<Marker latLng={[circle.lat || lat, circle.lng || lng]}>
-								<DivIcon options={{
-									html: `<div style="background-color: ${circle.color || 'red'}; width: 24px; height: 24px; border: 2px solid white; border-radius: 4px; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">${circle.symbol || 'X'}</div>`,
-									className: 'nato-icon',
-									iconSize: [24, 24],
-									iconAnchor: [12, 12]
-								}} />
-								<Popup>
-									<div class="p-1">
-										<p class="text-xs font-bold">{circle.text || 'Marker'}</p>
-									</div>
-								</Popup>
-							</Marker>
-						{/each}
-					{/if}
-				</Map>
-		{/if}
+			{#if circles.length > 0}
+				{#each circles as circle}
+					<Marker latLng={[circle.lat || lat, circle.lng || lng]}>
+						<DivIcon
+							options={{
+								html: `<div style="background-color: ${circle.color || 'red'}; width: 24px; height: 24px; border: 2px solid white; border-radius: 4px; display: flex; items-center; justify-content: center; color: white; font-weight: bold; font-size: 10px;">${circle.symbol || 'X'}</div>`,
+								className: 'nato-icon',
+								iconSize: [24, 24],
+								iconAnchor: [12, 12]
+							}}
+						/>
+						<Popup>
+							<div class="p-1">
+								<p class="text-xs font-bold">{circle.text || 'Marker'}</p>
+							</div>
+						</Popup>
+					</Marker>
+				{/each}
+			{/if}
+		</Map>
+	{/if}
 
 	<!-- Layer Switcher UI -->
-	<div class="absolute bottom-4 left-4 z-[400] flex flex-col gap-2 animate-in fade-in slide-in-from-left-2 duration-500">
-		<button class="btn btn-xs btn-glass hover:shadow-md hover:bg-base-300/50 transition-all duration-200" onclick={() => setLayer('osm')}>OSM</button>
-		<button class="btn btn-xs btn-glass hover:shadow-md hover:bg-base-300/50 transition-all duration-200" onclick={() => setLayer('satellite')}>Satellite</button>
-		<button class="btn btn-xs btn-glass hover:shadow-md hover:bg-base-300/50 transition-all duration-200" onclick={() => setLayer('topo')}>Topo</button>
-			<button class="btn btn-xs {showStreetViewPlaces ? 'btn-primary shadow-md' : 'btn-glass'} hover:shadow-md transition-all duration-200" onclick={() => showStreetViewPlaces = !showStreetViewPlaces}>
-				SV Places
-			</button>
-		<button class="btn btn-xs {isPlacingMarker ? 'btn-success shadow-md' : 'btn-glass'} hover:shadow-md transition-all duration-200" onclick={() => isPlacingMarker = !isPlacingMarker}>
+	<div
+		class="animate-in fade-in slide-in-from-left-2 absolute bottom-4 left-4 z-[400] flex flex-col gap-2 duration-500"
+	>
+		<button
+			class="btn btn-xs btn-glass hover:bg-base-300/50 transition-all duration-200 hover:shadow-md"
+			onclick={() => setLayer('osm')}
+		>
+			OSM
+		</button>
+		<button
+			class="btn btn-xs btn-glass hover:bg-base-300/50 transition-all duration-200 hover:shadow-md"
+			onclick={() => setLayer('satellite')}
+		>
+			Satellite
+		</button>
+		<button
+			class="btn btn-xs btn-glass hover:bg-base-300/50 transition-all duration-200 hover:shadow-md"
+			onclick={() => setLayer('topo')}
+		>
+			Topo
+		</button>
+		<button
+			class="btn btn-xs {showStreetViewPlaces
+				? 'btn-primary shadow-md'
+				: 'btn-glass'} transition-all duration-200 hover:shadow-md"
+			onclick={() => (showStreetViewPlaces = !showStreetViewPlaces)}
+		>
+			SV Places
+		</button>
+		<button
+			class="btn btn-xs {isPlacingMarker
+				? 'btn-success shadow-md'
+				: 'btn-glass'} transition-all duration-200 hover:shadow-md"
+			onclick={() => (isPlacingMarker = !isPlacingMarker)}
+		>
 			{isPlacingMarker ? 'Placing...' : 'Place Marker'}
 		</button>
 	</div>
 
 	{#if isPlacingMarker}
-		<div class="absolute top-4 left-1/2 -translate-x-1/2 z-[400] bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg animate-pulse">
+		<div
+			class="absolute top-4 left-1/2 z-[400] -translate-x-1/2 animate-pulse rounded-lg bg-blue-600 px-4 py-2 text-white shadow-lg"
+		>
 			Click on map to place marker
 		</div>
 	{/if}
 
-	<DataSourcePanel
-		{lat}
-		{lng}
-		{zoom}
-		onDataLoaded={handleExternalData}
-	/>
+	<DataSourcePanel {lat} {lng} {zoom} onDataLoaded={handleExternalData} />
 </div>
 
 <style>

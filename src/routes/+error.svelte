@@ -38,7 +38,7 @@
 
 	// Determine helpful message
 	const helpMessage = $derived.by(() => {
-			if (status === 404)
+		if (status === 404)
 			return "The page you're looking for doesn't exist. It might have been moved or deleted.";
 		if (status === 400)
 			return 'There was a problem with your request. Please check your input and try again.';

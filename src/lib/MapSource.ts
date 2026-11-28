@@ -3,4 +3,5 @@ export type MapSource = {
 	url: string;
 	isCustom: boolean;
 	category?: string;
+	color?: string;
 };

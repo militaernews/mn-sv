@@ -2,23 +2,33 @@
 	import type { Circle } from '$lib/Circle';
 	import { presetColors } from '$lib/defaults';
 
-	const { circle, onDragStart, onEdit } = $props<{
+	const {
+		circle,
+		onDragStart,
+		onEdit
+	}: {
 		circle: Circle;
 		onDragStart: (e: PointerEvent) => void;
 		onEdit: (circle: Circle) => void;
-	}>();
+	} = $props();
 
 	const fontColor = $derived(presetColors[circle.colorIndex]?.useDarkFont ? '#000000' : '#ffffff');
 	const backgroundColor = $derived(presetColors[circle.colorIndex]?.color);
 </script>
 
 {#if circle.isChecked}
-	<div 
-		class="absolute z-20 pointer-events-none"
+	<div
+		class="pointer-events-none absolute z-20"
 		style="top: {circle.y}%; left: {circle.x}%; transform: translate(-50%, -50%);"
 	>
-		<div class="bg-success text-success-content rounded-full p-1 shadow-lg animate-bounce">
-			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+		<div class="bg-success text-success-content animate-bounce rounded-full p-1 shadow-lg">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6"
+				fill="none"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+			>
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
 			</svg>
 		</div>

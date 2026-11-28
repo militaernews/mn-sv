@@ -10,6 +10,7 @@
 	import GeolocalizationPanel from '$lib/component/GeolocalizationPanel.svelte';
 	import OSINTToolbar from '$lib/component/OSINTToolbar.svelte';
 	import IconFluentMap24Regular from '~icons/fluent-emoji/world-map';
+	import type { Circle } from '$lib/Circle';
 
 	// Svelte Stores and Utilities
 	import { writable, derived } from 'svelte/store';
@@ -18,7 +19,7 @@
 	import { defaultMapSources } from '$lib/defaults';
 
 	let isMobile = $state(false);
-	let mapElement = $state(null);
+	let mapElement = $state<HTMLDivElement | null>(null);
 
 	$effect(() => {
 		const checkMobile = () => {
@@ -55,12 +56,12 @@
 	);
 	let selectedMapIndex = $state(initialSelectedMapIndex);
 
-	const [initialCircles, saveCircles] = createPersistentState('mapCircles', []);
-	const circles = writable(initialCircles);
+	const [initialCircles, saveCircles] = createPersistentState<Circle[]>('mapCircles', []);
+	const circles = writable<Circle[]>(initialCircles);
 
 	const [initialLegendTexts, saveLegendTexts] = createPersistentState(
 		'mapLegendTexts',
-		new Map(),
+		new Map<number, string>(),
 		(map) => JSON.stringify(Object.fromEntries(map)),
 		(json) => new Map(Object.entries(JSON.parse(json)))
 	);
@@ -75,17 +76,17 @@
 	let newMapName = $state('');
 	let newMapUrl = $state('');
 	let isCapturingScreenshot = $state(false);
-	let editingCircle = $state(null);
+	let editingCircle = $state<Circle | null>(null);
 
 	// New feature states
 	let useLeaflet = $state(false);
 	let showStreetView = $state(false);
 	let streetViewLat = $state(0);
 	let streetViewLng = $state(0);
-	let measureMode = $state('none');
+	let measureMode = $state<'distance' | 'area' | 'none'>('none');
 	let measureValue = $state(0);
 	let showInfraSearch = $state(false);
-	let searchResults = $state([]);
+	let searchResults = $state<any[]>([]);
 	let showStreetViewPlaces = $state(false);
 	let showGeolocalization = $state(false);
 	let geoToolTab = $state<'image-overlay' | 'sun'>('image-overlay');
@@ -156,6 +157,10 @@
 		isAddingCircle = true;
 		editingCircle = {
 			id: nextId,
+			x: 0,
+			y: 0,
+			rectExpandLeft: false,
+			useDottedBorder: false,
 			lat: mapLat,
 			lng: mapLng,
 			text: '',
@@ -166,7 +171,7 @@
 		nextId++;
 	}
 
-	function removeCircle(id) {
+	function removeCircle(id: number) {
 		circles.update((circs) => circs.filter((c) => c.id !== id));
 	}
 
@@ -195,15 +200,18 @@
 		if (!editingCircle) return;
 
 		if (isAddingCircle) {
-			circles.update((circs) => [...circs, editingCircle]);
+			circles.update((circs) => [...circs, editingCircle!]);
 		} else {
-			circles.update((circs) => circs.map((c) => (c.id === editingCircle.id ? editingCircle : c)));
+			circles.update((circs) =>
+				circs.map((c) => (c.id === editingCircle!.id ? editingCircle! : c))
+			);
 		}
 
-		const colorIndex = editingCircle.colorIndex || 0;
+		const current = editingCircle!;
+		const colorIndex = current.colorIndex || 0;
 		legendTexts.update((map) => {
 			const newMap = new Map(map);
-			newMap.set(colorIndex, editingCircle.text);
+			newMap.set(colorIndex, current.text);
 			return newMap;
 		});
 
@@ -211,7 +219,7 @@
 		editingCircle = null;
 	}
 
-	function openEditor(circle) {
+	function openEditor(circle: Circle) {
 		editingCircle = { ...circle };
 	}
 
@@ -220,17 +228,17 @@
 		isAddingCircle = false;
 	}
 
-	function selectColor(colorIndex) {
+	function selectColor(colorIndex: number) {
 		if (editingCircle) {
 			editingCircle.colorIndex = colorIndex;
 		}
 	}
 
-	function handleCirclesUpdate(updatedCircles) {
+	function handleCirclesUpdate(updatedCircles: Circle[]) {
 		circles.set(updatedCircles);
 	}
 
-	function handleLocationSelect(lat, lng) {
+	function handleLocationSelect(lat: number, lng: number) {
 		streetViewLat = lat;
 		streetViewLng = lng;
 		showStreetView = true;
@@ -317,6 +325,7 @@
 					onCirclesUpdate={handleCirclesUpdate}
 					{displayLegend}
 					legendTexts={$legendTexts}
+					onLegendChange={(map) => legendTexts.set(map)}
 					{activeLegendEntries}
 					{isMobile}
 					lat={mapLat}
@@ -415,7 +424,7 @@
 		isNew={isAddingCircle}
 		onCancel={cancelEditor}
 		onSave={saveEditor}
-		onRemove={() => removeCircle(editingCircle?.id)}
+		onRemove={() => removeCircle(editingCircle?.id ?? 0)}
 		onColorSelect={selectColor}
 	/>
 {/if}
