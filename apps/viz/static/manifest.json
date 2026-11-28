@@ -1,0 +1,25 @@
+{
+	"theme_color": "#06142a",
+	"background_color": "#06142a",
+	"icons": [
+		{
+			"purpose": "maskable",
+			"sizes": "512x512",
+			"src": "icon-512.png",
+			"type": "image/png"
+		},
+		{
+			"purpose": "any",
+			"sizes": "512x512",
+			"src": "icon-512.png",
+			"type": "image/png"
+		}
+	],
+	"orientation": "portrait",
+	"display": "standalone",
+	"dir": "ltr",
+	"lang": "en",
+	"name": "MN Viz: reverse image search",
+	"short_name": "MN Viz",
+	"description": "Find the earliest post of a picture in the Telegram news channels"
+}
