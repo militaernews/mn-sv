@@ -10,7 +10,13 @@
 		children: Snippet;
 	}
 
-	let { tone = 'neutral', size = 'sm', icon: Icon, class: className = '', children }: Props = $props();
+	let {
+		tone = 'neutral',
+		size = 'sm',
+		icon: Icon,
+		class: className = '',
+		children
+	}: Props = $props();
 
 	const iconSize = $derived(size === 'xs' ? 'size-3' : 'size-3.5');
 </script>

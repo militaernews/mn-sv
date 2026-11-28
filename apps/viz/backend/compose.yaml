@@ -9,11 +9,11 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: tgsearch
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d tgsearch"]
+      test: ['CMD-SHELL', 'pg_isready -U user -d tgsearch']
       interval: 5s
       retries: 10
 
@@ -21,8 +21,8 @@ services:
     image: docker.io/qdrant/qdrant:latest
     restart: unless-stopped
     ports:
-      - "6333:6333" # REST + dashboard
-      - "6334:6334" # gRPC, used by the Rust client
+      - '6333:6333' # REST + dashboard
+      - '6334:6334' # gRPC, used by the Rust client
     volumes:
       - qdrant_data:/qdrant/storage
 
@@ -33,10 +33,10 @@ services:
     environment:
       RUSTFS_ACCESS_KEY: rustfsadmin
       RUSTFS_SECRET_KEY: rustfsadmin
-      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_CONSOLE_ENABLE: 'true'
     ports:
-      - "9000:9000" # S3 API
-      - "9001:9001" # web console
+      - '9000:9000' # S3 API
+      - '9001:9001' # web console
     volumes:
       - rustfs_data:/data
 
@@ -49,7 +49,7 @@ services:
       AWS_ACCESS_KEY_ID: rustfsadmin
       AWS_SECRET_ACCESS_KEY: rustfsadmin
       AWS_DEFAULT_REGION: us-east-1
-    entrypoint: ["/bin/sh", "-c"]
+    entrypoint: ['/bin/sh', '-c']
     command:
       - |
         s3="aws --endpoint-url http://rustfs:9000 s3api"
@@ -75,7 +75,7 @@ services:
       CLIP_TOKENIZER_PATH: /app/models/clip-tokenizer.json
       FFMPEG_BIN: ffmpeg
     ports:
-      - "8080:8080"
+      - '8080:8080'
     volumes:
       - ./models:/app/models:ro
     depends_on:
@@ -86,7 +86,7 @@ services:
     profiles: [app]
     image: localhost/viz-rs:dev
     restart: unless-stopped
-    command: ["/usr/local/bin/ingest"]
+    command: ['/usr/local/bin/ingest']
     env_file: .env
     environment:
       <<: *app-env

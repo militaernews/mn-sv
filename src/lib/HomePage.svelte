@@ -356,10 +356,11 @@
 				<h2 id="channels-title" class="sr-only">{ui.channelsTitle}</h2>
 				<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
 					{#each CHANNELS as channel (channel.username)}
+						{@const href = channel.url ?? `https://t.me/${channel.username}`}
 						<li>
 							<a
-								href={`https://t.me/${channel.username}`}
-								onclick={external(`https://t.me/${channel.username}`)}
+								{href}
+								onclick={external(href)}
 								class="flex h-full items-center gap-3 rounded-xl border border-[var(--line)] bg-[var(--card)] px-4 py-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[var(--accent)]/50 hover:shadow-md"
 							>
 								<img
@@ -373,7 +374,8 @@
 								/>
 								<span class="min-w-0">
 									<span class="block text-sm font-bold">{channel.language[lang]}</span>
-									<span class="block truncate text-xs text-[var(--muted)]">@{channel.username}</span
+									<span class="block truncate text-xs text-[var(--muted)]"
+										>{channel.url ? channel.username : `@${channel.username}`}</span
 									>
 								</span>
 							</a>

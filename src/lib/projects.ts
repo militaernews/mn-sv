@@ -20,6 +20,7 @@ export interface Channel {
 	language: Record<Lang, string>;
 	username: string;
 	x?: string;
+	url?: string;
 	kind: 'language' | 'feed' | 'special';
 }
 
@@ -121,6 +122,25 @@ export const CHANNELS: Channel[] = [
 		language: { de: 'Israel', en: 'Israel' },
 		username: 'newsmix_israel',
 		kind: 'feed'
+	},
+	{
+		flag: '🌎',
+		language: { de: 'Südamerika', en: 'South America' },
+		username: 'newsmix_suedamerika',
+		kind: 'feed'
+	},
+	{
+		flag: '🌏',
+		language: { de: 'Asien', en: 'Asia' },
+		username: 'newsmix_asien',
+		kind: 'feed'
+	},
+	{
+		flag: '📸',
+		language: { de: 'lage.bericht', en: 'lage.bericht' },
+		username: 'lage.bericht',
+		url: 'https://www.instagram.com/lage.bericht/',
+		kind: 'special'
 	},
 	{
 		flag: '📰',

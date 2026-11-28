@@ -4,6 +4,11 @@
 	import IconSun from '~icons/lucide/sun';
 	import IconMoon from '~icons/lucide/moon';
 	import IconCheck from '~icons/lucide/check';
+	import IconStar from '~icons/lucide/star';
+	import { onMount } from 'svelte';
+	import { currentEntitlement, saveEntitlement } from '#lib/entitlement.ts';
+	import { PLANS, type PaidPlan } from '#lib/plans.js';
+	import { getInitData, openInvoice } from '#lib/telegram.js';
 	import SeoHead from '#lib/SeoHead.svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import { locales } from '#lib/paraglide/runtime.js';
@@ -11,6 +16,45 @@
 	import { prefs, setTheme, THEMES, type Theme } from '#lib/prefs.svelte.js';
 
 	let { data }: { data: { changelog: string } } = $props();
+
+	let entitlement = $state(currentEntitlement());
+	let busy = $state(false);
+	let notice = $state('');
+
+	onMount(() => {
+		entitlement = currentEntitlement();
+	});
+
+	async function subscribe(plan: PaidPlan) {
+		busy = true;
+		notice = '';
+		try {
+			const response = await fetch('/api/stars', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json', 'x-telegram-init-data': getInitData() },
+				body: JSON.stringify({ action: 'invoice', plan })
+			});
+			if (!response.ok) throw new Error(s('invoiceFailed'));
+			const { url } = await response.json();
+			openInvoice(url, async (status) => {
+				if (status !== 'paid') return;
+				const activation = await fetch('/api/stars', {
+					method: 'POST',
+					headers: { 'content-type': 'application/json', 'x-telegram-init-data': getInitData() },
+					body: JSON.stringify({ action: 'activate', plan })
+				});
+				if (!activation.ok) return;
+				const result = await activation.json();
+				saveEntitlement(result);
+				entitlement = currentEntitlement();
+				notice = s('planThanks');
+			});
+		} catch (cause) {
+			notice = cause instanceof Error ? cause.message : s('invoiceFailed');
+		} finally {
+			busy = false;
+		}
+	}
 
 	const s = (key: string) =>
 		(m as unknown as Record<string, (() => string) | undefined>)[key]?.() ?? '';
@@ -98,6 +142,46 @@
 							<IconCheck class="ml-auto size-4 text-[var(--accent)]" aria-hidden="true" />
 						{/if}
 					</button>
+				{/each}
+			</div>
+		</section>
+
+		<section class="mt-12" aria-labelledby="plans-title">
+			<h2 id="plans-title" class="text-xl font-extrabold text-[var(--strong)]">
+				{s('plansTitle')}
+			</h2>
+			<p class="mt-1 text-sm text-[var(--muted)]">{s('plansText')}</p>
+			{#if entitlement}
+				<p
+					class="mt-3 inline-flex items-center gap-2 rounded-full bg-[var(--accent-soft)] px-4 py-2 text-sm font-bold"
+				>
+					<IconCheck class="size-4" />
+					{s('currentPlan')}: {entitlement.plan.toUpperCase()} ·
+					{s('activeUntil')}
+					{new Date(entitlement.exp).toLocaleDateString()}
+				</p>
+			{/if}
+			{#if notice}<p class="mt-3 text-sm font-semibold text-[var(--accent)]">{notice}</p>{/if}
+			<div class="mt-4 grid gap-4 sm:grid-cols-2">
+				{#each Object.entries(PLANS) as [id, plan] (id)}
+					<div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
+						<div class="flex items-center gap-2 text-lg font-extrabold">
+							<IconStar class="size-5 text-[var(--accent)]" />
+							{s(id === 'pro' ? 'planPro' : 'planMax')}
+						</div>
+						<p class="mt-1 text-sm text-[var(--muted)]">{plan.stars} Stars · {s('perMonth')}</p>
+						<ul class="mt-3 space-y-1 text-sm text-[var(--muted)]">
+							{#each plan.features as feature}
+								<li class="flex items-center gap-2"><IconCheck class="size-4" /> {s(feature)}</li>
+							{/each}
+						</ul>
+						<button
+							type="button"
+							disabled={busy}
+							class="btn btn-primary mt-4 w-full"
+							onclick={() => subscribe(id as PaidPlan)}>{s('subscribe')}</button
+						>
+					</div>
 				{/each}
 			</div>
 		</section>

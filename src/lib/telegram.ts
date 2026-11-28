@@ -5,6 +5,8 @@ interface TelegramWebApp {
 	ready?: () => void;
 	openLink?: (url: string, options?: { try_instant_view?: boolean }) => void;
 	openTelegramLink?: (url: string) => void;
+	openInvoice?: (url: string, callback?: (status: string) => void) => void;
+	initData?: string;
 }
 
 function app(): TelegramWebApp | undefined {
@@ -40,4 +42,18 @@ export function openExternal(href: string) {
 		}
 	}
 	window.open(href, '_blank', 'noopener');
+}
+
+export function getInitData(): string {
+	return app()?.initData ?? '';
+}
+
+export function openInvoice(url: string, callback: (status: string) => void) {
+	const tg = app();
+	if (tg?.openInvoice) {
+		tg.openInvoice(url, callback);
+		return;
+	}
+	window.open(url, '_blank', 'noopener');
+	callback('opened');
 }

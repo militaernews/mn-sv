@@ -89,5 +89,20 @@
 	"legalWithdrawalSummary": "Your right of withdrawal and how to exercise it.",
 	"footerAbout": "About",
 	"footerSettings": "Settings",
-	"footerLegal": "Legal"
+	"footerLegal": "Legal",
+	"plansTitle": "Subscriptions with Telegram Stars",
+	"plansText": "Pro and Max are 30-day passes, paid with Telegram Stars.",
+	"planPro": "Pro",
+	"planMax": "Max",
+	"perMonth": "per 30 days",
+	"subscribe": "Subscribe with Stars",
+	"currentPlan": "Current plan",
+	"activeUntil": "Active until",
+	"planThanks": "Thank you! Your plan is active.",
+	"invoiceFailed": "Could not open the invoice.",
+	"planExports": "Unlimited exports",
+	"planHistory": "Longer history",
+	"planBranding": "Custom branding",
+	"planTeam": "Team access",
+	"planPriority": "Everything"
 }

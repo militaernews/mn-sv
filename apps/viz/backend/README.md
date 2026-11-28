@@ -3,11 +3,11 @@
 Reverse media search over Telegram channels: upload a photo or video (or type text) and get
 the earliest post of that media in an origin channel and in a backup channel.
 
-| Crate | Binary | Purpose |
-|---|---|---|
-| `crates/core` (`viz-core`) | – | CLIP ONNX embeddings, dhash + BK-tree, ffmpeg scene frames, S3 thumbnails, Qdrant, Postgres (migrations in `migrations/`) |
-| `crates/ingest` (`viz-ingest`) | `ingest` | Telegram (MTProto via grammers) watcher and backfill |
-| `crates/api` (`viz-api`) | `api` | axum search API used by viz-sv |
+| Crate                          | Binary   | Purpose                                                                                                                   |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `crates/core` (`viz-core`)     | –        | CLIP ONNX embeddings, dhash + BK-tree, ffmpeg scene frames, S3 thumbnails, Qdrant, Postgres (migrations in `migrations/`) |
+| `crates/ingest` (`viz-ingest`) | `ingest` | Telegram (MTProto via grammers) watcher and backfill                                                                      |
+| `crates/api` (`viz-api`)       | `api`    | axum search API used by viz-sv                                                                                            |
 
 ## Setup
 

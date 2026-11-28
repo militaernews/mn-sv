@@ -25,7 +25,8 @@ const BUTTON_BASE =
 // rather than literal hex, so a Telegram Mini App's live theme sync (see
 // src/lib/telegram.ts) reaches every button variant, not just the page background.
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
-	primary: 'bg-primary hover:brightness-110 active:brightness-90 border-0 text-primary-content focus-visible:ring-primary',
+	primary:
+		'bg-primary hover:brightness-110 active:brightness-90 border-0 text-primary-content focus-visible:ring-primary',
 	danger:
 		'bg-red-600 hover:bg-red-500 active:brightness-90 border-0 text-white focus-visible:ring-red-400',
 	success:
@@ -34,7 +35,8 @@ const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
 		'bg-base-100 hover:brightness-125 active:brightness-90 border-0 text-base-content/85 hover:text-base-content focus-visible:ring-primary',
 	subtle:
 		'bg-base-200/70 hover:bg-base-100 active:brightness-90 border-0 text-base-content/70 hover:text-base-content focus-visible:ring-primary',
-	ghost: 'btn-ghost border-0 text-base-content/60 hover:text-base-content hover:bg-primary/10 focus-visible:ring-primary',
+	ghost:
+		'btn-ghost border-0 text-base-content/60 hover:text-base-content hover:bg-primary/10 focus-visible:ring-primary',
 	'soft-amber':
 		'bg-primary/12 hover:bg-primary/20 border-0 text-primary hover:brightness-110 focus-visible:ring-primary',
 	'soft-blue':
@@ -111,7 +113,12 @@ export function badgeClass({
 	size = 'sm',
 	class: className = ''
 }: { tone?: BadgeTone; size?: BadgeSize; class?: string } = {}): string {
-	return ['badge rounded-full m-0.5 font-medium border-0', BADGE_TONES[tone], BADGE_SIZES[size], className]
+	return [
+		'badge rounded-full m-0.5 font-medium border-0',
+		BADGE_TONES[tone],
+		BADGE_SIZES[size],
+		className
+	]
 		.filter(Boolean)
 		.join(' ');
 }

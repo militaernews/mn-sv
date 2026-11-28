@@ -89,5 +89,20 @@
 	"legalWithdrawalSummary": "Dein Widerrufsrecht und wie du es ausübst.",
 	"footerAbout": "Über uns",
 	"footerSettings": "Einstellungen",
-	"footerLegal": "Rechtliches"
+	"footerLegal": "Rechtliches",
+	"plansTitle": "Abos mit Telegram Stars",
+	"plansText": "Pro und Max sind 30-Tage-Pässe. Bezahlt wird mit Telegram Stars.",
+	"planPro": "Pro",
+	"planMax": "Max",
+	"perMonth": "pro 30 Tage",
+	"subscribe": "Mit Stars abonnieren",
+	"currentPlan": "Aktueller Plan",
+	"activeUntil": "Aktiv bis",
+	"planThanks": "Danke! Dein Plan ist aktiv.",
+	"invoiceFailed": "Die Rechnung konnte nicht geöffnet werden.",
+	"planExports": "Unbegrenzte Exporte",
+	"planHistory": "Längerer Verlauf",
+	"planBranding": "Eigenes Branding",
+	"planTeam": "Team-Zugang",
+	"planPriority": "Alle Funktionen"
 }
