@@ -9,6 +9,15 @@ The projects and their texts are in `src/lib/projects.ts`; pictures are in `stat
 handbook lives in `src/lib/docs/` with an English translation in `src/lib/docs/en/` and is rendered
 by `src/lib/server/docs.ts`.
 
+The header leads to `/settings` (language, appearance and the changelog from `src/lib/changelog.md`)
+and `/about` (support contact and the four `/legal/*` pages). The legal texts live in
+`src/lib/legal/{de,en}/`; operator details are still marked as TODO placeholders.
+
+Appearance follows the system colour scheme in a browser. Inside Telegram, the WebApp colour scheme
+and colours are used instead, updates live when Telegram's theme changes, and external links open
+through the WebApp. Telegram also gets a compact layout. The relevant code is in `src/app.html`,
+`src/lib/prefs.svelte.ts` and `src/lib/telegram.ts`.
+
 ```sh
 bun install
 bun run dev

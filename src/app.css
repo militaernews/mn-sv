@@ -23,7 +23,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) {
+	:root:not([data-theme]):not([data-tg-theme='light']) {
 		--bg: #06142a;
 		--bg-2: #0a1f3d;
 		--card: #0d2648;
@@ -58,8 +58,25 @@
 	color-scheme: dark;
 }
 
+/* Telegram's colour scheme is the system setting inside its webview. The WebApp colours are
+   applied inline by app.html/prefs; these rules only keep form controls and scrollbars in sync. */
+:root[data-tg-theme='dark']:not([data-theme='light']) {
+	color-scheme: dark;
+}
+:root[data-tg-theme='light']:not([data-theme='dark']) {
+	color-scheme: light;
+}
+
 html {
 	scroll-behavior: smooth;
+}
+
+/* Telegram WebView: respect the bottom inset and stop decoration from fighting the app chrome */
+:root[data-tg] body {
+	padding-bottom: env(safe-area-inset-bottom, 0);
+}
+:root[data-tg] .flow-track {
+	animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

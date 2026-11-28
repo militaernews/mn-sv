@@ -4,10 +4,14 @@
 	import SiteHeader from '#lib/SiteHeader.svelte';
 	import { localeState } from '#lib/locale.svelte.js';
 	import { startPrefs } from '#lib/prefs.svelte.js';
+	import { startTelegram } from '#lib/telegram.js';
 
 	let { children } = $props();
 
-	onMount(startPrefs);
+	onMount(() => {
+		startPrefs();
+		startTelegram();
+	});
 
 	$effect(() => {
 		document.documentElement.lang = localeState.value;

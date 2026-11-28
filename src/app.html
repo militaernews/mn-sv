@@ -2,17 +2,65 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<link rel="icon" href="%sveltekit.assets%/icon.png" />
 		<link rel="apple-touch-icon" href="%sveltekit.assets%/icon.png" />
 		<meta name="theme-color" content="#06142a" />
 		<meta name="color-scheme" content="dark light" />
+		<script src="https://telegram.org/js/telegram-web-app.js"></script>
 		<script>
-			// Apply the remembered scheme before the first paint; Paraglide picks the language
-			try {
-				var theme = localStorage.getItem('mn-sv:theme');
-				if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
-			} catch (e) {}
+			// Apply the remembered scheme before the first paint. Inside Telegram the WebApp colours
+			// are the real system setting, so they win over the browser's prefers-color-scheme.
+			(function () {
+				var root = document.documentElement;
+				var stored = null;
+				try {
+					stored = localStorage.getItem('mn-sv:theme');
+				} catch (e) {}
+				if (stored === 'light' || stored === 'dark') root.dataset.theme = stored;
+
+				var tg = window.Telegram && window.Telegram.WebApp;
+				if (!tg) return;
+				root.dataset.tg = '1';
+				var dark = tg.colorScheme === 'dark';
+				root.dataset.tgTheme = dark ? 'dark' : 'light';
+				var params = tg.themeParams || {};
+				if (stored !== 'light' && stored !== 'dark') {
+					var set = function (name, value, fallback) {
+						root.style.setProperty(name, value || fallback);
+					};
+					set('--bg', params.bg_color, dark ? '#06142a' : '#eef5fb');
+					set('--bg-2', params.secondary_bg_color, dark ? '#0a1f3d' : '#dfeaf5');
+					set(
+						'--card',
+						params.section_bg_color || params.secondary_bg_color,
+						dark ? '#0d2648' : '#ffffff'
+					);
+					set('--ink', params.text_color, dark ? '#e6f6ff' : '#0b1d33');
+					set('--muted', params.hint_color, dark ? '#9fb6c9' : '#4a5d73');
+					set(
+						'--line',
+						params.section_separator_color || params.separator_color,
+						dark ? '#1c3a63' : '#c9d9ea'
+					);
+					set('--accent', params.button_color, dark ? '#2ec5ff' : '#0a7fbf');
+					set('--accent-ink', params.button_text_color, dark ? '#04152b' : '#ffffff');
+					set(
+						'--strong',
+						params.header_text_color || params.text_color,
+						dark ? '#9be7ff' : '#0c3a6b'
+					);
+					root.style.setProperty('--ring', 'color-mix(in srgb, var(--accent) 18%, transparent)');
+					root.style.setProperty(
+						'--accent-soft',
+						'color-mix(in srgb, var(--accent) 12%, transparent)'
+					);
+					root.style.setProperty('--bg-glass', 'color-mix(in srgb, var(--bg) 85%, transparent)');
+					root.style.setProperty('--code', 'color-mix(in srgb, var(--bg-2) 90%, var(--ink))');
+				}
+				var meta = document.querySelector('meta[name="theme-color"]');
+				if (meta && params.bg_color) meta.setAttribute('content', params.bg_color);
+			})();
 		</script>
 		%sveltekit.head%
 	</head>
