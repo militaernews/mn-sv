@@ -195,6 +195,7 @@ export interface Project {
 	/** An image in static/img, or an icon when the project has no picture */
 	image?: string;
 	icon?: Component;
+	font?: 'baloo';
 	href: string;
 	text: Record<Lang, Text>;
 }
@@ -455,6 +456,7 @@ export const PROJECTS: Project[] = [
 	{
 		id: 'ww3',
 		kind: 'game',
+		font: 'baloo',
 		image: '/img/ww3.svg',
 		href: 'https://ww3-sv.vercel.app',
 		text: {

@@ -55,7 +55,6 @@ export const DOC_UI: Record<
 		nav: string;
 		botsTitle: string;
 		toGuide: string;
-		available: string;
 		onThisPage: string;
 	}
 > = {
@@ -64,7 +63,6 @@ export const DOC_UI: Record<
 		nav: 'Handbuch',
 		botsTitle: 'Die drei Bots',
 		toGuide: 'Zur Anleitung',
-		available: 'Dieses Handbuch ist auch auf Englisch verfügbar – Sprachumschalter oben.',
 		onThisPage: 'Auf dieser Seite'
 	},
 	en: {
@@ -72,7 +70,6 @@ export const DOC_UI: Record<
 		nav: 'Handbook navigation',
 		botsTitle: 'The three bots',
 		toGuide: 'Read the guide',
-		available: 'This handbook is also available in German — use the language switch above.',
 		onThisPage: 'On this page'
 	}
 };

@@ -1,6 +1,32 @@
 @import 'tailwindcss';
 
 @font-face {
+	font-family: 'Baloo 2';
+	src: url('/fonts/baloo-2-latin-400-normal.woff2') format('woff2');
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Baloo 2';
+	src: url('/fonts/baloo-2-latin-700-normal.woff2') format('woff2');
+	font-weight: 700;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Baloo 2';
+	src: url('/fonts/baloo-2-latin-ext-400-normal.woff2') format('woff2');
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+0100-02BA, U+1E00-1E9F;
+}
+@font-face {
+	font-family: 'Baloo 2';
+	src: url('/fonts/baloo-2-latin-ext-700-normal.woff2') format('woff2');
+	font-weight: 700;
+	font-display: swap;
+	unicode-range: U+0100-02BA, U+1E00-1E9F;
+}
+@font-face {
 	font-family: 'HP Simplified';
 	src: url('/fonts/HPSimplified.ttf') format('truetype');
 	font-display: swap;
@@ -13,6 +39,7 @@
 @theme {
 	--font-sans: 'HP Simplified', system-ui, -apple-system, 'Segoe UI', sans-serif;
 	--font-display: 'BlackedOut', 'HP Simplified', sans-serif;
+	--font-ww3: 'Baloo 2', 'HP Simplified', sans-serif;
 }
 h1,
 h2,

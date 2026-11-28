@@ -19,7 +19,6 @@
 		nav: s('docNav'),
 		botsTitle: s('docBotsTitle'),
 		toGuide: s('docToGuide'),
-		available: s('docAvailable'),
 		onThisPage: s('docOnThisPage')
 	});
 	const BOTS = DOCS.filter((page) => page.bot);
@@ -177,11 +176,6 @@
 					{/if}
 				</div>
 			</div>
-			<p
-				class="mt-5 rounded-xl border border-[var(--line)] bg-[var(--bg-2)] px-4 py-3 text-sm text-[var(--muted)]"
-			>
-				{ui.available}
-			</p>
 			{#if doc.slug === 'index'}
 				<h2 class="mt-10 text-xl font-bold text-[var(--strong)]">{ui.botsTitle}</h2>
 				<ul class="mt-4 grid gap-4 sm:grid-cols-3">

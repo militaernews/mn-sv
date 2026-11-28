@@ -126,7 +126,12 @@
 					<div class="text-[0.7rem] font-bold tracking-widest text-[var(--accent)] uppercase">
 						{text.audience}
 					</div>
-					<h3 class="mt-0.5 text-xl font-extrabold tracking-tight">{text.name}</h3>
+					<h3
+						class="mt-0.5 text-xl font-extrabold tracking-tight"
+						style:font-family={project.font === 'baloo' ? 'var(--font-ww3)' : undefined}
+					>
+						{text.name}
+					</h3>
 					<p class="text-sm font-semibold text-[var(--muted)]">{text.tagline}</p>
 				</div>
 			</div>
