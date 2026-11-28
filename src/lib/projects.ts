@@ -14,12 +14,13 @@ export const LANGS: Lang[] = ['de', 'en'];
 
 export const CONTACT = 'https://t.me/MilitaernewsKontakt';
 
-/** The MilitärNews language channels, in the order the posting pipeline serves them */
+/** All MilitärNews channels: language editions, regional feeds and specials */
 export interface Channel {
 	flag: string;
 	language: Record<Lang, string>;
 	username: string;
 	x?: string;
+	kind: 'language' | 'feed' | 'special';
 }
 
 export const CHANNELS: Channel[] = [
@@ -27,36 +28,134 @@ export const CHANNELS: Channel[] = [
 		flag: '🇩🇪',
 		language: { de: 'Deutsch', en: 'German' },
 		username: 'MilitaerNews',
-		x: 'MilitaerNews'
+		x: 'MilitaerNews',
+		kind: 'language'
 	},
 	{
 		flag: '🇺🇸',
 		language: { de: 'Englisch', en: 'English' },
 		username: 'MilitaryNewsEN',
-		x: 'MilitaryNewsEN'
+		x: 'MilitaryNewsEN',
+		kind: 'language'
 	},
-	{ flag: '🇹🇷', language: { de: 'Türkisch', en: 'Turkish' }, username: 'MilitaryNewsTR' },
-	{ flag: '🇮🇷', language: { de: 'Persisch', en: 'Persian' }, username: 'MilitaryNewsFA' },
-	{ flag: '🇷🇺', language: { de: 'Russisch', en: 'Russian' }, username: 'MilitaryNewsRU' },
-	{ flag: '🇧🇷', language: { de: 'Portugiesisch', en: 'Portuguese' }, username: 'MilitaryNewsBR' },
-	{ flag: '🇪🇸', language: { de: 'Spanisch', en: 'Spanish' }, username: 'MilitaryNewsES' },
-	{ flag: '🇫🇷', language: { de: 'Französisch', en: 'French' }, username: 'MilitaryNewsFR' },
-	{ flag: '🇮🇹', language: { de: 'Italienisch', en: 'Italian' }, username: 'MilitaryNewsITA' },
-	{ flag: '🇪🇬', language: { de: 'Arabisch', en: 'Arabic' }, username: 'MilitaryNewsAR' },
-	{ flag: '🇮🇩', language: { de: 'Indonesisch', en: 'Indonesian' }, username: 'MilitaryNewsIDN' }
+	{
+		flag: '🇹🇷',
+		language: { de: 'Türkisch', en: 'Turkish' },
+		username: 'MilitaryNewsTR',
+		kind: 'language'
+	},
+	{
+		flag: '🇮🇷',
+		language: { de: 'Persisch', en: 'Persian' },
+		username: 'MilitaryNewsFA',
+		kind: 'language'
+	},
+	{
+		flag: '🇷🇺',
+		language: { de: 'Russisch', en: 'Russian' },
+		username: 'MilitaryNewsRU',
+		kind: 'language'
+	},
+	{
+		flag: '🇧🇷',
+		language: { de: 'Portugiesisch', en: 'Portuguese' },
+		username: 'MilitaryNewsBR',
+		kind: 'language'
+	},
+	{
+		flag: '🇪🇸',
+		language: { de: 'Spanisch', en: 'Spanish' },
+		username: 'MilitaryNewsES',
+		kind: 'language'
+	},
+	{
+		flag: '🇫🇷',
+		language: { de: 'Französisch', en: 'French' },
+		username: 'MilitaryNewsFR',
+		kind: 'language'
+	},
+	{
+		flag: '🇮🇹',
+		language: { de: 'Italienisch', en: 'Italian' },
+		username: 'MilitaryNewsITA',
+		kind: 'language'
+	},
+	{
+		flag: '🇪🇬',
+		language: { de: 'Arabisch', en: 'Arabic' },
+		username: 'MilitaryNewsAR',
+		kind: 'language'
+	},
+	{
+		flag: '🇮🇩',
+		language: { de: 'Indonesisch', en: 'Indonesian' },
+		username: 'MilitaryNewsIDN',
+		kind: 'language'
+	},
+	{
+		flag: '🎭',
+		language: { de: 'Memes', en: 'Memes' },
+		username: 'MilitaerMemes',
+		kind: 'special'
+	},
+	{
+		flag: '🇺🇦',
+		language: { de: 'Ukraine', en: 'Ukraine' },
+		username: 'newsmix_ukraine',
+		kind: 'feed'
+	},
+	{
+		flag: '⛰️',
+		language: { de: 'Kaukasus', en: 'Caucasus' },
+		username: 'newsmix_kaukasus',
+		kind: 'feed'
+	},
+	{
+		flag: '🌍',
+		language: { de: 'Afrika', en: 'Africa' },
+		username: 'newsmix_afrika',
+		kind: 'feed'
+	},
+	{
+		flag: '🇮🇱',
+		language: { de: 'Israel', en: 'Israel' },
+		username: 'newsmix_israel',
+		kind: 'feed'
+	},
+	{
+		flag: '📰',
+		language: { de: 'IT & Technik', en: 'IT & tech' },
+		username: 'blog_itisinteresting',
+		kind: 'special'
+	},
+	{
+		flag: '📈',
+		language: { de: 'Finanzen', en: 'Finance' },
+		username: 'FinanzPionier',
+		kind: 'special'
+	}
 ];
 
-/** TGStat-style community metrics tracked by the MNChat bot (user_stats) */
-export interface CommunityStat {
+/** Channel metrics, derived from the channel list so they stay in sync */
+export interface ChannelStat {
 	label: Record<Lang, string>;
 	value: string;
 }
 
-export const COMMUNITY_STATS: CommunityStat[] = [
-	{ label: { de: 'Beiträge je Nutzer', en: 'Posts per user' }, value: '⌀ 42' },
-	{ label: { de: 'Wörter je Beitrag', en: 'Words per post' }, value: '⌀ 18' },
-	{ label: { de: 'Zeichen je Beitrag', en: 'Characters per post' }, value: '⌀ 126' },
-	{ label: { de: 'Karma-Punkte', en: 'Karma points' }, value: 'live' }
+export const CHANNEL_STATS: ChannelStat[] = [
+	{ label: { de: 'Kanäle gesamt', en: 'Channels total' }, value: String(CHANNELS.length) },
+	{
+		label: { de: 'Sprachausgaben', en: 'Language editions' },
+		value: String(CHANNELS.filter((channel) => channel.kind === 'language').length)
+	},
+	{
+		label: { de: 'Themen-Feeds', en: 'Topic feeds' },
+		value: String(CHANNELS.filter((channel) => channel.kind === 'feed').length)
+	},
+	{
+		label: { de: 'Auch auf X', en: 'Also on X' },
+		value: String(CHANNELS.filter((channel) => channel.x).length)
+	}
 ];
 
 interface Text {
@@ -458,8 +557,9 @@ export const UI: Record<
 		botsText: 'Direkt im Chat – für Kanäle, Werbung und Gruppen.',
 		channelsTitle: 'Die Kanäle',
 		channelsText: 'Elf Sprachkanäle, die aus einem deutschen Post entstehen. Ein Klick genügt.',
-		statsTitle: 'Community in Zahlen',
-		statsText: 'TGStat-Daten aus der Community-Gruppe: Aktivität und Karma auf einen Blick.',
+		statsTitle: 'Kanäle in Zahlen',
+		statsText:
+			'Elf Sprachausgaben, vier Themen-Feeds und drei Specials – alle Kanäle auf einen Blick.',
 		guideTitle: 'Handbuch',
 		guideText: 'Alles Wichtige zur Arbeit mit den Bots – auf Deutsch und Englisch.',
 		contactTitle: 'Fragen oder Interesse?',
@@ -493,8 +593,9 @@ export const UI: Record<
 		channelsTitle: 'The channels',
 		channelsText:
 			'Eleven language channels born from a single German post. One click is all it takes.',
-		statsTitle: 'Community in numbers',
-		statsText: 'TGStat data from the community group: activity and karma at a glance.',
+		statsTitle: 'Channels in numbers',
+		statsText:
+			'Eleven language editions, four topic feeds and three specials — every channel at a glance.',
 		guideTitle: 'Handbook',
 		guideText: 'Everything you need to work with the bots — in German and English.',
 		contactTitle: 'Questions or interested?',

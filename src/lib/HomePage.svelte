@@ -16,7 +16,7 @@
 	import { langFromPath, localizedHref } from './lang.js';
 	import {
 		CHANNELS,
-		COMMUNITY_STATS,
+		CHANNEL_STATS,
 		CONTACT,
 		PROJECTS,
 		UI,
@@ -312,7 +312,7 @@
 			{@render sectionHead(IconBarChart, ui.statsTitle, ui.statsText)}
 			<h2 id="stats-title" class="sr-only">{ui.statsTitle}</h2>
 			<ul class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-				{#each COMMUNITY_STATS as stat (stat.label.de)}
+				{#each CHANNEL_STATS as stat (stat.label.de)}
 					<li
 						class="rounded-2xl border border-[var(--line)] bg-linear-to-br from-[var(--bg-2)] to-[var(--card)] p-5 text-center shadow-sm"
 					>
