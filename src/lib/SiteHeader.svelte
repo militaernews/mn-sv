@@ -32,6 +32,7 @@
 				<a href="/#tools" class={link}>{s('navTools')}</a>
 				<a href="/docs" class={link}>{s('navDocs')}</a>
 				<a href="/about" class={link}>{s('navAbout')}</a>
+				<a href="/changelog" class={link}>{s('navChangelog')}</a>
 				<a
 					href="/settings"
 					class="ml-1 grid size-8 place-items-center rounded-full border border-[var(--line)] bg-[var(--card)] text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"

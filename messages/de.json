@@ -104,5 +104,8 @@
 	"planHistory": "Längerer Verlauf",
 	"planBranding": "Eigenes Branding",
 	"planTeam": "Team-Zugang",
-	"planPriority": "Alle Funktionen"
+	"planPriority": "Alle Funktionen",
+	"navChangelog": "Änderungen",
+	"changelogTitle": "Änderungsprotokoll",
+	"changelogText": "Was sich an MilitärNews geändert hat – nach Datum sortiert."
 }

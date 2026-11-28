@@ -15,8 +15,6 @@
 	import { changeLocale, localeState } from '#lib/locale.svelte.js';
 	import { prefs, setTheme, THEMES, type Theme } from '#lib/prefs.svelte.js';
 
-	let { data }: { data: { changelog: string } } = $props();
-
 	let entitlement = $state(currentEntitlement());
 	let busy = $state(false);
 	let notice = $state('');
@@ -186,14 +184,19 @@
 			</div>
 		</section>
 
-		<section class="mt-12" aria-labelledby="changelog-title">
-			<h2 id="changelog-title" class="text-xl font-extrabold text-[var(--strong)]">
-				{s('settingsChangelog')}
-			</h2>
-			<p class="mt-1 text-sm text-[var(--muted)]">{s('settingsChangelogText')}</p>
-			<div class="doc mt-4 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 sm:p-6">
-				{@html data.changelog}
-			</div>
+		<section class="mt-12">
+			<a
+				href="/changelog"
+				class="flex items-center justify-between rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 transition-colors hover:border-[var(--accent)]"
+			>
+				<span>
+					<strong class="block text-lg font-extrabold text-[var(--strong)]"
+						>{s('settingsChangelog')}</strong
+					>
+					<span class="mt-1 block text-sm text-[var(--muted)]">{s('settingsChangelogText')}</span>
+				</span>
+				<span class="text-[var(--accent)]">→</span>
+			</a>
 		</section>
 
 		<nav

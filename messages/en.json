@@ -104,5 +104,8 @@
 	"planHistory": "Longer history",
 	"planBranding": "Custom branding",
 	"planTeam": "Team access",
-	"planPriority": "Everything"
+	"planPriority": "Everything",
+	"navChangelog": "Changelog",
+	"changelogTitle": "Changelog",
+	"changelogText": "What changed in MilitärNews — grouped by date."
 }
