@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "mn-sv",
+      "dependencies": {
+        "sharp": "^0.35.5",
+      },
       "devDependencies": {
         "@iconify-json/lucide": "1.2.149",
         "@inlang/paraglide-js": "3.2.2",

@@ -120,7 +120,7 @@
 	"brandSelect": "Datei wählen",
 	"brandDownload": "Herunterladen",
 	"brandMaster": "Quelldateien",
-	"brandPng": "PNG-Exporte",
+	"brandPng": "PNG herunterladen",
 	"brandMasterText": "GIMP- und Font-Quellen. Für PNG-Export in GIMP öffnen.",
 	"brandPngText": "Fertige PNGs für Web und Apps.",
 	"adminStatsTitle": "Admin-Statistik",
@@ -137,5 +137,17 @@
 	"changelogContributors": "Autoren",
 	"changelogLastUpdate": "Letztes Update",
 	"changelogViewCommit": "Commit ansehen",
-	"changelogNoCommits": "Commits konnten nicht geladen werden."
+	"changelogNoCommits": "Commits konnten nicht geladen werden.",
+	"brandEditor": "Text bearbeiten",
+	"brandLine1": "Zeile 1",
+	"brandLine2": "Zeile 2",
+	"brandSubline": "Unterzeile",
+	"brandVariant": "Format",
+	"brandWide": "Breit",
+	"brandTalk": "Quadrat",
+	"brandAccent": "Akzentfarbe",
+	"brandRender": "Vorschau erstellen",
+	"brandSvg": "SVG herunterladen",
+	"brandPresets": "Vorlagen",
+	"brandEditable": "Der Text ist im SVG direkt änderbar."
 }
