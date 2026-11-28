@@ -5,11 +5,14 @@
     "": {
       "name": "mn-sv",
       "dependencies": {
+        "d3-scale": "^4.0.3",
+        "d3-time-format": "^4.1.1",
         "html2canvas-pro": "^2.6.5",
         "leaflet": "^1.9.4",
         "maplibre-gl": "^6.20.0",
         "sharp": "^0.35.5",
         "sveaflet": "^0.1.5",
+        "svelteplot": "^0.14.2",
       },
       "devDependencies": {
         "@iconify-json/lucide": "1.2.149",

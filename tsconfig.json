@@ -13,6 +13,9 @@
 			],
 			"#lib/*": [
 				"./src/lib/*"
+			],
+			"#charts/*": [
+				"./src/lib/apps/charts/lib/*"
 			]
 		}
 	},
