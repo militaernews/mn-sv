@@ -1,7 +1,12 @@
 <script lang="ts">
-	import CookieBanner from '$lib/components/CookieBanner.svelte';
 	import '../app.css';
+	import { onMount } from 'svelte';
 	let { children } = $props();
+
+	onMount(() => {
+		if (import.meta.env.PROD && 'serviceWorker' in navigator)
+			navigator.serviceWorker.register('/sw.js').catch(() => {});
+	});
 </script>
 
 <svelte:head>
@@ -16,5 +21,3 @@
 		{@render children()}
 	</div>
 </div>
-
-<CookieBanner />

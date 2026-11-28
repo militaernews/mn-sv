@@ -14,18 +14,18 @@
 		We at <strong>Militaernews</strong> (“we”, “us”, or “our”) are committed to protecting your
 		privacy. This Privacy Policy explains how we collect, use, and safeguard your personal data when
 		you visit our website
-		<a class="link link-primary" href="https://charts-mn.vercel.app/"
-			>https://charts-mn.vercel.app/</a
-		> (the “Site”), in accordance with the General Data Protection Regulation (EU) 2016/679 (“GDPR”).
+		<a class="link link-primary" href="https://charts-mn.vercel.app/">
+			https://charts-mn.vercel.app/
+		</a> (the “Site”), in accordance with the General Data Protection Regulation (EU) 2016/679 (“GDPR”).
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">2. Data Controller</h2>
 	<p>The data controller responsible for your personal data is:</p>
 	<p>
 		<strong>Militaernews</strong><br />
-		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt"
-			>https://t.me/MilitaernewsKontakt</a
-		>
+		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt">
+			https://t.me/MilitaernewsKontakt
+		</a>
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">3. What Personal Data We Collect</h2>
@@ -81,9 +81,9 @@
 	</ul>
 	<p>
 		To exercise any of these rights, contact us at:
-		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt"
-			>https://t.me/MilitaernewsKontakt</a
-		>
+		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt">
+			https://t.me/MilitaernewsKontakt
+		</a>
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">8. Data Retention</h2>
@@ -111,9 +111,9 @@
 	</p>
 	<p>
 		<strong>Data Protection Officer (DPO)</strong> (if applicable):<br />
-		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt"
-			>https://t.me/MilitaernewsKontakt</a
-		>
+		<a class="link link-primary" href="https://t.me/MilitaernewsKontakt">
+			https://t.me/MilitaernewsKontakt
+		</a>
 	</p>
 
 	<h2 class="mt-6 text-2xl font-semibold">12. Complaints</h2>

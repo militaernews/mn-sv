@@ -22,9 +22,6 @@ export function formatDate(date: Date | null | string) {
 	});
 }
 
-
-
-
 export async function captureScreenshot2(): Promise<void> {
 	try {
 		// Get the main container
@@ -56,7 +53,6 @@ export async function captureScreenshot2(): Promise<void> {
 
 		// Clean up
 		container.classList.remove('temp-screenshot');
-		document.head.removeChild(style);
 
 		// Download the screenshot
 		canvas.toBlob((blob) => {
@@ -75,5 +71,17 @@ export async function captureScreenshot2(): Promise<void> {
 		console.error('html2canvas failed:', error);
 		alert("Screenshot capture failed. Please try using your browser's built-in screenshot tools.");
 		throw error;
+	}
+}
+
+export function formatPrice(value: number, currency: string): string {
+	try {
+		return new Intl.NumberFormat('de-DE', {
+			style: 'currency',
+			currency,
+			maximumFractionDigits: 0
+		}).format(value);
+	} catch {
+		return `${value} ${currency}`;
 	}
 }

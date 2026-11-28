@@ -1,6 +1,5 @@
 <!-- src/lib/components/PriceDisplay.svelte -->
 <script lang="ts">
-	import { get } from 'lodash-es';
 	import { formatPrice } from '$lib/util';
 
 	interface Props {
