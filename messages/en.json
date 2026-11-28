@@ -130,5 +130,12 @@
 	"adminIssues": "Open issues",
 	"adminChannels": "Channels",
 	"adminProjects": "Projects",
-	"adminDocs": "Handbook pages"
+	"adminDocs": "Handbook pages",
+	"changelogCommits": "Recent commits",
+	"changelogCommitsText": "Every change straight from the repository.",
+	"changelogCommitsTotal": "Total commits",
+	"changelogContributors": "Contributors",
+	"changelogLastUpdate": "Last update",
+	"changelogViewCommit": "View commit",
+	"changelogNoCommits": "Could not load commits."
 }

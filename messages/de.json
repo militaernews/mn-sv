@@ -130,5 +130,12 @@
 	"adminIssues": "Offene Issues",
 	"adminChannels": "Kanäle",
 	"adminProjects": "Projekte",
-	"adminDocs": "Handbuchseiten"
+	"adminDocs": "Handbuchseiten",
+	"changelogCommits": "Letzte Commits",
+	"changelogCommitsText": "Alle Änderungen direkt aus dem Repository.",
+	"changelogCommitsTotal": "Commits insgesamt",
+	"changelogContributors": "Autoren",
+	"changelogLastUpdate": "Letztes Update",
+	"changelogViewCommit": "Commit ansehen",
+	"changelogNoCommits": "Commits konnten nicht geladen werden."
 }

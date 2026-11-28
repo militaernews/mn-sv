@@ -1,10 +1,27 @@
 <script lang="ts">
 	import IconHistory from '~icons/lucide/history';
+	import IconGitCommit from '~icons/lucide/git-commit-horizontal';
+	import IconUsers from '~icons/lucide/users';
+	import IconCalendar from '~icons/lucide/calendar-days';
 	import SeoHead from '#lib/SeoHead.svelte';
 	import { m } from '#lib/paraglide/messages.js';
 	import { localeState } from '#lib/locale.svelte.js';
 
-	let { data }: { data: { sections: { date: string; html: string }[] } } = $props();
+	interface Commit {
+		sha: string;
+		message: string;
+		date: string;
+		author: string;
+	}
+	let {
+		data
+	}: {
+		data: {
+			sections: { date: string; html: string }[];
+			commits: Commit[];
+			stats: { total: number; contributors: number; lastUpdate: string };
+		};
+	} = $props();
 
 	const s = (key: string) =>
 		(m as unknown as Record<string, (() => string) | undefined>)[key]?.() ?? '';
@@ -26,6 +43,30 @@
 			{title}
 		</h1>
 		<p class="mt-2 text-[var(--muted)]">{description}</p>
+
+		<div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+			<div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4">
+				<IconGitCommit class="size-5 text-[var(--accent)]" />
+				<strong class="mt-2 block text-2xl text-[var(--strong)]">{data.stats.total}</strong>
+				<span class="text-xs text-[var(--muted)]">{s('changelogCommitsTotal')}</span>
+			</div>
+			<div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4">
+				<IconUsers class="size-5 text-[var(--accent)]" />
+				<strong class="mt-2 block text-2xl text-[var(--strong)]">{data.stats.contributors}</strong>
+				<span class="text-xs text-[var(--muted)]">{s('changelogContributors')}</span>
+			</div>
+			<div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4">
+				<IconCalendar class="size-5 text-[var(--accent)]" />
+				<strong class="mt-2 block text-sm text-[var(--strong)]">
+					{data.stats.lastUpdate
+						? new Date(data.stats.lastUpdate).toLocaleDateString(
+								localeState.value === 'de' ? 'de-DE' : 'en-GB'
+							)
+						: '–'}
+				</strong>
+				<span class="text-xs text-[var(--muted)]">{s('changelogLastUpdate')}</span>
+			</div>
+		</div>
 
 		<div class="mt-8 space-y-5">
 			{#each data.sections as section (section.date)}
