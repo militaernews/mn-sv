@@ -1,10 +1,7 @@
 <script lang="ts">
-	import AppFrame from '#lib/AppFrame.svelte';
+	import VizPage from '#lib/apps/viz/VizPage.svelte';
+
+	let { data }: { data: any } = $props();
 </script>
 
-<AppFrame
-	title="MN Viz"
-	description="Visual search across MilitärNews collections."
-	src="https://viz-sv.vercel.app/"
-	path="/viz"
-/>
+<VizPage {data} />

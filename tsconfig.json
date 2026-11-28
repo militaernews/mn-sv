@@ -16,6 +16,9 @@
 			],
 			"#charts/*": [
 				"./src/lib/apps/charts/lib/*"
+			],
+			"#viz/*": [
+				"./src/lib/apps/viz/lib/*"
 			]
 		}
 	},
