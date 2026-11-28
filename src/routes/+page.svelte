@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { Component } from 'svelte';
 	import IconArrowRight from '~icons/lucide/arrow-right';
 	import IconChevronRight from '~icons/lucide/chevron-right';
 	import IconCheck from '~icons/lucide/check';
@@ -8,10 +7,14 @@
 	import IconBook from '~icons/lucide/book-open';
 	import IconGrid from '~icons/lucide/layout-grid';
 	import IconBot from '~icons/lucide/bot';
+	import SeoHead from '#lib/SeoHead.svelte';
 	import { CONTACT, PROJECTS, UI, type Project, type ProjectKind } from '#lib/projects.js';
-	import { prefs } from '#lib/prefs.svelte.js';
+	import { page } from '$app/state';
+import { langFromPath, localizedHref } from '#lib/lang.js';
+import type { Lang } from '#lib/projects.js';
+import type { Component } from 'svelte';
 
-	const lang = $derived(prefs.lang);
+	const lang = $derived(langFromPath(page.url.pathname)) as Lang;
 	const ui = $derived(UI[lang]);
 
 	const byKind = (kind: ProjectKind) => PROJECTS.filter((project) => project.kind === kind);
@@ -23,13 +26,7 @@
 	const isTelegram = (href: string) => href.startsWith('https://t.me/');
 </script>
 
-<svelte:head>
-	<title>{ui.title}</title>
-	<meta name="description" content={ui.description} />
-	<meta property="og:title" content={ui.title} />
-	<meta property="og:description" content={ui.description} />
-	<meta property="og:image" content="/img/mn.webp" />
-</svelte:head>
+<SeoHead title={ui.title} description={ui.description} path="/" />
 
 {#snippet sectionHead(Icon: Component, title: string, text: string)}
 	<div class="mb-7 flex items-start gap-4">
@@ -95,7 +92,7 @@
 		</ul>
 		<div class="mt-auto pt-6">
 			<a
-				href={project.href}
+				href={localizedHref(project.href, lang)}
 				target={project.href.startsWith('/') ? undefined : '_blank'}
 				rel={project.href.startsWith('/') ? undefined : 'noopener'}
 				class="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-bold text-[var(--accent-ink)] shadow-sm transition-all hover:shadow-md hover:brightness-110"
@@ -107,7 +104,7 @@
 				{:else}
 					<IconExternal class="size-4" aria-hidden="true" />
 				{/if}
-				{text.cta}
+				{guideText.cta}
 				<IconArrowRight
 					class="size-4 transition-transform group-hover:translate-x-0.5"
 					aria-hidden="true"
@@ -141,7 +138,7 @@
 				class="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--card)] px-4 py-1.5 text-[0.7rem] font-bold tracking-widest text-[var(--accent)] uppercase shadow-sm"
 			>
 				<span class="size-1.5 rounded-full bg-[var(--accent)]"></span>
-				{ui.eyebrow}
+				{lang === 'de' ? 'Die MilitärNews' : 'MilitaryNews'}
 			</span>
 			<img
 				src="/img/mn.webp"
@@ -257,7 +254,7 @@
 						</p>
 					</div>
 					<a
-						href={guide.href}
+						href={localizedHref(guide.href, lang)}
 						class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-bold text-[var(--accent-ink)] shadow-md transition hover:brightness-110"
 					>
 						{guideText.cta}
